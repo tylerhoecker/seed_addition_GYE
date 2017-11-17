@@ -1,0 +1,851 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE metadata SYSTEM "http://www.fgdc.gov/metadata/fgdc-std-001-1998.dtd">
+<metadata>
+	<idinfo>
+		<citation>
+			<citeinfo>
+				<origin>Fire Cache, Yellowstone National Park</origin>
+				<origin>Spatial Analysis Center, Yellowstone National Park</origin>
+				<pubdate>Unpublished Material</pubdate>
+				<title>Fire Perimeters (from 1881 to 2008) in Yellowstone National Park, Wyoming, Montana, Idaho</title>
+				<geoform>vector digital data</geoform>
+				<onlink>http://nrdata.nps.gov/yell/yelldata/yell_firehistory_perimeters.zip</onlink>
+				<ftname Sync="TRUE">yell_fire_perimeters</ftname></citeinfo>
+		</citation>
+		<descript>
+			<abstract>This map depicts the perimeters of fires in
+Yellowstone National Park (YNP) larger than 100
+acres from 1881-2003.  Due to increased availability
+of better mapping technologies and products, 2004
+to present perimeters may include fires less than 
+100 acres in size.  YNP fire files were
+researched by NPS firefighter/researcher Bob
+Flather. Superintendent and other reports were
+researched from 1881-1930 for maps and locational
+accounts of large fires.  Individual Forest Fire
+Reports forms 1931-1970 were researched,
+entered into a database and queried for sizes
+larger than 100 acres.  Shared Applications
+Computer System (SACS) database was queried for
+fires larger than 100 acres.  Fire perimeters from
+Don Despain's Pre 1988 covertype/fire history were
+combined with other historic perimeter maps
+including Roy Renkin's master map, historic and
+other maps.  Fire perimeters for 2000 through 2003 were
+derived from NBR satellite imagery by comparing
+areas before and a year after burns to detect change.
+All fires larger than 100 acres were matched
+with a perimeter map and attributed with a
+unique identifier for linking  with future
+databases for each fire.
+**1988 Data for this dataset was created using
+Normalized Burn Ratio imagery product
+combinted with "Burned Area Survey"
+layer for the park.  This combination gives
+a more accurate representation of unburned
+areas within the park, but most likely under-
+represents non-forested burn outside the park.
+This data layer is in process and has not
+cleared a final QA/QC.</abstract>
+			<purpose>The primary objective of this mapping effort was
+to produce a GIS fire perimeter layer of all fires
+larger than 100 acres.  Using a unique ID this GIS
+layer could later be linked to a historic fire database
+to aid in the development of models and analysis.</purpose>
+			<langdata Sync="TRUE">en</langdata></descript>
+		<timeperd>
+			<timeinfo>
+				<rngdates>
+					<begdate>18810501</begdate>
+					<enddate>20081231</enddate>
+				</rngdates>
+			</timeinfo>
+			<current>Observed</current>
+		</timeperd>
+		<status>
+			<progress>In work</progress>
+			<update>Annually</update>
+		</status>
+		<spdom>
+			<bounding>
+				<westbc>
+-111.110494</westbc>
+				<eastbc>
+-110.013249</eastbc>
+				<northbc>
+44.970327</northbc>
+				<southbc>
+44.160170</southbc>
+			</bounding>
+			<lboundng><leftbc Sync="TRUE">481815.843800</leftbc><rightbc Sync="TRUE">621032.500000</rightbc><bottombc Sync="TRUE">4861455.775000</bottombc><topbc Sync="TRUE">5020665.500000</topbc></lboundng></spdom>
+		<keywords>
+			<theme>
+				<themekt>None</themekt>
+				<themekey>Fire</themekey>
+				<themekey>Wildfire</themekey>
+				<themekey>Fire History</themekey>
+				<themekey>Fire Perimeters</themekey>
+			</theme>
+			<place>
+				<placekt>United States of America, USA, US, North America</placekt>
+				<placekey>National Park Service, NPS, Department of the
+Interior, DOI, US Government</placekey>
+				<placekey>Yellowstone National Park, YNP, YELL, Greater
+Yellowstone Area, GYA, Greater Yellowstone
+Ecosystem, GYE, Park County, Teton County, Fremont
+County, Gallatin County, Montana, Idaho, Wyoming,
+Northern Rocky Mountains</placekey>
+			</place>
+		</keywords>
+		<accconst>None</accconst>
+		<useconst>Use at your own risk - please see the disclaimer
+in the Distribution Information</useconst>
+		<ptcontac>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>Spatial Analysis Center - Yellowstone National
+Park</cntorg>
+				</cntorgp>
+				<cntpos>GIS Specialist</cntpos>
+				<cntaddr>
+					<addrtype>Mailing Address</addrtype>
+					<address>Yellowstone Center for Resources</address>
+					<address>Spatial Analysis Center</address>
+					<address>P.O. Box 168</address>
+					<city>Yellowstone National Park</city>
+					<state>Wyoming</state>
+					<postal>82190</postal>
+					<country>USA</country>
+				</cntaddr>
+				<cntvoice>(307) 344-2246</cntvoice>
+				<cntfax>(307) 344-2211</cntfax>
+				<cntemail>yell_gis@nps.gov</cntemail>
+				<hours>8:00 a.m. to 4:00 p.m. (Mountain Time) Monday
+Through Friday</hours>
+				<cntinst>Please check web site first:
+http://www.nps.gov/yell/technical/gis</cntinst>
+			</cntinfo>
+		</ptcontac>
+		<secinfo>
+			<secsys>None</secsys>
+			<secclass>None</secclass>
+			<sechandl>None</sechandl>
+		</secinfo>
+		<native>Microsoft Windows XP Version 2002 Service Pack 2; ESRI ArcCatalog 9.3 Build 1770</native>
+		<natvform Sync="TRUE">File Geodatabase Feature Class</natvform></idinfo>
+	<dataqual>
+		<attracc>
+			<attraccr>Features were obtained from ground truthing and heads up
+digitizing.  Polygons were later checked and updated from
+NBR satellite imagery.  Attribute information was entered
+manually and checked against fire history data layers.</attraccr>
+		</attracc>
+		<logic>Data checked for missing attribute labels.  Polygons checked
+for sliver and gap polygons.</logic>
+		<complete>Updated annually.</complete>
+		<posacc>
+			<horizpa>
+				<horizpar>Various and unknown methods of mapping were used
+to initially record these historic fires.</horizpar>
+			</horizpa>
+		</posacc>
+		<lineage>
+			<procstep>
+				<procdesc>Research and query of Fire Records to identify
+fires larger than 100 acres for 1931-1971.</procdesc>
+				<procdate>Unknown</procdate>
+			</procstep>
+			<procstep>
+				<procdesc>Fire Perimeters digitized from Roy Renkin's Master
+Map in the Bear Office.</procdesc>
+				<procdate>2001</procdate>
+			</procstep>
+			<procstep>
+				<procdesc>Query of SACS fire records for fires larger than
+100 acres 1972 - 2000.</procdesc>
+				<procdate>2001</procdate>
+			</procstep>
+			<procstep>
+				<procdesc>Fire perimeters acquired for those fires not shown
+on Roy's master map.</procdesc>
+				<procdate>2001</procdate>
+			</procstep>
+			<procstep>
+				<procdesc>Fire perimeters merged into one shapefile and
+attributed with unique identifier to link with
+fire records.</procdesc>
+				<procdate>2001</procdate>
+			</procstep>
+			<procstep>
+				<procdesc>Researcher, Bob Flathers, wrote descriptions of
+large fires mentioned in Superintendent and other
+reports previous to 1931.</procdesc>
+				<procdate>2001</procdate>
+			</procstep>
+			<procstep>
+				<procdesc>Fire Perimeters for 2000 through 2002 were updated with
+digitized boundaries from NBR satellite imagery.</procdesc>
+				<procdate>20020716</procdate>
+				<proccont>
+					<cntinfo>
+						<cntorgp>
+							<cntorg>Spatial Analysis Center - Yellowstone National
+Park</cntorg>
+						</cntorgp>
+						<cntpos>GIS Specialist</cntpos>
+						<cntaddr>
+							<addrtype>mailing address</addrtype>
+							<address>Yellowstone Center for Resources</address>
+							<address>Spatial Analysis Center</address>
+							<address>P. O. Box 168</address>
+							<city>Yellowstone National Park</city>
+							<state>Wyoming</state>
+							<postal>82190</postal>
+							<country>USA</country>
+						</cntaddr>
+						<cntvoice>(307) 344-2246</cntvoice>
+						<cntfax>(307) 344-2211</cntfax>
+						<cntemail>yell_gis@nps.gov</cntemail>
+						<hours>8:00 a.m. to 4:00 p.m.(Mountain Time)  Monday
+Through Friday</hours>
+						<cntinst>Please check web site first:
+http://www.nps.gov/yell/technical/gis</cntinst>
+					</cntinfo>
+				</proccont>
+			</procstep>
+			<procstep>
+				<procdesc>Perimeters from 2004 were added.</procdesc>
+				<procdate>20041020</procdate>
+			</procstep>
+			<procstep>
+				<procdesc>Fire Perimeters for 2003 were updated with
+digitized boundaries from NBR satellite imagery.</procdesc>
+				<procdate>20041020</procdate>
+			</procstep>
+			<procstep>
+				<procdesc>Fire perimeters for the two fires in 2005 that had any acreage (Elk Tongue = 33; Chickadee = 80) were added.</procdesc>
+				<procdate>20051208</procdate>
+			</procstep>
+			<procstep>
+				<procdesc>Fire perimeters for the two fires in 2006 that had any acreage (Magpie = 3235 and Stinky = 1010) were added.</procdesc>
+			</procstep>
+			<procstep><procdesc>Fire perimeters for those fires in 2007 that had any acreage were added.</procdesc></procstep><procstep><procdesc>Data for 1988 was removed, as it was created using a maximum daily perimeter (drawn on hardcopy maps).  This data layer remains as the progression layer for the 1988 fires, but NBR Imagery was used in combination with the "Burned Area Survey" data to create a layer more representative of the burned mosaic in the park.  **1988 Data for this map was created using Normalized Burn Ratio imagery product combinted with "Burned Area Survey" layer for the park.  This combination gives a more accurate representation of unburned areas within the park, but most likely under-represents non-forested burn outside the park.
+This data layer is in process and has not cleared a final QA/QC.</procdesc></procstep><procstep><procdesc>Fire perimeters for those fires in 2008 that had any acreage were added.</procdesc><procsv>ArcGIS 9.3 Build 1770</procsv><procdate>20090129</procdate></procstep><procstep><procdesc Sync="TRUE">Dataset copied.</procdesc><srcused Sync="TRUE">\\BRIAN-PC\G\GYE_Wisc\Yellowstone\Fire_history\Fire_maps\All_years\yell_fire_history.gdb</srcused><procdate Sync="TRUE">20110417</procdate><proctime Sync="TRUE">13290700</proctime></procstep></lineage>
+	</dataqual>
+	<spdoinfo>
+		<direct>Vector</direct>
+		<ptvctinf>
+			<sdtsterm Name="yell_fire_perimeters">
+				<sdtstype>G-polygon</sdtstype>
+				<ptvctcnt>19</ptvctcnt>
+			</sdtsterm>
+			<esriterm Name="yell_fire_perimeters"><efeatyp Sync="TRUE">Simple</efeatyp><efeageom Sync="TRUE">Polygon</efeageom><esritopo Sync="TRUE">FALSE</esritopo><efeacnt Sync="TRUE">156</efeacnt><spindex Sync="TRUE">TRUE</spindex><linrefer Sync="TRUE">FALSE</linrefer></esriterm></ptvctinf>
+	</spdoinfo>
+	<spref>
+		<horizsys>
+			<planar>
+				<planci>
+					<plance>coordinate pair</plance>
+					<coordrep>
+						<absres>0.000000</absres>
+						<ordres>0.000000</ordres>
+					</coordrep>
+					<plandu>meters</plandu>
+				</planci>
+				<gridsys><gridsysn Sync="TRUE">Universal Transverse Mercator</gridsysn><utm><utmzone Sync="TRUE">12</utmzone><transmer><sfctrmer Sync="TRUE">0.999600</sfctrmer><longcm Sync="TRUE">-111.000000</longcm><latprjo Sync="TRUE">0.000000</latprjo><feast Sync="TRUE">500000.000000</feast><fnorth Sync="TRUE">0.000000</fnorth></transmer></utm></gridsys></planar>
+			<geodetic>
+				<horizdn>North American Datum of 1983</horizdn>
+				<ellips>Geodetic Reference System 80</ellips>
+				<semiaxis>6378137.000000</semiaxis>
+				<denflat>298.257222</denflat>
+			</geodetic>
+			<cordsysn><geogcsn Sync="TRUE">GCS_North_American_1983</geogcsn><projcsn Sync="TRUE">NAD_1983_UTM_Zone_12N</projcsn></cordsysn></horizsys>
+	</spref>
+	<eainfo>
+		<detailed Name="yell_fire_perimeters">
+			<enttyp>
+				<enttypl>
+yell_fire_perimeters</enttypl>
+				<enttypt Sync="TRUE">Feature Class</enttypt><enttypc Sync="TRUE">156</enttypc></enttyp>
+			<attr>
+				<attrlabl>SOURCETHM</attrlabl>
+				<attrdef>Source used for fire perimeter data</attrdef>
+				<attalias Sync="TRUE">SOURCETHM</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">16</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl>YEAR</attrlabl>
+				<attrdef>Year in which the fire started</attrdef>
+				<attrdefs>Item 3c on NPS edited version, DI-1202 Individual Fire Report (12/1994); referenced as CALENDAR YEAR in SACS</attrdefs>
+				<attrdomv>
+					<udom>Year in which the fire started</udom>
+				</attrdomv>
+				<attalias Sync="TRUE">YEAR</attalias><attrtype Sync="TRUE">Double</attrtype><attwidth Sync="TRUE">8</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl>Y_FIRE_ID</attrlabl>
+				<attrdef>Yellowstone's unique ID for each fire; developed by combining the official fire number with the fire year</attrdef>
+				<attrdefs>Yellowstone National Park</attrdefs>
+				<attrdomv>
+					<udom>[YEAR] + [Y_ID]</udom>
+				</attrdomv>
+				<attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">8</attwidth><attalias Sync="TRUE">Y_FIRE_ID</attalias><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl>Shape</attrlabl>
+				<attrdef>Feature geometry.</attrdef>
+				<attrdefs>ESRI</attrdefs>
+				<attrdomv>
+					<udom>Coordinates defining the features.</udom>
+				</attrdomv>
+				<attrtype Sync="TRUE">Geometry</attrtype><attwidth Sync="TRUE">0</attwidth><attalias Sync="TRUE">Shape</attalias><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl>FIRE_ID</attrlabl>
+				<attrdef>Unique ID for each fire; created by concatenating [UNIT_ID] + [YEAR] + [FIRE_NUM]</attrdef>
+				<attrdefs>Proposed NPS Fire GIS Data Standards</attrdefs>
+				<attrdomv>
+					<udom>Unique ID for each fire</udom>
+				</attrdomv>
+				<attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">50</attwidth><attalias Sync="TRUE">FIRE_ID</attalias><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl>FIRE_NAME</attrlabl>
+				<attrdef>Name of Fire</attrdef>
+				<attrdefs>Item 9a on NPS edited version, DI-1202 Individual Fire Report (12/1994); Referenced as FIRE NAME in SACS</attrdefs>
+				<attrdomv>
+					<udom>The name of the fire</udom>
+				</attrdomv>
+				<attrvai>
+					<attrva>This attribute was obtained from the SACS database for Yellowstone.  The database contains fire data from 1972 on and therefore for fires prior to 1972 attribute information was obtained from hardcopy maps and records.  If the attributes in SACS varied from the hardcopy reports and maps then attribute information reflects the hardcopy documents.</attrva>
+				</attrvai>
+				<attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">254</attwidth><attalias Sync="TRUE">FIRE_NAME</attalias><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl>Y_FIRE_NAM</attrlabl>
+				<attrdef>Yellowstone's fire name.</attrdef>
+				<attrdomv>
+					<udom>The name of the fire</udom>
+				</attrdomv>
+				<attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">16</attwidth><attalias Sync="TRUE">Y_FIRE_NAM</attalias><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl>UNIT_ID</attrlabl>
+				<attrdef>Interagency unit identifier; comprised of 2 letter state abbreviation and 3 letter unit abbreviation</attrdef>
+				<attrdefs>Proposed NPS Fire GIS Data Standards</attrdefs>
+				<attrdomv>
+					<edom>
+						<edomv>WY-YEL</edomv>
+						<edomvd>The first two letters of the state of Wyoming and the first three letters of the park name, Yellowstone</edomvd>
+					</edom>
+				</attrdomv>
+				<attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">254</attwidth><attalias Sync="TRUE">UNIT_ID</attalias><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl>FIRE_NUM</attrlabl>
+				<attrdef>Local Unit Fire Number.  This attribute was obtained from the SACS database for Yellowstone.  The database contains fire data from 1972 on and therefore fires prior to 1972 do not have this attribute information.</attrdef>
+				<attrdefs>Item 3d on NPS edited version, DI-1202 Individual Fire Report (12/1994); Referenced as FIRE NUMBER in SACS</attrdefs>
+				<attrdomv>
+					<udom>Local unit fire number</udom>
+				</attrdomv>
+				<attrtype Sync="TRUE">Double</attrtype><attwidth Sync="TRUE">8</attwidth><attalias Sync="TRUE">FIRE_NUM</attalias><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl>FIRE_TYPE</attrlabl>
+				<attrdef>Fire Type (1st digit) concatenated with Protection Type (2nd digit) as recorded on DI-1202 report.  This attribute was obtained from the SACS database for Yellowstone.  The database contains fire data from 1972 on and therefore fires prior to 1972 do not have this attribute information.</attrdef>
+				<attrdefs>Item 4 on NPS edited version, DI-1202 Individual Fire Report (12/1994); Referenced as FIRE TYPE in SACS</attrdefs>
+				<attrdomv>
+					<edom>
+						<edomv>11</edomv>
+						<edomvd>Suppression - Wildfire inside park was suppressed by NPS</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>12</edomv>
+						<edomvd>Suppression - Wildfire inside park was suppressed by another federal agency</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>13</edomv>
+						<edomvd>Suppression - Wildfire inside park was suppressed by non-federal agency</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>14</edomv>
+						<edomvd>Suppression - Wildfire that occurred on NPS land was confined to a specific area without full suppression</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>15</edomv>
+						<edomvd>Mutual Aid - NPS resources take suppression action on adjoining state land</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>21</edomv>
+						<edomvd>Natural Out - Fire inside park is extinquished by weather before NPS resources take suppression action</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>48</edomv>
+						<edomvd>Management-Ignited Prescribed Fire (e.g., hazard fuel reduction, resources management - prescribed burning) was conducted in park</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>49</edomv>
+						<edomvd>Prescribed Natural Fire - Occurred inside park and was managed as such within prescription under an approved plan</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+				</attrdomv>
+				<attrtype Sync="TRUE">Double</attrtype><attwidth Sync="TRUE">8</attwidth><attalias Sync="TRUE">FIRE_TYPE</attalias><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl>GEN_CAUSE</attrlabl>
+				<attrdef>General cause of fire</attrdef>
+				<attrdefs>Item 5 (first number) on NPS edited version, DI-1202 Individual Fire Report (12/1994); Referenced as GENERAL CAUSE in SACS</attrdefs>
+				<attrdomv>
+					<edom>
+						<edomv>1</edomv>
+						<edomvd>Natural</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>2</edomv>
+						<edomvd>Campfire</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>3</edomv>
+						<edomvd>Smoking</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>4</edomv>
+						<edomvd>Debris Burning</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>5</edomv>
+						<edomvd>Incendiary</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>6</edomv>
+						<edomvd>Equipment Use</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>7</edomv>
+						<edomvd>Railroad</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>8</edomv>
+						<edomvd>Children</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>9</edomv>
+						<edomvd>Miscellaneous</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+				</attrdomv>
+				<attrtype Sync="TRUE">Double</attrtype><attwidth Sync="TRUE">8</attwidth><attalias Sync="TRUE">GEN_CAUSE</attalias><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl>SPEC_CAUSE</attrlabl>
+				<attrdef>Specific cause of fire</attrdef>
+				<attrdefs>Item 5 (second number) on NPS edited version, DI-1202 Individual Fire Report (12/1994); Referenced as GENERAL CAUSE in SACS</attrdefs>
+				<attrdomv>
+					<edom>
+						<edomv>1</edomv>
+						<edomvd>Lightning</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>2</edomv>
+						<edomvd>Aircraft</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>3</edomv>
+						<edomvd>Burning Vehicle</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>4</edomv>
+						<edomvd>Power Saw</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>5</edomv>
+						<edomvd>Exhaust - Other</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>6</edomv>
+						<edomvd>Logging Line</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>7</edomv>
+						<edomvd>Brakeshoe</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>8</edomv>
+						<edomvd>Cooking Fire</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>9</edomv>
+						<edomvd>Warming Fire</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>10</edomv>
+						<edomvd>Smoking</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>11</edomv>
+						<edomvd>Trash Burning</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>12</edomv>
+						<edomvd>Burning Dump</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>13</edomv>
+						<edomvd>Field Burning</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>14</edomv>
+						<edomvd>Land Clearing</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>15</edomv>
+						<edomvd>Slash Burning</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>16</edomv>
+						<edomvd>Right of Way Burning</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>17</edomv>
+						<edomvd>Resource Management Burning</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>18</edomv>
+						<edomvd>Grudge Fire</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>19</edomv>
+						<edomvd>Pyromania</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>20</edomv>
+						<edomvd>Smoke out Bees/Game</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>21</edomv>
+						<edomvd>Insect/Snake Control</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>22</edomv>
+						<edomvd>Job Hunting</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>23</edomv>
+						<edomvd>Blasting</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>24</edomv>
+						<edomvd>Burning Building</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>25</edomv>
+						<edomvd>Power Line</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>26</edomv>
+						<edomvd>Fireworks</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>27</edomv>
+						<edomvd>Play with Matches</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>28</edomv>
+						<edomvd>Repel Predators</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>29</edomv>
+						<edomvd>House/Stove Flue Sparks</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>30</edomv>
+						<edomvd>Other/Unknown</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+					<edom>
+						<edomv>31</edomv>
+						<edomvd>Volcanic</edomvd>
+						<edomvds>See document, "Instructions For Completing National Park Service Edited Version of DI-1202, Individual Fire Report."  December 14, 1994.</edomvds>
+					</edom>
+				</attrdomv>
+				<attrtype Sync="TRUE">Double</attrtype><attwidth Sync="TRUE">8</attwidth><attalias Sync="TRUE">SPEC_CAUSE</attalias><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl>AREA_NAME</attrlabl>
+				<attrdef>Four letter Park/Area alpha code</attrdef>
+				<attrdefs>Item 9b on NPS edited version, DI-1202 Individual Fire Report (12/1994); Referenced as AREA NAME in SACS</attrdefs>
+				<attrdomv>
+					<edom>
+						<edomv>YELL</edomv>
+						<edomvd>the park's four letter NPS acronym</edomvd>
+						<edomvds>National Park Service</edomvds>
+					</edom>
+				</attrdomv>
+				<attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">254</attwidth><attalias Sync="TRUE">AREA_NAME</attalias><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl>OWNER</attrlabl>
+				<attrdef>Land ownder at the point of origin for the fire</attrdef>
+				<attrdefs>Item 9f on NPS edited version, DI-1202 Individual Fire Report (12/1994); Referenced as OWNER in SACS</attrdefs>
+				<attrdomv>
+					<edom>
+						<edomv>1</edomv>
+						<edomvd>BLM</edomvd>
+						<edomvds>Item 9f on NPS edited version, DI-1202 Individual Fire Report (12/1994); Referenced as OWNER in SACS</edomvds>
+					</edom>
+					<edom>
+						<edomv>2</edomv>
+						<edomvd>BIA</edomvd>
+						<edomvds>Item 9f on NPS edited version, DI-1202 Individual Fire Report (12/1994); Referenced as OWNER in SACS</edomvds>
+					</edom>
+					<edom>
+						<edomv>3</edomv>
+						<edomvd>NPS</edomvd>
+						<edomvds>Item 9f on NPS edited version, DI-1202 Individual Fire Report (12/1994); Referenced as OWNER in SACS</edomvds>
+					</edom>
+					<edom>
+						<edomv>4</edomv>
+						<edomvd>FWS</edomvd>
+						<edomvds>Item 9f on NPS edited version, DI-1202 Individual Fire Report (12/1994); Referenced as OWNER in SACS</edomvds>
+					</edom>
+					<edom>
+						<edomv>5</edomv>
+						<edomvd>USFS</edomvd>
+						<edomvds>Item 9f on NPS edited version, DI-1202 Individual Fire Report (12/1994); Referenced as OWNER in SACS</edomvds>
+					</edom>
+					<edom>
+						<edomv>6</edomv>
+						<edomvd>OTHER FED LAND</edomvd>
+						<edomvds>Item 9f on NPS edited version, DI-1202 Individual Fire Report (12/1994); Referenced as OWNER in SACS</edomvds>
+					</edom>
+					<edom>
+						<edomv>7</edomv>
+						<edomvd>STATE</edomvd>
+						<edomvds>Item 9f on NPS edited version, DI-1202 Individual Fire Report (12/1994); Referenced as OWNER in SACS</edomvds>
+					</edom>
+					<edom>
+						<edomv>8</edomv>
+						<edomvd>PRIVATE</edomvd>
+						<edomvds>Item 9f on NPS edited version, DI-1202 Individual Fire Report (12/1994); Referenced as OWNER in SACS</edomvds>
+					</edom>
+					<edom>
+						<edomv>9</edomv>
+						<edomvd>OTHER</edomvd>
+						<edomvds>Item 9f on NPS edited version, DI-1202 Individual Fire Report (12/1994); Referenced as OWNER in SACS</edomvds>
+					</edom>
+				</attrdomv>
+				<attrtype Sync="TRUE">Double</attrtype><attwidth Sync="TRUE">8</attwidth><attalias Sync="TRUE">OWNER</attalias><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl>DISC_DATE</attrlabl>
+				<attrdef>Date the fire was discovered (YYYYMMDD)</attrdef>
+				<attrdefs>Item 10a (Date) on NPS edited version, DI-1202 Individual Fire Report (12/1994); Referenced as DATE DISCOVERED in SACS</attrdefs>
+				<attrdomv>
+					<udom>Year, Month and Day</udom>
+				</attrdomv>
+				<attrtype Sync="TRUE">Double</attrtype><attwidth Sync="TRUE">8</attwidth><attalias Sync="TRUE">DISC_DATE</attalias><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl>CNTRL_ACRE</attrlabl>
+				<attrtype Sync="TRUE">Double</attrtype><attwidth Sync="TRUE">8</attwidth><attalias Sync="TRUE">CNTRL_ACRE</attalias><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl>Shape_Area</attrlabl>
+				<attrdef>Area of feature in internal units squared.</attrdef>
+				<attrdefs>ESRI</attrdefs>
+				<attrdomv>
+					<udom>Positive real numbers that are automatically generated.</udom>
+				</attrdomv>
+				<attrtype Sync="TRUE">Double</attrtype><attwidth Sync="TRUE">8</attwidth><attalias Sync="TRUE">Shape_Area</attalias><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr><attrlabl Sync="TRUE">OBJECTID</attrlabl><attalias Sync="TRUE">OBJECTID</attalias><attrtype Sync="TRUE">OID</attrtype><attwidth Sync="TRUE">4</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale><attrdef Sync="TRUE">Internal feature number.</attrdef><attrdefs Sync="TRUE">ESRI</attrdefs><attrdomv><udom Sync="TRUE">Sequential unique whole numbers that are automatically generated.</udom></attrdomv></attr><attr>
+				<attrlabl>DECLD_DATE</attrlabl>
+				<attrdef>Date the fire was declared out (YYYYMMDD)</attrdef>
+				<attrdefs>Item 10d on NPS edited version, DI-1202 Individual Fire Report (12/1994); Referenced as DATE DECLARED OUT in SACS</attrdefs>
+				<attrdomv>
+					<udom>Year, Month and Day</udom>
+				</attrdomv>
+				<attrtype Sync="TRUE">Double</attrtype><attwidth Sync="TRUE">8</attwidth><attalias Sync="TRUE">DECLD_DATE</attalias><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr><attrlabl Sync="TRUE">Shape_Length</attrlabl><attalias Sync="TRUE">Shape_Length</attalias><attrtype Sync="TRUE">Double</attrtype><attwidth Sync="TRUE">8</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale><attrdef Sync="TRUE">Length of feature in internal units.</attrdef><attrdefs Sync="TRUE">ESRI</attrdefs><attrdomv><udom Sync="TRUE">Positive real numbers that are automatically generated.</udom></attrdomv></attr><attr><attrlabl Sync="TRUE">Y_DATE_IA</attrlabl><attalias Sync="TRUE">Y_DATE_IA</attalias><attrtype Sync="TRUE">Double</attrtype><attwidth Sync="TRUE">8</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale><attrdef>Date of initial attack</attrdef></attr><attr><attrlabl Sync="TRUE">ACRES_CALC</attrlabl><attalias Sync="TRUE">ACRES_CALC</attalias><attrtype Sync="TRUE">Double</attrtype><attwidth Sync="TRUE">8</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale><attrdef>Acreage, calculated using ArcGIS "calculate geometry" tool</attrdef></attr><attr><attrlabl Sync="TRUE">CNTRL_DATE</attrlabl><attalias Sync="TRUE">CNTRL_DATE</attalias><attrtype Sync="TRUE">Double</attrtype><attwidth Sync="TRUE">8</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr></detailed>
+		<overview>
+			<eaover>ACRES_CALC = total acreage of each polygon; YEAR =
+year of fire; Y_FIRE_ID = developed by combining the
+official fire number with the fire year (the first
+fire in 1988 = 198801).  For fires from 1881-1930
+fire numbers were assigned according to the size of
+fire (acres).  (The biggest fire of 1881 = 188101)
+From 1931-2002 official fire numbers were assigned
+sequentially to all fires according to occurrence
+during a fire year. Y_FIRE_NAM = taken from records
+and historic records. SOURCETHM = the source used
+for each perimeter with the following attributes:
+"Roy's master map" is on file in the Bear
+management office,  "IFFR" is Individual Forest
+Fire Reports forms 1931-1970,  "f88perim" is the
+1988 fires GIS coverage,  "15'quadroy" is Roy
+Renkin's aerial observation digitized from USGS
+quad , "SACSpoint" is a fire without a map so a
+circle was drawn at the location from the SACS
+report, "Roybrian" is a combination of Roy
+Renkin's aerial observation maps and Brian
+Sorbel's 1994-1996 landsat coverage,
+"FirecacheGIS" is arcview shapefiles developed by
+the YNP fire cache; PERIM_MILE = perimeter of
+polygons in miles</eaover>
+			<eadetcit>none</eadetcit>
+		</overview>
+	</eainfo>
+	<distinfo>
+		<distrib>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>National Park Service, Intermountain GIS Program Office</cntorg>
+				</cntorgp>
+				<cntpos>GIS Coordinator/GIS Specialist</cntpos>
+				<cntaddr>
+					<addrtype>mailing and physical address</addrtype>
+					<address>12795 West Alameda Parkway</address>
+					<city>Lakewood</city>
+					<state>Colorado</state>
+					<postal>80225</postal>
+					<country>USA</country>
+				</cntaddr>
+				<cntemail>imro_gis_coordinator@nps.gov</cntemail>
+				<cntinst>Data available on national NPS spatial data
+clearinghouse, http://science.nature.nps.gov/nrdata/index.cfm</cntinst>
+			</cntinfo>
+		</distrib>
+		<resdesc>yell_firehistory_perimeters.zip</resdesc>
+		<distliab>The National Park Service shall not be held liable
+for improper or incorrect use of the data
+described and/or contained herein. These data and
+related graphics ("GIF" format files) are not
+legal documents and are not intended to be used as
+such. The information contained in these data is
+dynamic and may change over time. The data are not
+better than the original sources from which they
+were derived. It is the responsibility of the data
+user to use the data appropriately and consistent
+within the limitations of geospatial data in
+general and these data in particular. The related
+graphics are intended to aid the data user in
+acquiring relevant data; it is not appropriate to
+use the related graphics as data. The National
+Park Service gives no warranty, expressed or
+implied, as to the accuracy, reliability, or
+completeness of these data. It is strongly
+recommended that these data are directly acquired
+from an NPS server and not indirectly through
+other sources which may have changed the data in
+some way. Although these data have been processed
+successfully on a computer system at the National
+Park Service, no warranty expressed or implied is
+made regarding the utility of the data on another
+system or for general or scientific purposes, nor
+shall the act of distribution constitute any such
+warranty. This disclaimer applies both to
+individual use of the data and aggregate use with
+other data.</distliab>
+		<stdorder>
+			<digform>
+				<digtinfo>
+					<formname>ArcView</formname>
+					<formvern>3.2a</formvern>
+					<formspec>.shp</formspec>
+					<filedec>WinZip</filedec>
+					<transize>0.812</transize>
+					<dssize Sync="TRUE">0.000</dssize></digtinfo>
+				<digtopt>
+					<onlinopt>
+						<computer>
+							<networka>
+								<networkr>http://nrdata.nps.gov/yell/yelldata/yell_firehistory_perimeters.zip</networkr>
+							</networka>
+						</computer>
+					</onlinopt>
+				</digtopt>
+			</digform>
+			<fees>None</fees>
+			<ordering>Data available at any time via the world wide web.</ordering>
+		</stdorder>
+	</distinfo>
+	<metainfo>
+		<metd>20090129</metd>
+		<metrd>20090129</metrd>
+		<metc>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>Spatial Analysis Center - Yellowstone National
+Park</cntorg>
+					<cntper>REQUIRED: The person responsible for the metadata information.</cntper>
+				</cntorgp>
+				<cntpos>GIS Specialist</cntpos>
+				<cntaddr>
+					<addrtype>Mailing Address</addrtype>
+					<address>Yellowstone Center for Resources</address>
+					<address>Spatial Analysis Center</address>
+					<address>P.O. Box 168</address>
+					<city>Yellowstone National Park</city>
+					<state>Wyoming</state>
+					<postal>82190</postal>
+					<country>USA</country>
+				</cntaddr>
+				<cntvoice>(307) 344-2246</cntvoice>
+				<cntfax>(307) 344-2211</cntfax>
+				<cntemail>yell_gis@nps.gov</cntemail>
+				<hours>8:00 a.m. to 4:00 p.m. (Mountain Time) Monday
+Through Friday</hours>
+				<cntinst>Please check web site first:
+http://www.nps.gov/yell/technical/gis</cntinst>
+			</cntinfo>
+		</metc>
+		<metstdn>FGDC Content Standards for Digital Geospatial Metadata</metstdn>
+		<metstdv>FGDC-STD-001-1998</metstdv>
+		<mettc>local time</mettc>
+		<metac>None</metac>
+		<metuc>None</metuc>
+		<metsi>
+			<metscs>None</metscs>
+			<metsc>Unclassified</metsc>
+			<metshd>None</metshd>
+		</metsi>
+		<metextns>
+			<onlink>http://www.esri.com/metadata/esriprof80.html</onlink>
+			<metprof>ESRI Metadata Profile</metprof>
+		</metextns>
+		<metextns>
+			<onlink>http://www.esri.com/metadata/esriprof80.html</onlink>
+			<metprof>ESRI Metadata Profile</metprof>
+		</metextns>
+		<metextns>
+			<onlink>http://www.esri.com/metadata/esriprof80.html</onlink>
+			<metprof>ESRI Metadata Profile</metprof>
+		</metextns>
+		<langmeta Sync="TRUE">en</langmeta><metextns><onlink Sync="TRUE">http://www.esri.com/metadata/esriprof80.html</onlink><metprof Sync="TRUE">ESRI Metadata Profile</metprof></metextns></metainfo>
+	<Esri><CreaDate>20170607</CreaDate><CreaTime>13101900</CreaTime><SyncOnce>FALSE</SyncOnce><SyncDate>20090129</SyncDate><SyncTime>15440100</SyncTime><ModDate>20090129</ModDate><ModTime>15582700</ModTime><DataProperties><lineage><Process Name="FeatureClassToFeatureClass_1" ToolSource="C:\Program Files\ArcGIS\ArcToolbox\Toolboxes\Conversion Tools.tbx\FeatureClassToFeatureClass" Date="20070507" Time="142814">FeatureClassToFeatureClass K:\Fire_2006Season\Data\Data_Integration_2006\YELL_Fire_Starts_fGDB.gdb\YELL_fire_perimeters_2006 G:\yell_data\fire yellowstone_fire_perimeters_2006.shp # "YEAR YEAR true true false 8 Double 0 0 ,First,#,K:\Fire_2006Season\Data\Data_Integration_2006\YELL_Fire_Starts_fGDB.gdb\YELL_fire_perimeters_2006,YEAR,-1,-1;Y_FIRE_ID Y_FIRE_ID true true false 8 Text 0 0 ,First,#,K:\Fire_2006Season\Data\Data_Integration_2006\YELL_Fire_Starts_fGDB.gdb\YELL_fire_perimeters_2006,Y_FIRE_ID,-1,-1;Y_FIRE_NAM Y_FIRE_NAM true true false 16 Text 0 0 ,First,#,K:\Fire_2006Season\Data\Data_Integration_2006\YELL_Fire_Starts_fGDB.gdb\YELL_fire_perimeters_2006,Y_FIRE_NAM,-1,-1;ACRES ACRES true true false 8 Double 0 0 ,First,#,K:\Fire_2006Season\Data\Data_Integration_2006\YELL_Fire_Starts_fGDB.gdb\YELL_fire_perimeters_2006,ACRES,-1,-1;AREA AREA true true false 8 Double 0 0 ,First,#,K:\Fire_2006Season\Data\Data_Integration_2006\YELL_Fire_Starts_fGDB.gdb\YELL_fire_perimeters_2006,AREA,-1,-1;PERIMETER PERIMETER true true false 8 Double 0 0 ,First,#,K:\Fire_2006Season\Data\Data_Integration_2006\YELL_Fire_Starts_fGDB.gdb\YELL_fire_perimeters_2006,PERIMETER,-1,-1;PERIM_MILE PERIM_MILE true true false 8 Double 0 0 ,First,#,K:\Fire_2006Season\Data\Data_Integration_2006\YELL_Fire_Starts_fGDB.gdb\YELL_fire_perimeters_2006,PERIM_MILE,-1,-1;SOURCETHM SOURCETHM true true false 16 Text 0 0 ,First,#,K:\Fire_2006Season\Data\Data_Integration_2006\YELL_Fire_Starts_fGDB.gdb\YELL_fire_perimeters_2006,SOURCETHM,-1,-1;FIRE_ID FIRE_ID true true false 50 Text 0 0 ,First,#,K:\Fire_2006Season\Data\Data_Integration_2006\YELL_Fire_Starts_fGDB.gdb\YELL_fire_perimeters_2006,FIRE_ID,-1,-1;UNIT_ID UNIT_ID true true false 254 Text 0 0 ,First,#,K:\Fire_2006Season\Data\Data_Integration_2006\YELL_Fire_Starts_fGDB.gdb\YELL_fire_perimeters_2006,UNIT_ID,-1,-1;FIRE_NUM FIRE_NUM true true false 8 Double 0 0 ,First,#,K:\Fire_2006Season\Data\Data_Integration_2006\YELL_Fire_Starts_fGDB.gdb\YELL_fire_perimeters_2006,FIRE_NUM,-1,-1;FIRE_TYPE FIRE_TYPE true true false 8 Double 0 0 ,First,#,K:\Fire_2006Season\Data\Data_Integration_2006\YELL_Fire_Starts_fGDB.gdb\YELL_fire_perimeters_2006,FIRE_TYPE,-1,-1;GEN_CAUSE GEN_CAUSE true true false 8 Double 0 0 ,First,#,K:\Fire_2006Season\Data\Data_Integration_2006\YELL_Fire_Starts_fGDB.gdb\YELL_fire_perimeters_2006,GEN_CAUSE,-1,-1;SPEC_CAUSE SPEC_CAUSE true true false 8 Double 0 0 ,First,#,K:\Fire_2006Season\Data\Data_Integration_2006\YELL_Fire_Starts_fGDB.gdb\YELL_fire_perimeters_2006,SPEC_CAUSE,-1,-1;FIRE_NAME FIRE_NAME true true false 254 Text 0 0 ,First,#,K:\Fire_2006Season\Data\Data_Integration_2006\YELL_Fire_Starts_fGDB.gdb\YELL_fire_perimeters_2006,FIRE_NAME,-1,-1;AREA_NAME AREA_NAME true true false 254 Text 0 0 ,First,#,K:\Fire_2006Season\Data\Data_Integration_2006\YELL_Fire_Starts_fGDB.gdb\YELL_fire_perimeters_2006,AREA_NAME,-1,-1;OWNER OWNER true true false 8 Double 0 0 ,First,#,K:\Fire_2006Season\Data\Data_Integration_2006\YELL_Fire_Starts_fGDB.gdb\YELL_fire_perimeters_2006,OWNER,-1,-1;DISC_DATE DISC_DATE true true false 8 Double 0 0 ,First,#,K:\Fire_2006Season\Data\Data_Integration_2006\YELL_Fire_Starts_fGDB.gdb\YELL_fire_perimeters_2006,DISC_DATE,-1,-1;CNTRL_ACRE CNTRL_ACRE true true false 8 Double 0 0 ,First,#,K:\Fire_2006Season\Data\Data_Integration_2006\YELL_Fire_Starts_fGDB.gdb\YELL_fire_perimeters_2006,CNTRL_ACRE,-1,-1;DECLD_DATE DECLD_DATE true true false 8 Double 0 0 ,First,#,K:\Fire_2006Season\Data\Data_Integration_2006\YELL_Fire_Starts_fGDB.gdb\YELL_fire_perimeters_2006,DECLD_DATE,-1,-1;Hectares Hectares true true false 8 Double 0 0 ,First,#,K:\Fire_2006Season\Data\Data_Integration_2006\YELL_Fire_Starts_fGDB.gdb\YELL_fire_perimeters_2006,Hectares,-1,-1;Shape_Leng Shape_Length false true true 8 Double 0 0 ,First,#,K:\Fire_2006Season\Data\Data_Integration_2006\YELL_Fire_Starts_fGDB.gdb\YELL_fire_perimeters_2006,Shape_Length,-1,-1;Shape_Area Shape_Area false true true 8 Double 0 0 ,First,#,K:\Fire_2006Season\Data\Data_Integration_2006\YELL_Fire_Starts_fGDB.gdb\YELL_fire_perimeters_2006,Shape_Area,-1,-1" # G:\yell_data\fire\yellowstone_fire_perimeters_2006.shp</Process><Process Name="FeatureClassToFeatureClass_1" ToolSource="C:\Program Files\ArcGIS\ArcToolbox\Toolboxes\Conversion Tools.tbx\FeatureClassToFeatureClass" Date="20080129" Time="153436">FeatureClassToFeatureClass G:\yell_data\fire\yellowstone_fire_perimeters.shp S:\cguiles\Projects\G_Drive_Permanent_Layers\Fire\Fire_2007_Data\yell_fire_history.gdb yell_fire_perimeters_05 # "YEAR YEAR true false false 19 Double 0 0 ,First,#,G:\yell_data\fire\yellowstone_fire_perimeters.shp,YEAR,-1,-1;Y_FIRE_ID Y_FIRE_ID true false false 8 Text 0 0 ,First,#,G:\yell_data\fire\yellowstone_fire_perimeters.shp,Y_FIRE_ID,-1,-1;Y_FIRE_NAM Y_FIRE_NAM true false false 16 Text 0 0 ,First,#,G:\yell_data\fire\yellowstone_fire_perimeters.shp,Y_FIRE_NAM,-1,-1;ACRES ACRES true false false 19 Double 0 0 ,First,#,G:\yell_data\fire\yellowstone_fire_perimeters.shp,ACRES,-1,-1;AREA AREA true false false 19 Double 0 0 ,First,#,G:\yell_data\fire\yellowstone_fire_perimeters.shp,AREA,-1,-1;PERIMETER PERIMETER true false false 19 Double 0 0 ,First,#,G:\yell_data\fire\yellowstone_fire_perimeters.shp,PERIMETER,-1,-1;PERIM_MILE PERIM_MILE true false false 19 Double 0 0 ,First,#,G:\yell_data\fire\yellowstone_fire_perimeters.shp,PERIM_MILE,-1,-1;SOURCETHM SOURCETHM true false false 16 Text 0 0 ,First,#,G:\yell_data\fire\yellowstone_fire_perimeters.shp,SOURCETHM,-1,-1;FIRE_ID FIRE_ID true false false 50 Text 0 0 ,First,#,G:\yell_data\fire\yellowstone_fire_perimeters.shp,FIRE_ID,-1,-1;UNIT_ID UNIT_ID true false false 254 Text 0 0 ,First,#,G:\yell_data\fire\yellowstone_fire_perimeters.shp,UNIT_ID,-1,-1;FIRE_NUM FIRE_NUM true false false 19 Double 0 0 ,First,#,G:\yell_data\fire\yellowstone_fire_perimeters.shp,FIRE_NUM,-1,-1;FIRE_TYPE FIRE_TYPE true false false 19 Double 0 0 ,First,#,G:\yell_data\fire\yellowstone_fire_perimeters.shp,FIRE_TYPE,-1,-1;GEN_CAUSE GEN_CAUSE true false false 19 Double 0 0 ,First,#,G:\yell_data\fire\yellowstone_fire_perimeters.shp,GEN_CAUSE,-1,-1;SPEC_CAUSE SPEC_CAUSE true false false 19 Double 0 0 ,First,#,G:\yell_data\fire\yellowstone_fire_perimeters.shp,SPEC_CAUSE,-1,-1;FIRE_NAME FIRE_NAME true false false 254 Text 0 0 ,First,#,G:\yell_data\fire\yellowstone_fire_perimeters.shp,FIRE_NAME,-1,-1;AREA_NAME AREA_NAME true false false 254 Text 0 0 ,First,#,G:\yell_data\fire\yellowstone_fire_perimeters.shp,AREA_NAME,-1,-1;OWNER OWNER true false false 19 Double 0 0 ,First,#,G:\yell_data\fire\yellowstone_fire_perimeters.shp,OWNER,-1,-1;DISC_DATE DISC_DATE true false false 19 Double 0 0 ,First,#,G:\yell_data\fire\yellowstone_fire_perimeters.shp,DISC_DATE,-1,-1;CNTRL_ACRE CNTRL_ACRE true false false 19 Double 0 0 ,First,#,G:\yell_data\fire\yellowstone_fire_perimeters.shp,CNTRL_ACRE,-1,-1;DECLD_DATE DECLD_DATE true false false 19 Double 0 0 ,First,#,G:\yell_data\fire\yellowstone_fire_perimeters.shp,DECLD_DATE,-1,-1;Hectares Hectares true false false 19 Double 0 0 ,First,#,G:\yell_data\fire\yellowstone_fire_perimeters.shp,Hectares,-1,-1;Shape_Leng Shape_Leng true false false 19 Double 0 0 ,First,#,G:\yell_data\fire\yellowstone_fire_perimeters.shp,Shape_Leng,-1,-1;Shape_Area Shape_Area true false false 19 Double 0 0 ,First,#,G:\yell_data\fire\yellowstone_fire_perimeters.shp,Shape_Area,-1,-1" # S:\cguiles\Projects\G_Drive_Permanent_Layers\Fire\Fire_2007_Data\yell_fire_history.gdb\yell_fire_perimeters_05</Process><Process ToolSource="C:\Program Files\ArcGIS\ArcToolbox\Toolboxes\Data Management Tools.tbx\CopyFeatures" Date="20080803" Time="144749">CopyFeatures G:\yell_data\fire\yell_fire_history.gdb\yell_fire_perimeters S:\cguiles\Projects\G_Drive_Permanent_Layers\Fire\G_Drive_Perimeter_Update_20080803\yell_fire_history.gdb\yell_fire_perimeters # 0 0 0</Process></lineage><itemProps><itemLocation><linkage Sync="TRUE">file://\\FD-D38NTJH2\D$\Dropbox\BJH_ComputerFiles\Work\GIS_RS\Projects\2016YellowstoneFires\88firesperimeter</linkage><protocol Sync="TRUE">Local Area Network</protocol></itemLocation></itemProps><copyHistory><copy source="E:\MuddyWatersHardDriveCopy20140610\GYE_Wisc\GYE\1988_dNBR_YNP\88firesperimeter" dest="\\FD-D38NTJH2\D$\Dropbox\BJH_ComputerFiles\Work\GIS_RS\Projects\2016YellowstoneFires\88firesperimeter" date="20170607" time="13101900"></copy></copyHistory></DataProperties></Esri><dataIdInfo><envirDesc Sync="TRUE">Microsoft Windows XP Version 5.1 (Build 2600) Service Pack 2; ESRI ArcCatalog 9.3.1.1850</envirDesc><dataLang><languageCode Sync="TRUE" value="en"></languageCode></dataLang><idCitation><resTitle Sync="TRUE">yell_fire_perimeters</resTitle><presForm><PresFormCd Sync="TRUE" value="005"></PresFormCd></presForm></idCitation><dataExt><geoEle><GeoBndBox esriExtentType="native"><westBL Sync="TRUE">481815.8438</westBL><eastBL Sync="TRUE">621032.5</eastBL><northBL Sync="TRUE">5020665.5</northBL><southBL Sync="TRUE">4861455.775</southBL><exTypeCode Sync="TRUE">1</exTypeCode></GeoBndBox></geoEle></dataExt><geoBox esriExtentType="decdegrees"><westBL Sync="TRUE">-111.232092</westBL><eastBL Sync="TRUE">-109.455485</eastBL><northBL Sync="TRUE">45.339498</northBL><southBL Sync="TRUE">43.896271</southBL><exTypeCode Sync="TRUE">1</exTypeCode></geoBox><spatRpType><SpatRepTypCd Sync="TRUE" value="001"></SpatRepTypCd></spatRpType></dataIdInfo><mdLang><languageCode Sync="TRUE" value="en"></languageCode></mdLang><mdStanName Sync="TRUE">ISO 19115 Geographic Information - Metadata</mdStanName><mdStanVer Sync="TRUE">DIS_ESRI1.0</mdStanVer><mdChar><CharSetCd Sync="TRUE" value="004"></CharSetCd></mdChar><mdHrLv><ScopeCd Sync="TRUE" value="005"></ScopeCd></mdHrLv><mdHrLvName Sync="TRUE">dataset</mdHrLvName><distInfo><distributor><distorTran><onLineSrc><orDesc Sync="TRUE">002</orDesc><linkage Sync="TRUE">file://</linkage><protocol Sync="TRUE">Local Area Network</protocol></onLineSrc><transSize Sync="TRUE">0.000</transSize></distorTran><distorFormat><formatName Sync="TRUE">File Geodatabase Feature Class</formatName></distorFormat></distributor></distInfo><refSysInfo><RefSystem><refSysID><identCode Sync="TRUE">NAD_1983_UTM_Zone_12N</identCode></refSysID></RefSystem></refSysInfo><spatRepInfo><VectSpatRep><topLvl><TopoLevCd Sync="TRUE" value="001"></TopoLevCd></topLvl><geometObjs Name="yell_fire_perimeters"><geoObjTyp><GeoObjTypCd Sync="TRUE" value="001"></GeoObjTypCd></geoObjTyp><geoObjCnt Sync="TRUE">156</geoObjCnt></geometObjs></VectSpatRep></spatRepInfo><mdDateSt Sync="TRUE">20090129</mdDateSt></metadata>

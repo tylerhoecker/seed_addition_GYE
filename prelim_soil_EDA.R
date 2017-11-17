@@ -20,7 +20,7 @@ soilData <- map(paste0('data/',sites,'_',dataTime,'.csv'), read_csv) %>%
          port = sub(".*_","",.$key)) %>%
   mutate(measType = if_else(measType == 'mois',"Moisture","Temperature")) %>%
   select(site,aspect,date,hour,port,measType,value) %>%
-  group_by(aspect,date,measType) %>%
+  group_by(site,aspect,date,measType) %>% # Change site for aspect
   summarize(dayMin = min(value),
          dayMean = mean(value),
          dayMax = max(value)) 
@@ -30,11 +30,10 @@ soilFlat <- filter(soilData, aspect == 'F')
 soilNorth <- filter(soilData, aspect == 'N')
 
 colVals <- rev(c('S' = '#E69F00', 'F' = '#009E73', 'N' = '#0072B2'))
-legLabs <- rev(c('Flat','North','South'))
+legLabs <- rev(c('South','Flat','North'))
 alphaVals <- 0.4
 sizeVals <- 1
 
-relevel(soilData$aspect, "S")
 
 seriesPlot <- 
 ggplot() +
@@ -102,4 +101,34 @@ moisthistPlot <-
   
 plot_grid(seriesPlot,moisthistPlot,temphistPlot, 
           ncol = 3, rel_widths = c(1,0.25,0.25))
+
+
+# ---------
+# By Site
+ggplot(soilData) +
+  geom_ribbon(aes(x = date, ymin = dayMin, ymax = dayMax, fill = aspect),
+              alpha = alphaVals) +
+  geom_line(aes(x = date, y = dayMean, color = aspect)) +
+  geom_point(aes(x = date, y = dayMean, color = aspect, shape = site), 
+            size = 2) +
+  facet_wrap(~measType, scales = 'free_y') +
+  scale_fill_manual(values = colVals, name = 'Aspect', labels = legLabs) +
+  scale_color_manual(values = colVals, name = 'Aspect', labels = legLabs) +
+  labs(y = 'Count') +
+  theme_th() 
+
++
+  theme(axis.title.y = element_blank(),
+        legend.position="none")
+
+
+
+
+
+
+
+
+
+#--------
+
  
