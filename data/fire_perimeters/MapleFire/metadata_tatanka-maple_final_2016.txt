@@ -1,0 +1,151 @@
+Identification_Information:
+  Citation:
+    Citation_Information:
+      Originator: USGS EROS
+      Publication_Date: 11/03/2016
+      Title: Tatanka Complex - Maple fire "Final Assessment", located 6 miles northeast of West Yellowstone, WY. 
+      Geospatial_Data_Presentation_Form: raster digital data
+      Publication_Information:
+        Publication_Place: Sioux Falls, South Dakota USA
+        Publisher: U.S. Geological Survey
+      Online_Linkage: http://edc.usgs.gov
+  Description:
+    Abstract:  The pre-fire and post-fire subsets included were used to create a differenced Normalized Burn Ratio (dNBR) image. The dNBR image attempts to portray the variation of burn severity within a fire. The severity ratings are influenced by the effects to the canopy.  The severity rating is based upon a composite of the severity to the understory (grass, shrub layers), midstory trees and overstory trees. Because there is often a strong correlation between canopy consumption and soil effects, this algorithm works in many cases for BAER teams whose objective is a soil burn severity assessment.  It is not, however, accurate in all ecosystems or fires.
+
+    Purpose: These data were created by USGS EROS to support Burned Area Emergency Response (BAER) teams.
+    Supplemental_Information:
+      Fire Name: Tatanka Complex - Maple
+      Agency: NPS
+      Land Management Unit: NPS Yellowstone NP
+      Type of assessment: Immediate Response (BARC)
+      Fire size (acres) as listed on the Situation Report: 45,377 acres
+      Pre-Fire Landsat Path/Row and Date:  Landsat 8 039/029, 9/10/2015
+      Post-Fire Landsat Path/Row and Date: Landsat 8 039/029, 9/28/2016
+      Output Dataset Projection: UTM
+      UTM Zone: 12
+      Spheroid Name: WGS84
+      Datum: WGS84
+
+      Product List:
+      
+        tatanka-maple_final_pre754_20150910_l8.img = Pre-Fire Landsat scene.
+
+        tatanka-maple_final_post754_20160928_l8.img = Post-Fire Landsat scene. This scene had clouds/shadows impacting the southeast portion of the burn area. These "no data" areas were patched using a Landsat 7 scene acquired on 8/28/2016. Some small areas of unavoidable L7 "data gaps" were filtered to generate estimated BARC4/BARC256 values in those areas.See the dnbr1000 image to clearly see where the filtered/interpolated BARC values occurred.
+
+
+        tatanka-maple_final_barc256_20160928-20150910_clip1box.img = 256-class (0-255) continuous image representing fire severity. This dataset is meant to be adjusted if thevBARC4 does not provide a good estimate of fire severity. It is anticipated that users will adjust the breakpoints between classes, then recode to their desired 3 or 4 classes. 
+
+	tatanka-maple_final_dnbr1000_20160928-20150910.img = full precision dNBR image in ERDAS Imagine format.
+     
+	tatanka-maple_final_barc4_20160928-20150910_clip1box.img = Four category severity classification subset in ERDAS Imagine format with values:
+					0 = background/fill
+					1 = unchanged / very low (Dark Green)
+					2 = low severity (Cyan)
+					3 = moderate severity (Yellow)
+					4 = high severity (Red)
+					5 = enhanced greenness
+					6 = No Data (clouds, shadow, data gaps, etc.)
+
+
+
+
+      
+  Time_Period_of_Content:
+    Time_Period_Information:
+      Multiple_Dates/Times:
+        Single_Date/Time:
+          Calendar_Date: 
+        Single_Date/Time:
+          Calendar_Date: 
+    Currentness_Reference: ground condition
+  Status:
+    Progress: Evaluation of methods in process
+    Maintenance_and_Update_Frequency: As needed
+  Keywords:
+    Theme:
+      Theme_Keyword_Thesaurus: none
+      Theme_Keyword: Wildland Fire
+      Theme_Keyword: Normalized Burn Ratio (NBR)
+      Theme_Keyword: Fire Severity
+      Theme_Keyword: USGS EROS
+      Theme_Keyword: Landsat
+    Place:
+      Place_Keyword_Thesaurus: none
+      Place_Keyword: West Yellowstone
+      Place_Keyword: WY
+  Access_Constraints: FTP data sets are available to any user.
+  Use_Constraints: There are no restrictions on use, except for reasonable and proper acknowledgement of information sources.
+  Data_Set_Credit: USGS EROS
+  Native_Data_Set_Environment: ERDAS Imagine, ARCInfo
+Data_Quality_Information:
+  Positional_Accuracy:
+    Horizontal_Positional_Accuracy:
+      Horizontal_Positional_Accuracy_Report: These data were terrain corrected using a USGS digital elevation model with less than 1/2 pixel RMS error.
+  Lineage:
+    Process_Step:
+      Process_Description:
+        These data products are derived from Landsat 8 data. Pre-fire and post-fire scenes are analyzed to create a differenced Normalized Burn Ratio (dNBR) image. The dNBR image portrays the variation of burn severity within the fire. The pre- and post-fire Landsat images are terrain corrected and corrected to Top of Atmosphere reflectance. The Normalized Burn Ratio (NBR) is computed for each date of imagery (Landsat 8 bands) using the following formula: 
+        (Band 5(NIR) - Band 7(SWIR) / (Band 5 + Band 7) = NBR
+
+        The Differenced NBR is computed to determine severity by subtracting the post-fire NBR from the pre-fire NBR:
+        (PreNBR - PostNBR) = dNBR
+
+        The BARC products are a generalization of the raw dNBR dataset. Both BARC products have been resampled to unsigned 8-bit images and are easily viewed and adjusted within ArcGIS.
+
+        The classes represented on the BARC products are created with thresholds chosen by an analyst at USGS EROS.  These thresholds can be roughly related back to original dNBR values by multiplying by 5 and then subtracting 275 (for example, a BARC256 value of 100 would relate to a dNBR value of 225).  The thresholds used on this particular fire are:
+   
+	Unchanged:	All values   0 - 77
+	Low:		All values  78 - 111
+	Moderate:	All values 112 - 189
+	High:		All values 190 - 255
+	No Data/Clouds:	All values 
+
+ 
+ 
+        General descriptions of the severity classes are below:
+
+	Unchanged:  	This means the area after the fire was indistinguishable from pre-fire conditions. 
+			This does not always indicate the area did not burn.
+	Low: 		This severity class represents areas of surface fire with little change in cover and little
+			mortality of the dominant vegetation.
+	Moderate: 	This severity class is between low and high and means there is a mixture of effects on the
+			dominant vegetation.
+	High: 		This severity class represents areas where the canopy has high to complete consumption.
+
+Spatial_Data_Organization_Information:
+  Direct_Spatial_Reference_Method: Raster
+  Raster_Object_Information:
+    Vertical_Count: 1
+Spatial_Reference_Information:
+  Horizontal_Coordinate_System_Definition:
+    Planar:
+      Grid_Coordinate_System:
+        Grid_Coordinate_System_Name: 
+        Universal_Transverse_Mercator:
+          UTM_Zone_Number: 
+      Planar_Coordinate_Information:
+        Planar_Coordinate_Encoding_Method: row and column
+        Coordinate_Representation:
+          Abscissa_Resolution: 
+          Ordinate_Resolution: 
+        Planar_Distance_Units: meters
+    Geodetic_Model:
+      Horizontal_Datum_Name: 
+      Ellipsoid_Name: 
+      Semi-major_Axis: 
+      Denominator_of_Flattening_Ratio: 
+Distribution_Information:
+  Resource_Description: Downloadable Data
+Metadata_Reference_Information:
+  Metadata_Date: 11/03/2016
+  Metadata_Contact:
+    Contact_Information:
+      Contact_Organization_Primary:
+        Contact_Organization: USGS EROS
+        Contact_Person: Randy McKinley
+      Contact_Address:
+        Address_Type: 47914 252nd St
+        City: Sioux Falls
+        State_or_Province: SD
+        Postal_Code: 57198
+      Contact_Voice_Telephone: 605-594-2745

@@ -1,0 +1,481 @@
+<?xml version="1.0"?>
+<metadata>
+	<idinfo>
+		<citation>
+			<citeinfo>
+				<origin>Spatial Analysis Center - Yellowstone National Park</origin>
+				<pubdate>Unpublished Material</pubdate>
+				<title>All Roads in Yellowstone National Park</title>
+				<geoform Sync="TRUE">vector digital data</geoform>
+				<ftname Sync="TRUE">yell_roads</ftname><onlink Sync="TRUE">\\inpyellgis\sac_personnel\cguiles\Projects\G_Drive_Permanent_Layers\Infrastructure\Roads\yell_roads.shp</onlink></citeinfo>
+		</citation>
+		<descript>
+			<abstract>This data set contains all the  roads in Yellowstone National Park (YNP) and includes service roads, residential roads  and roads within developed areas. The roads are represented by line segments with attributes attached to them. Attributes include: type, surface, speed limit, the date that the  road segment was surveyed and the surveyor's name, type of survey, full name, alternate name, and functional  classification.  Data was obtained either by heads- up digitizing using 1- Meter or less DOQQS, 7.5' USGS DRGs, Federal Highways surveys or using a differentially corrected GPS.  Original survey completed in 1997, roads are updated and corrected as needed.</abstract>
+			<purpose>This data set was developed in order to establish an accurate record of all the roads in YNP. This data set replaces a previous data set that was developed by heads up digitizing off 15' DRGS.</purpose>
+			<langdata Sync="TRUE">en</langdata></descript>
+		<timeperd>
+			<timeinfo>
+				<rngdates><begdate>1999</begdate><enddate>present</enddate></rngdates></timeinfo>
+			<current>Observed</current>
+		</timeperd>
+		<status>
+			<progress>In work</progress>
+			<update>As needed</update>
+		</status>
+		<spdom>
+			<bounding>
+				<westbc Sync="TRUE">-111.155789</westbc>
+				<eastbc Sync="TRUE">-109.626120</eastbc>
+				<northbc Sync="TRUE">45.065418</northbc>
+				<southbc Sync="TRUE">44.116931</southbc>
+			</bounding>
+			<descgeog>Yellowstone National Park</descgeog>
+			<lboundng><leftbc Sync="TRUE">487735.396500</leftbc><rightbc Sync="TRUE">608175.062500</rightbc><bottombc Sync="TRUE">4885748.762000</bottombc><topbc Sync="TRUE">4990217.500000</topbc></lboundng></spdom>
+		<keywords>
+			<theme>
+				<themekt>None</themekt>
+				<themekey>Campgrounds</themekey>
+				<themekey>Roads</themekey>
+				<themekey>Transportation</themekey>
+				<themekey>Service Roads</themekey>
+				<themekey>Developed Areas</themekey>
+				<themekey>Picnic Areas</themekey>
+				<themekey>Residential Areas</themekey>
+				<themekey>Scenic Drives</themekey>
+				<themekey>Service Areas</themekey>
+				<themekey>Viewshed</themekey>
+				<themekey>Cultural Landscape</themekey>
+				<themekey>Concessions</themekey>
+				<themekey>Residential Roads</themekey>
+			</theme>
+			<place>
+				<placekt>None</placekt>
+				<placekey>
+Yellowstone National Park, YNP, YELL, Greater
+Yellowstone Area, GYA, Greater Yellowstone
+Ecosystem, GYE, Park County, Teton County, Fremont
+County, Gallatin County, Montana, Idaho, Wyoming,
+Northern Rocky Mountains
+</placekey>
+				<placekey>
+National Park Service, NPS, Department of the
+Interior, DOI, US Government
+</placekey>
+				<placekey>United States of America, US, USA, North America</placekey>
+			</place>
+		</keywords>
+		<accconst>None</accconst>
+		<useconst>None</useconst>
+		<ptcontac>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>Spatial Analysis Center - Yellowstone National Park</cntorg>
+				</cntorgp>
+				<cntpos>GIS Specialist</cntpos>
+				<cntaddr>
+					<addrtype>mailing address</addrtype>
+					<address>Yellowstone Center for Resources</address>
+					<address>Spatial Analysis Center</address>
+					<address>P.O. Box 168</address>
+					<city>Yellowstone National Park</city>
+					<state>Wyoming</state>
+					<postal>82190</postal>
+					<country>USA</country>
+				</cntaddr>
+				<cntvoice>(307) 344-2246</cntvoice>
+				<cntfax>(307) 344-2211</cntfax>
+				<cntemail>yell_gis@nps.gov</cntemail>
+				<hours>8:00 a.m. to 5:30 p.m. (Mountain Time) Monday
+Through Friday</hours>
+				<cntinst>
+Please check web site first:
+http://www.nps.gov/yell/technical/gis
+</cntinst>
+			</cntinfo>
+		</ptcontac>
+		<datacred>Viktoria Magnis, Allen Carter Mortiner</datacred>
+		<native Sync="TRUE">Microsoft Windows Vista Version 6.1 (Build 7600) ; ESRI ArcCatalog 9.3.1.3500</native>
+		<crossref>
+			<citeinfo>
+				<origin>Spatial Analysis Center, Yellowstone National Park</origin>
+				<pubdate>Unpublished Material</pubdate>
+				<title>1997 Major Roads of Yellowstone National Park, Wyoming, Montana, Idaho</title>
+				<geoform>map</geoform>
+			</citeinfo>
+		</crossref>
+		<natvform Sync="TRUE">Shapefile</natvform></idinfo>
+	<dataqual>
+		<attracc>
+			<attraccr>For the original road survey, each attribute in the data set was checked for accuracy by driving all the roads.  Subsequent errors or changes were entered into the attribute table and queried for quality assurance.</attraccr>
+		</attracc>
+		<logic>All arcs contain topology. All unnecessary node errors were removed and all intersecting arcs were snapped together. The coverage was built and cleaned in January of 2000.
+Transferred to file geodatabase structure in 2009.  Topology verified after edits.</logic>
+		<complete>Complete</complete>
+		<posacc>
+			<horizpa>
+				<horizpar>
+Horizontal accuracy reflect the survey method.
+Arcs digitized off the DOQQs and DRGs have a
+horizontal accuracy of 12.19 meters.  Sub-meter
+accuracy is possible for arcs obtained by a GPS
+survey.
+</horizpar>
+			</horizpa>
+		</posacc>
+		<lineage>
+			<srcinfo>
+				<srccite>
+					<citeinfo>
+						<origin>U.S. Geological Survey</origin>
+						<origin>Western Mapping Center</origin>
+						<pubdate>Unknown</pubdate>
+						<title>1 Meter Digital Orthophoto Quarter Quads</title>
+						<geoform>Remote-Sensing Image</geoform>
+						<pubinfo>
+							<pubplace>Menlo Park, California</pubplace>
+							<publish>U.S. Geological Survey</publish>
+						</pubinfo>
+					</citeinfo>
+				</srccite>
+				<srcscale>24000</srcscale>
+				<typesrc>Raster Image</typesrc>
+				<srctime>
+					<timeinfo>
+						<rngdates>
+							<begdate>19911201</begdate>
+							<enddate>19941201</enddate>
+						</rngdates>
+					</timeinfo>
+					<srccurr>Date of Publication</srccurr>
+				</srctime>
+				<srccitea>DOQQ</srccitea>
+				<srccontr>Background image for heads-up digitizing</srccontr>
+			</srcinfo>
+			<srcinfo>
+				<srccite>
+					<citeinfo>
+						<origin>U.S. Geological Survey</origin>
+						<pubdate>Unknown</pubdate>
+						<title>1:24,000 Scale Digital Raster Graphics</title>
+						<geoform>Remote-Sensing Image</geoform>
+						<pubinfo>
+							<pubplace>Rolla, Michigan</pubplace>
+							<publish>U.S. Geological Survey</publish>
+						</pubinfo>
+					</citeinfo>
+				</srccite>
+				<srcscale>24000</srcscale>
+				<typesrc>Raster Image</typesrc>
+				<srctime>
+					<timeinfo>
+						<rngdates>
+							<begdate>Unknown</begdate>
+							<enddate>Unknown</enddate>
+						</rngdates>
+					</timeinfo>
+					<srccurr>Date of Publication</srccurr>
+				</srctime>
+				<srccitea>DRG</srccitea>
+				<srccontr>Background image for heads-up digitizing</srccontr>
+			</srcinfo>
+			<srcinfo>
+				<srccite>
+					<citeinfo>
+						<origin>U.S Department of the Interior</origin>
+						<pubdate>19850801</pubdate>
+						<title>Road Classification For Yellowstone National Park</title>
+						<edition>Unknown</edition>
+						<geoform>Document</geoform>
+						<pubinfo>
+							<pubplace>Denver Service Center</pubplace>
+							<publish>
+U.S Department of the Interior-National Park
+Service
+</publish>
+						</pubinfo>
+					</citeinfo>
+				</srccite>
+				<typesrc>Paper</typesrc>
+				<srctime>
+					<timeinfo>
+						<sngdate>
+							<caldate>19850901</caldate>
+						</sngdate>
+					</timeinfo>
+					<srccurr>Date of Publication</srccurr>
+				</srctime>
+				<srccitea>1985 Road Clasification Report</srccitea>
+				<srccontr>
+Source for road classification and class
+attributes
+</srccontr>
+			</srcinfo>
+			<procstep>
+				<procdesc>Road segments were either heads-up digitized off
+georeferenced 7.5 minute DRGs and 1 meter DOQQs or
+surveyed using a differential GPS unit (Trimble
+Pro XL or Pro XR). PDOP maximum was set to 6, and
+data were only collected when at least 4
+satellites were readable.  GPS information was
+corrected using base station files from the Idaho
+Falls Community Base Station
+(ftp.inel.gov/pub/gps) and Pathfinder Office
+software. Editing was done in an Arc/Info
+environment.</procdesc>
+				<srcused>7.5' DRGs</srcused>
+				<srcused>DOQQs</srcused>
+				<procdate>19990301</procdate>
+			</procstep>
+			<procstep>
+				<procdesc>
+Edited GPS data in Arc/Info. Manually snapped arcs
+to intersecting arcs. Eliminated  all unnecessary
+node errors.  Assigned attributes to each arc.
+</procdesc>
+				<procdate>19990930</procdate>
+				<proccont>
+					<cntinfo>
+						<cntorgp>
+							<cntorg>
+Spatial Analysis Center - Yellowstone National
+Park
+</cntorg>
+						</cntorgp>
+						<cntpos>GIS Specialist</cntpos>
+						<cntaddr>
+							<addrtype>Mailing Address</addrtype>
+							<address>Yellowstone Center for Resources</address>
+							<address>Spatial Analysis Center</address>
+							<address>P.O. Box 168</address>
+							<city>Yellowstone National Park</city>
+							<state>Wyoming</state>
+							<postal>82190</postal>
+							<country>USA</country>
+						</cntaddr>
+						<cntvoice>(307) 344-2246</cntvoice>
+						<cntfax>(307) 344-2211</cntfax>
+						<cntemail>yell_gis@nps.gov</cntemail>
+						<hours>
+8:00 a.m. to 4:00 p.m. (Mountain Time) Monday
+Through Friday
+</hours>
+						<cntinst>
+Please check web site first:
+http://www.nps.gov/yell/technical/gis
+</cntinst>
+					</cntinfo>
+				</proccont>
+			</procstep>
+			<procstep><procdesc>Dataset imported to file geodatabase structure.  Following fields were added to conform to NPS enterprise GIS data standards: FeatureID, GeometryID, UnitCode, Name, AltName, ShortName, IsExtant, IsSensitive, FNotes, FCategory, MapMethod, MapSource, SourceDate, EditDate, HError, VError.
+
+Upon further inspection, noted that the CLASS/CATEGORY fields were not correct - they should agree, such as Class I = Principle Park Roads, Class 2 = Connector Park Roads, etc.  
+Checked literature (K:\Infrastructure_FMSS\Roads\Documents\ NPSParkRoadStandards1984.pdf) and 1998 Road Inventory for Yellowstone National Park (binders) and found the correct classification table (K:\Infrastructure_FMSS\Roads\Documents\ GENERAL PARK ROAD FUNCTIONAL CLASSIFICATION.doc)
+
+Calculated MapMethod, MapSource, and SourceDate fields from SURVEY field
+Selection - principle park roads or class = 1 - all OK
+Selection - connector park roads or class = 2 - made corrections
+Selection - special purpose park roads or class = 3 - all OK
+Selection - primitive park roads or class = 4 - made corrections
+Selection - Administrative Access roads or class = 5 - made corrections
+Selection - Restricted roads or class = 6 - made corrections
+Calculated "CLASS" field to "RoadClass" field
+Calculated "CATEGORY" field to "RoadClassText" field
+Calculated "RoadAccess" field as "Public Road" where RoadClass=1,2,3, or 4
+Calculated "RoadAccess" field as "Administrative Road" where RoadClass=5 or 6
+Archived changes
+Deleted "CLASS" "CATEGORY" "SURVEY" fields as they were redundant - the original fields were saved in the archive copy</procdesc><date Sync="TRUE">20060925</date><time Sync="TRUE">15063800</time><procsv>Microsoft Windows XP Version 5.1 (Build 2600) Service Pack 3; ESRI ArcCatalog 9.3.1.1850</procsv><procdate>200904</procdate><srcused>1985 Road Clasification Report</srcused><srcused>NAIP</srcused><srcused>DOQQs</srcused><srcused>DRG</srcused></procstep><srcinfo><typesrc>disc</typesrc><srccitea>NAIP</srccitea><srccontr>1 meter leaf-on true color imagery from the National Aerial Imagery program for the years 2004-2006 was used as a digitzing background. Years vary by state - ID=2004, MT=2005, WY=2006</srccontr><srccite><citeinfo><title>National Agricultural Inventory Program 1 meter true color imagery</title></citeinfo></srccite><srctime><timeinfo><rngdates><begdate>2004</begdate><enddate>2006</enddate></rngdates></timeinfo><srccurr>ground condition</srccurr></srctime></srcinfo><srcinfo><typesrc>disc</typesrc><srccitea>QuickBird 2-foot Imagery</srccitea><srccontr>Background image for heads-up digitizing</srccontr></srcinfo><procstep><procdesc Sync="TRUE">Metadata imported.</procdesc><srcused Sync="TRUE">K:\Telecom_e911\Data\E911\Archive\FMSS_Roads_Original.shp.xml</srcused><procdate Sync="TRUE">20100930</procdate><proctime Sync="TRUE">08261900</proctime></procstep><procstep><procdesc>Road segments were modified to fit the QuickBird 2-foot Imagery.  All segments were cleaned up and moved to match the centerline of the street.</procdesc><srcused>Quick Bird Imagery</srcused><procdate>20101026</procdate></procstep><procstep><procdesc>FMSS Location ID's added to road segments</procdesc><srcused>FMSS database</srcused><procdate>2010</procdate></procstep><procstep><procdesc>Dataset copied to shapefile from SDE.  Non-essential fields removed (addressing).</procdesc><srcused Sync="TRUE">Server=inpyellgis; Service=6060; Database=yell_transportation; Version=dbo.DEFAULT</srcused><procdate Sync="TRUE">20110412</procdate><proctime Sync="TRUE">10211900</proctime></procstep></lineage>
+	</dataqual>
+	<spdoinfo>
+		<direct Sync="TRUE">Vector</direct>
+		<ptvctinf>
+			<sdtsterm Name="yell_roads">
+				<sdtstype Sync="TRUE">String</sdtstype>
+				<ptvctcnt Sync="TRUE">1651</ptvctcnt>
+			</sdtsterm>
+			<esriterm Name="yell_roads"><efeatyp Sync="TRUE">Simple</efeatyp><efeageom Sync="TRUE">Polyline</efeageom><esritopo Sync="TRUE">FALSE</esritopo><efeacnt Sync="TRUE">1651</efeacnt><spindex Sync="TRUE">FALSE</spindex><linrefer Sync="TRUE">FALSE</linrefer><XYRank Sync="TRUE">1</XYRank><ZRank Sync="TRUE">1</ZRank><topoWeight Sync="TRUE">5.000000</topoWeight><validateEvents Sync="TRUE">FALSE</validateEvents><partTopoRules><topoRuleID Sync="TRUE">3</topoRuleID></partTopoRules></esriterm><esriterm Name="tic"><efeatyp Sync="TRUE">Simple</efeatyp><efeageom Sync="TRUE">Tic</efeageom><esritopo Sync="TRUE">FALSE</esritopo><efeacnt Sync="TRUE">12</efeacnt><spindex Sync="TRUE">FALSE</spindex><linrefer Sync="TRUE">FALSE</linrefer></esriterm><sdtsterm Name="tic"><sdtstype Sync="TRUE">Point</sdtstype><ptvctcnt Sync="TRUE">12</ptvctcnt></sdtsterm></ptvctinf>
+	</spdoinfo>
+	<spref>
+		<horizsys>
+			<planar>
+				<planci>
+					<plance Sync="TRUE">coordinate pair</plance>
+					<coordrep>
+						<absres Sync="TRUE">0.000000</absres>
+						<ordres Sync="TRUE">0.000000</ordres>
+					</coordrep>
+					<plandu Sync="TRUE">meters</plandu>
+				</planci>
+				<gridsys><gridsysn Sync="TRUE">Universal Transverse Mercator</gridsysn><utm><utmzone Sync="TRUE">12</utmzone><transmer><sfctrmer Sync="TRUE">0.999600</sfctrmer><longcm Sync="TRUE">-111.000000</longcm><latprjo Sync="TRUE">0.000000</latprjo><feast Sync="TRUE">500000.000000</feast><fnorth Sync="TRUE">0.000000</fnorth></transmer></utm></gridsys></planar>
+			<geodetic>
+				<horizdn Sync="TRUE">North American Datum of 1983</horizdn>
+				<ellips Sync="TRUE">Geodetic Reference System 80</ellips>
+				<semiaxis Sync="TRUE">6378137.000000</semiaxis>
+				<denflat Sync="TRUE">298.257222</denflat>
+			</geodetic>
+			<cordsysn><geogcsn Sync="TRUE">GCS_North_American_1983</geogcsn><projcsn Sync="TRUE">NAD_1983_UTM_Zone_12N</projcsn></cordsysn></horizsys>
+		<vertdef><altsys><altenc Sync="TRUE">Explicit elevation coordinate included with horizontal coordinates</altenc><altres Sync="TRUE">0.000100</altres></altsys></vertdef></spref>
+	<eainfo>
+		<overview>
+			<eaover>All the road segments of Yellowstone National Park were surveyed. Arcs were defined by speed limit segments and intersections. 
+
+The Name of each road segment was obtained by using the 1985 Road Classification Report.  
+
+RoadClassText is the functional road classification system defined by the 1985 Road Classification Report. The RoadClass is a number that corresponds to road classification.  There are eight possible categories (below).
+
+GENERAL PARK ROAD FUNCTIONAL CLASSIFICATION TABLE
+
+Class 1 (I) - Principal Park Road/Rural Parkway (Public Roads): Roads which constitute the main access route, circulatory tour, or thoroughfare for park visitors. Route umbers 1-99. 
+Note: Rural Parkways (e.g. Natchez Trace) are numbered 1-9.
+All other FC 1 routes have two digit numbers.
+
+Class 2 (II) - Connector Park Road (Public Roads): Roads which provide access within a park to areas of scenic, scientific, recreational or cultural interest, such as overlooks, campgrounds, etc. Route Numbers 100-199.
+
+Class 3 (III) - Special Purpose Park Road (Public Roads): Roads which provide circulation within public areas, such as campgrounds, picnic areas, visitor center complexes, concessionaire facilities, etc.
+These roads generally serve low-speed traffic and are often designed for one-way circulation. Route Numbers 200-299.
+
+Class 4 (IV) - Primitive Park Roads (Public Roads): Roads which provide circulation through remote areas and/or access to primitive campgrounds and undeveloped areas. 
+These roads frequently have no minimum design standards and their use may be limited to specially equipped vehicles. Route Numbers 200-299.
+Note: Functional Classes III and IV have the same route numbers because, historically, they were numbered similarly.
+
+Class 5 (V) - Administrative Access Road (Administrative Roads): All public roads intended for access to administrative developments or structures such as park offices, employee quarters, or utility areas. Route Numbers 400-499.
+
+Class 6 (VI) - Restricted Road (Administrative Roads): All roads normally closed to the public, including patrol roads, truck trails, and other similar roads. Route Numbers 400-499. 
+Note: Functional Classes V and VI have the same route numbers because historically they were numbered similarly and often there is little distinction between these routes. For example, because utility areas and employee housing are often closed to the public, this restriction would result in classification of FC VI rather than FC V.
+
+Class 7 (VII) - Urban Parkway (Urban Parkways and City Streets): These facilities serve high volumes of park and non-park related traffic and are restricted, limited-access facilities in an urban area. 
+This category or roads primarily encompasses the major parkways which serve as gateways to our nation's capital. Other major park roads or portions thereof, however, may included in this category. Route Numbers 1-9.
+
+Class 8 (VIII) - City Streets (Urban Parkways and City Streets): City streets are usually extensions of the adjoining street system that are owned and maintained by the National Park Service. 
+The construction and/or reconstruction should conform with accepted local engineering practice and local conditions. Route Numbers 600-699.</eaover>
+			<eadetcit>none</eadetcit>
+		</overview>
+		<detailed Name="yell_roads"><enttyp><enttypl Sync="TRUE">yell_roads</enttypl><enttypt Sync="TRUE">Feature Class</enttypt><enttypc Sync="TRUE">1651</enttypc></enttyp><attr><attrlabl Sync="TRUE">FID</attrlabl><attalias Sync="TRUE">FID</attalias><attrtype Sync="TRUE">OID</attrtype><attwidth Sync="TRUE">4</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale><attrdef Sync="TRUE">Internal feature number.</attrdef><attrdefs Sync="TRUE">ESRI</attrdefs><attrdomv><udom Sync="TRUE">Sequential unique whole numbers that are automatically generated.</udom></attrdomv></attr><attr><attrlabl Sync="TRUE">Shape</attrlabl><attalias Sync="TRUE">Shape</attalias><attrtype Sync="TRUE">Geometry</attrtype><attwidth Sync="TRUE">0</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale><attrdef Sync="TRUE">Feature geometry.</attrdef><attrdefs Sync="TRUE">ESRI</attrdefs><attrdomv><udom Sync="TRUE">Coordinates defining the features.</udom></attrdomv></attr><attr><attrlabl Sync="TRUE">SURFACE</attrlabl><attwidth Sync="TRUE">20</attwidth><atoutwid Sync="TRUE">20</atoutwid><attrtype Sync="TRUE">String</attrtype><attrdef>SURFACE denotes if the road is paved or dirt</attrdef><attalias Sync="TRUE">SURFACE</attalias></attr><attr><attrlabl Sync="TRUE">SPEED</attrlabl><attwidth Sync="TRUE">10</attwidth><atoutwid Sync="TRUE">2</atoutwid><attrtype Sync="TRUE">Number</attrtype><attrdef>SPEED contains the speed limit of the road segment in miles per hour (15, 25, 35, 45,55)</attrdef><attalias Sync="TRUE">SPEED</attalias></attr><attr><attrlabl Sync="TRUE">SURVEYOR</attrlabl><attwidth Sync="TRUE">20</attwidth><atoutwid Sync="TRUE">20</atoutwid><attrtype Sync="TRUE">String</attrtype><attrdef>contains the name of the surveyor</attrdef><attalias Sync="TRUE">SURVEYOR</attalias></attr><attr><attrlabl Sync="TRUE">SURVEY_DAT</attrlabl><attalias Sync="TRUE">SURVEY_DAT</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">20</attwidth><attrdef>SURVEY_DATE relates the date the survey information was collected</attrdef></attr><attr><attrlabl Sync="TRUE">TYPE</attrlabl><attwidth Sync="TRUE">20</attwidth><atoutwid Sync="TRUE">20</atoutwid><attrtype Sync="TRUE">String</attrtype><attrdef>The TYPE attribute defines the road use status. Roads can either be used for primary, secondary or tertiary travel. Unsure from where this rating comes.  Was included in the original data layer, so remains for the time being.</attrdef><attalias Sync="TRUE">TYPE</attalias></attr><attr><attrlabl Sync="TRUE">FMSS</attrlabl><attalias Sync="TRUE">FMSS</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">10</attwidth><attrdef>Facilities Management Software System unique identifier for the road segment.  Work was completed by matching FMSS database entries to roads layer.</attrdef></attr><attr><attrlabl Sync="TRUE">FeatureID</attrlabl><attalias Sync="TRUE">FeatureID</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">38</attwidth><attrdef>a unique identifier for the feature (physical entity).  Auto-generated by NPS "Generate GUID" utility</attrdef></attr><attr><attrlabl Sync="TRUE">GeometryID</attrlabl><attalias Sync="TRUE">GeometryID</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">38</attwidth><attrdef>a unique identifier for the geospatial representation (geometry).  Using the NPS Buildings data standard as an example, GeometryID would be equivalent to the Geometry_ID.   In the case where a Building is represented by a center point and a perimeter polygon, the point and polygon would have distinct and unique values for GeometryID, and would have identical values for FeatureID.   Auto-generated by NPS "Generate GUID" utility</attrdef></attr><attr><attrlabl Sync="TRUE">UnitCode</attrlabl><attalias Sync="TRUE">UnitCode</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">10</attwidth><attrdef>The NPS standard alphabetic abbreviation for the NPS unit with which the data is associated.  Data not specifically associated with an NPS Unit will use the value WASO.  Data come from the UnitCode domain.</attrdef></attr><attr><attrlabl Sync="TRUE">Name</attrlabl><attalias Sync="TRUE">Name</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">254</attwidth><attrdef>The full name of the feature.</attrdef></attr><attr><attrlabl Sync="TRUE">IsSensitiv</attrlabl><attalias Sync="TRUE">IsSensitiv</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">1</attwidth></attr><attr><attrlabl Sync="TRUE">IsExtant</attrlabl><attalias Sync="TRUE">IsExtant</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">1</attwidth><attrdef>Specifies whether or not the feature (physical entity) currently exists.</attrdef></attr><attr><attrlabl Sync="TRUE">FNotes</attrlabl><attalias Sync="TRUE">FNotes</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">254</attwidth><attrdef>A field to provide comments or notes for a feature.</attrdef></attr><attr><attrlabl Sync="TRUE">FCategory</attrlabl><attalias Sync="TRUE">FCategory</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">16</attwidth><attrdef>a text value used to define the "Feature Category".    Each data standard will have a specific domain (list of values).</attrdef></attr><attr><attrlabl Sync="TRUE">MapMethod</attrlabl><attalias Sync="TRUE">MapMethod</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">4</attwidth><attrdef>The method used to create the spatial data.  Domain Values are: Heads up Digitized; Tablet Digitized; Differential GPS; Autonomous GPS; Derived/Calculated; Conventional Survey; Other; Unknown</attrdef></attr><attr><attrlabl Sync="TRUE">HError</attrlabl><attalias Sync="TRUE">HError</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">16</attwidth><attrdef>The estimated error on the horizontal plane that exists in the spatial data depending on the MapMethod.  This field is most applicable to data created by GPS. The Default Value is Unknown</attrdef></attr><attr><attrlabl Sync="TRUE">VError</attrlabl><attalias Sync="TRUE">VError</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">16</attwidth><attrdef>The estimated error on the vertical plane that exists in the spatial data depending on the MapMethod.  This field is most applicable to data created by GPS. The Default Value is Unknown</attrdef></attr><attr><attrlabl Sync="TRUE">MapSource</attrlabl><attalias Sync="TRUE">MapSource</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">254</attwidth><attrdef>Data source used to create the spatial depending on the MapMethod. (Ex. NAIP Imagery)</attrdef></attr><attr><attrlabl Sync="TRUE">SourceDate</attrlabl><attalias Sync="TRUE">SourceDate</attalias><attrtype Sync="TRUE">Date</attrtype><attwidth Sync="TRUE">8</attwidth><attrdef>The date of the map source (i.e. MapSource) used to create the spatial data.</attrdef></attr><attr><attrlabl Sync="TRUE">TrafficFlo</attrlabl><attalias Sync="TRUE">TrafficFlo</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">254</attwidth></attr><attr><attrlabl Sync="TRUE">TrafficDir</attrlabl><attalias Sync="TRUE">TrafficDir</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">254</attwidth></attr><attr><attrlabl Sync="TRUE">EditDate</attrlabl><attalias Sync="TRUE">EditDate</attalias><attrtype Sync="TRUE">Date</attrtype><attwidth Sync="TRUE">8</attwidth><attrdef>The date that the spatial data was created, if not known, the date that it was loaded into an implementation model.</attrdef></attr><attr><attrlabl Sync="TRUE">RoadClassT</attrlabl><attalias Sync="TRUE">RoadClassT</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">50</attwidth></attr><attr><attrlabl Sync="TRUE">EditNotes</attrlabl><attalias Sync="TRUE">EditNotes</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">254</attwidth><attrdef>Text field to provide notes for a geometry record (point, polygon or line).</attrdef></attr><attr><attrlabl Sync="TRUE">RoadClass</attrlabl><attalias Sync="TRUE">RoadClass</attalias><attrtype Sync="TRUE">Number</attrtype><attwidth Sync="TRUE">5</attwidth><attrdef>Class code for the road taken from the "General Park Road Functinal Classification Table" Roman numerals changed to Arabic for sorting purposes.</attrdef></attr><attr><attrlabl Sync="TRUE">RoadAccess</attrlabl><attalias Sync="TRUE">RoadAccess</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">50</attwidth><attrdef>Access type (public or administrative)for the road taken from the "General Park Road Functinal Classification Table" </attrdef></attr><attr><attrlabl Sync="TRUE">Source</attrlabl><attalias Sync="TRUE">Source</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">50</attwidth></attr><attr><attrlabl Sync="TRUE">Zip_L</attrlabl><attalias Sync="TRUE">Zip_L</attalias><attrtype Sync="TRUE">Number</attrtype><attwidth Sync="TRUE">19</attwidth><atnumdec Sync="TRUE">8</atnumdec></attr><attr><attrlabl Sync="TRUE">Zip_R</attrlabl><attalias Sync="TRUE">Zip_R</attalias><attrtype Sync="TRUE">Number</attrtype><attwidth Sync="TRUE">19</attwidth><atnumdec Sync="TRUE">8</atnumdec></attr><attr><attrlabl Sync="TRUE">R_City</attrlabl><attalias Sync="TRUE">R_City</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">254</attwidth></attr><attr><attrlabl Sync="TRUE">L_City</attrlabl><attalias Sync="TRUE">L_City</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">254</attwidth></attr><attr><attrlabl Sync="TRUE">State_L</attrlabl><attalias Sync="TRUE">State_L</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">254</attwidth></attr><attr><attrlabl Sync="TRUE">State_R</attrlabl><attalias Sync="TRUE">State_R</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">254</attwidth></attr><attr><attrlabl Sync="TRUE">State</attrlabl><attalias Sync="TRUE">State</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">254</attwidth></attr><attr><attrlabl Sync="TRUE">Address_ID</attrlabl><attalias Sync="TRUE">Address_ID</attalias><attrtype Sync="TRUE">Number</attrtype><attwidth Sync="TRUE">19</attwidth><atnumdec Sync="TRUE">8</atnumdec></attr><attr><attrlabl Sync="TRUE">Shape_len</attrlabl><attalias Sync="TRUE">Shape_len</attalias><attrtype Sync="TRUE">Float</attrtype><attwidth Sync="TRUE">19</attwidth><atnumdec Sync="TRUE">11</atnumdec></attr></detailed></eainfo>
+	<distinfo>
+		<distrib>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>Spatial Analysis Center - Yellowstone National Park</cntorg>
+				</cntorgp>
+				<cntpos>GIS Specialist</cntpos>
+				<cntaddr>
+					<addrtype>mailing address</addrtype>
+					<address>Yellowstone Center for Resources</address>
+					<address>Spatial Analysis Center</address>
+					<address>P. O. Box 168</address>
+					<city>Yellowstone National Park</city>
+					<state>Wyoming</state>
+					<postal>82190</postal>
+					<country>USA</country>
+				</cntaddr>
+				<cntvoice>(307) 344-2246</cntvoice>
+				<cntfax>(307) 344-2211</cntfax>
+				<cntemail>yell_gis@nps.gov</cntemail>
+				<hours>8:00 a.m. to 5:30 p.m.(Mountain Time)  Monday
+Through Friday</hours>
+				<cntinst>
+Please check web site first:
+http://www.nps.gov/yell/technical/gis
+</cntinst>
+			</cntinfo>
+		</distrib>
+		<resdesc>yell_roads_all.zip</resdesc>
+		<distliab>
+The National Park Service shall not be held liable
+for improper or incorrect use of the data
+described and/or contained herein. These data and
+related graphics ("GIF" format files) are not
+legal documents and are not intended to be used as
+such. The information contained in these data is
+dynamic and may change over time. The data are not
+better than the original sources from which they
+were derived. It is the responsibility of the data
+user to use the data appropriately and consistent
+within the limitations of geospatial data in
+general and these data in particular. The related
+graphics are intended to aid the data user in
+acquiring relevant data; it is not appropriate to
+use the related graphics as data. The National
+Park Service gives no warranty, expressed or
+implied, as to the accuracy, reliability, or
+completeness of these data. It is strongly
+recommended that these data are directly acquired
+from an NPS server and not indirectly through
+other sources which may have changed the data in
+some way. Although these data have been processed
+successfully on a computer system at the National
+Park Service, no warranty expressed or implied is
+made regarding the utility of the data on another
+system or for general or scientific purposes, nor
+shall the act of distribution constitute any such
+warranty. This disclaimer applies both to
+individual use of the data and aggregate use with
+other data.
+</distliab>
+		<stdorder>
+			<digform>
+				<digtinfo>
+					<formname>ARCE</formname>
+					<formvern>Version 9.3.1</formvern>
+					<formspec>.e00</formspec>
+					<transize Sync="TRUE">0.617</transize>
+					<dssize Sync="TRUE">0.617</dssize></digtinfo>
+				<digtopt>
+					<onlinopt>
+						<computer>
+							<networka>
+								<networkr>http:\\science.nature.nps.gov\nrdata</networkr></networka>
+						</computer>
+					</onlinopt>
+				</digtopt>
+			</digform>
+			<fees>None</fees>
+			<ordering>
+Contact the GIS Specialist at the Yellowstone
+National Park Spatial Analysis Center.
+</ordering>
+		</stdorder>
+	</distinfo>
+	<metainfo>
+		<metd Sync="TRUE">20110510</metd>
+		<metrd>20000920</metrd>
+		<metc>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>
+Spatial Analysis Center - Yellowstone National
+Park
+</cntorg>
+				</cntorgp>
+				<cntpos>GIS Specialist</cntpos>
+				<cntaddr>
+					<addrtype>Mailing Address</addrtype>
+					<address>Yellowstone Center for Resources</address>
+					<address>Spatial Analysis Center</address>
+					<address>P.O. Box 168</address>
+					<city>Yellowstone National Park</city>
+					<state>Wyoming</state>
+					<postal>82190</postal>
+					<country>USA</country>
+				</cntaddr>
+				<cntvoice>(307) 344-2246</cntvoice>
+				<cntfax>(307) 344-2211</cntfax>
+				<cntemail>yell_gis@nps.gov</cntemail>
+				<hours>8:00 a.m. to 5:30 p.m. (Mountain Time) Monday
+Through Friday</hours>
+				<cntinst>
+Please check web site first:
+http://www.nps.gov/yell/technical/gis
+</cntinst>
+			</cntinfo>
+		</metc>
+		<metstdn Sync="TRUE">FGDC Content Standards for Digital Geospatial Metadata</metstdn>
+		<metstdv Sync="TRUE">FGDC-STD-001-1998</metstdv>
+		<metac>None</metac>
+		<metuc>None</metuc>
+		<metsi>
+			<metscs>None</metscs>
+			<metsc>Unclassified</metsc>
+			<metshd>None</metshd>
+		</metsi>
+		<langmeta Sync="TRUE">en</langmeta><mettc Sync="TRUE">local time</mettc><metextns><onlink Sync="TRUE">http://www.esri.com/metadata/esriprof80.html</onlink><metprof Sync="TRUE">ESRI Metadata Profile</metprof></metextns></metainfo>
+	<Esri><CreaDate>20170607</CreaDate><CreaTime>13091800</CreaTime><SyncOnce>FALSE</SyncOnce><SyncDate>20110510</SyncDate><SyncTime>12080700</SyncTime><ModDate>20110510</ModDate><ModTime>12080700</ModTime><DataProperties><lineage><Process ToolSource="C:\Program Files\ArcGIS\ArcToolbox\Toolboxes\Conversion Tools.tbx\FeatureClassToFeatureClass" Date="20090413" Time="091721">FeatureClassToFeatureClass K:\Infrastructure_FMSS\Roads\Data\yell_roads_master.shp K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb yell_roads # "TYPE 'TYPE' true true false 20 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_master.shp,TYPE,-1,-1;SURFACE 'SURFACE' true true false 20 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_master.shp,SURFACE,-1,-1;SURVEY_DAT 'SURVEY_DAT' true true false 20 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_master.shp,SURVEY_DAT,-1,-1;SPEED 'SPEED' true true false 9 Long 0 9 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_master.shp,SPEED,-1,-1;SURVEYOR 'SURVEYOR' true true false 20 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_master.shp,SURVEYOR,-1,-1;CATEGORY 'CATEGORY' true true false 100 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_master.shp,CATEGORY,-1,-1;SURVEY 'SURVEY' true true false 100 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_master.shp,SURVEY,-1,-1;FULLNAME 'FULLNAME' true true false 100 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_master.shp,FULLNAME,-1,-1;CLASS 'CLASS' true true false 5 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_master.shp,CLASS,-1,-1;FMSS 'FMSS' true true false 10 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_master.shp,FMSS,-1,-1;TrafficFlo 'TrafficFlo' true true false 50 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_master.shp,TrafficFlo,-1,-1;TrafficDir 'TrafficDir' true true false 50 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_master.shp,TrafficDir,-1,-1" # K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\yell_roads</Process><Process ToolSource="C:\Program Files (x86)\ArcGIS\ArcToolbox\Toolboxes\Conversion Tools.tbx\FeatureClassToFeatureClass" Date="20090805" Time="154640">FeatureClassToFeatureClass K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\yell_roads_1 K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads yell_roads # "TYPE 'TYPE' true true false 20 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\yell_roads_1,TYPE,-1,-1;SURFACE 'SURFACE' true true false 20 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\yell_roads_1,SURFACE,-1,-1;SURVEY_DAT 'SURVEY_DATE' true true false 20 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\yell_roads_1,SURVEY_DAT,-1,-1;SPEED 'SPEED' true true false 4 Long 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\yell_roads_1,SPEED,-1,-1;SURVEYOR 'SURVEYOR' true true false 20 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\yell_roads_1,SURVEYOR,-1,-1;FMSS 'FMSS' true true false 10 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\yell_roads_1,FMSS,-1,-1;Shape_Length 'Shape_Length' false true true 8 Double 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\yell_roads_1,Shape_Length,-1,-1;UnitCode 'UnitCode' true true false 10 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\yell_roads_1,UnitCode,-1,-1;Name 'Name' true true false 255 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\yell_roads_1,Name,-1,-1;AltName 'AltName' true true false 255 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\yell_roads_1,AltName,-1,-1;ShortName 'ShortName' true true false 16 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\yell_roads_1,ShortName,-1,-1;IsExtant 'IsExtant' true true false 1 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\yell_roads_1,IsExtant,-1,-1;IsSensitive 'IsSensitive' true true false 1 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\yell_roads_1,IsSensitive,-1,-1;FNotes 'FNotes' true true false 255 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\yell_roads_1,FNotes,-1,-1;FCategory 'FCategory' true true false 16 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\yell_roads_1,FCategory,-1,-1;MapMethod 'MapMethod' true true false 4 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\yell_roads_1,MapMethod,-1,-1;HError 'HError' true true false 16 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\yell_roads_1,HError,-1,-1;VError 'VError' true true false 16 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\yell_roads_1,VError,-1,-1;MapSource 'MapSource' true true false 255 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\yell_roads_1,MapSource,-1,-1;SourceDate 'SourceDate' true true false 8 Date 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\yell_roads_1,SourceDate,-1,-1;EditDate 'EditDate' true true false 8 Date 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\yell_roads_1,EditDate,-1,-1;EditNotes 'EditNotes' true true false 255 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\yell_roads_1,EditNotes,-1,-1;TrafficFlow 'TrafficFlow' true true false 255 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\yell_roads_1,TrafficFlow,-1,-1;TrafficDirection 'TrafficDirection' true true false 255 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\yell_roads_1,TrafficDirection,-1,-1;GlobalID 'GlobalID' false false true 38 Long 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\yell_roads_1,GlobalID,-1,-1;RoadClass 'RoadClass' true true false 2 Short 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\yell_roads_1,RoadClass,-1,-1;RoadClassText 'RoadClassText' true true false 50 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\yell_roads_1,RoadClassText,-1,-1;RoadAccess 'RoadAccess' true true false 50 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\yell_roads_1,RoadAccess,-1,-1;FeatureID 'FeatureID' true true false 38 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\yell_roads_1,FeatureID,-1,-1;GeometryID 'GeometryID' true true false 38 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\yell_roads_1,GeometryID,-1,-1" # K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads</Process><Process ToolSource="C:\Program Files\ArcGIS\ArcToolbox\Toolboxes\Conversion Tools.tbx\FeatureClassToFeatureClass" Date="20100722" Time="105506">FeatureClassToFeatureClass K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads S:\Mike_Sobiech\E911\Test_Data_Tables\Transportation1.gdb Roads10 # "TYPE 'TYPE' true true false 20 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads,TYPE,-1,-1;SURFACE 'SURFACE' true true false 20 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads,SURFACE,-1,-1;SURVEY_DAT 'SURVEY_DATE' true true false 20 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads,SURVEY_DAT,-1,-1;SPEED 'SPEED' true true false 4 Long 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads,SPEED,-1,-1;SURVEYOR 'SURVEYOR' true true false 20 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads,SURVEYOR,-1,-1;FMSS 'FMSS' true true false 10 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads,FMSS,-1,-1;UnitCode 'UnitCode' true true false 10 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads,UnitCode,-1,-1;Name 'Name' true true false 255 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads,Name,-1,-1;AltName 'AltName' true true false 255 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads,AltName,-1,-1;ShortName 'ShortName' true true false 16 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads,ShortName,-1,-1;IsExtant 'IsExtant' true true false 1 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads,IsExtant,-1,-1;IsSensitive 'IsSensitive' true true false 1 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads,IsSensitive,-1,-1;FNotes 'FNotes' true true false 255 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads,FNotes,-1,-1;FCategory 'FCategory' true true false 16 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads,FCategory,-1,-1;MapMethod 'MapMethod' true true false 4 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads,MapMethod,-1,-1;HError 'HError' true true false 16 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads,HError,-1,-1;VError 'VError' true true false 16 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads,VError,-1,-1;MapSource 'MapSource' true true false 255 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads,MapSource,-1,-1;SourceDate 'SourceDate' true true false 8 Date 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads,SourceDate,-1,-1;EditDate 'EditDate' true true false 8 Date 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads,EditDate,-1,-1;EditNotes 'EditNotes' true true false 255 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads,EditNotes,-1,-1;TrafficFlow 'TrafficFlow' true true false 255 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads,TrafficFlow,-1,-1;TrafficDirection 'TrafficDirection' true true false 255 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads,TrafficDirection,-1,-1;GlobalID 'GlobalID' false false true 38 Long 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads,GlobalID,-1,-1;RoadClass 'RoadClass' true true false 2 Short 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads,RoadClass,-1,-1;RoadClassText 'RoadClassText' true true false 50 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads,RoadClassText,-1,-1;RoadAccess 'RoadAccess' true true false 50 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads,RoadAccess,-1,-1;FeatureID 'FeatureID' true true false 38 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads,FeatureID,-1,-1;GeometryID 'GeometryID' true true false 38 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads,GeometryID,-1,-1;Shape_Length 'Shape_Length' false true true 8 Double 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads,Shape_Length,-1,-1;Source 'Source' true true false 50 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Roads\Data\yell_roads_MASTER.gdb\Roads\yell_roads,Source,-1,-1" # S:\Mike_Sobiech\E911\Test_Data_Tables\Transportation1.gdb\Roads10</Process><Process ToolSource="C:\Program Files\ArcGIS\ArcToolbox\Toolboxes\Conversion Tools.tbx\FeatureClassToFeatureClass" Date="20100804" Time="115545">FeatureClassToFeatureClass K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Roads_Copy K:\Telecom_e911\Data\E911\Archive FMSS_Roads_Original.shp # "TYPE 'TYPE' true true false 20 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Roads_Copy,TYPE,-1,-1;SURFACE 'SURFACE' true true false 20 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Roads_Copy,SURFACE,-1,-1;SURVEY_DAT 'SURVEY_DATE' true true false 20 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Roads_Copy,SURVEY_DAT,-1,-1;SPEED 'SPEED' true true false 4 Long 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Roads_Copy,SPEED,-1,-1;SURVEYOR 'SURVEYOR' true true false 20 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Roads_Copy,SURVEYOR,-1,-1;FMSS 'FMSS' true true false 10 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Roads_Copy,FMSS,-1,-1;UnitCode 'UnitCode' true true false 10 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Roads_Copy,UnitCode,-1,-1;Name 'Name' true true false 255 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Roads_Copy,Name,-1,-1;AltName 'AltName' true true false 255 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Roads_Copy,AltName,-1,-1;ShortName 'ShortName' true true false 16 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Roads_Copy,ShortName,-1,-1;IsExtant 'IsExtant' true true false 1 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Roads_Copy,IsExtant,-1,-1;IsSensitiv 'IsSensitive' true true false 1 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Roads_Copy,IsSensitive,-1,-1;FNotes 'FNotes' true true false 255 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Roads_Copy,FNotes,-1,-1;FCategory 'FCategory' true true false 16 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Roads_Copy,FCategory,-1,-1;MapMethod 'MapMethod' true true false 4 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Roads_Copy,MapMethod,-1,-1;HError 'HError' true true false 16 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Roads_Copy,HError,-1,-1;VError 'VError' true true false 16 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Roads_Copy,VError,-1,-1;MapSource 'MapSource' true true false 255 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Roads_Copy,MapSource,-1,-1;SourceDate 'SourceDate' true true false 8 Date 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Roads_Copy,SourceDate,-1,-1;EditDate 'EditDate' true true false 8 Date 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Roads_Copy,EditDate,-1,-1;EditNotes 'EditNotes' true true false 255 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Roads_Copy,EditNotes,-1,-1;TrafficFlo 'TrafficFlo' true true false 255 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Roads_Copy,TrafficFlow,-1,-1;TrafficDir 'TrafficDir' true true false 255 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Roads_Copy,TrafficDirection,-1,-1;RoadClass 'RoadClass' true true false 2 Short 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Roads_Copy,RoadClass,-1,-1;RoadClassT 'RoadClassT' true true false 50 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Roads_Copy,RoadClassText,-1,-1;RoadAccess 'RoadAccess' true true false 50 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Roads_Copy,RoadAccess,-1,-1;FeatureID 'FeatureID' true true false 38 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Roads_Copy,FeatureID,-1,-1;GeometryID 'GeometryID' true true false 38 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Roads_Copy,GeometryID,-1,-1;Source 'Source' true true false 50 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Roads_Copy,Source,-1,-1;Shape_Leng 'Shape_Length' false true true 8 Double 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Roads_Copy,Shape_Length,-1,-1" # K:\Telecom_e911\Data\E911\Archive\FMSS_Roads_Original.shp</Process><Process ToolSource="C:\Program Files (x86)\ArcGIS\ArcToolbox\Toolboxes\Conversion Tools.tbx\FeatureClassToFeatureClass" Date="20101027" Time="135211">FeatureClassToFeatureClass K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads K:\Infrastructure_FMSS\Transportation\Transportation.gdb yell_roads # "TYPE 'TYPE' true true false 20 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,TYPE,-1,-1;SURFACE 'SURFACE' true true false 20 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,SURFACE,-1,-1;SURVEY_DAT 'SURVEY_DATE' true true false 20 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,SURVEY_DAT,-1,-1;SPEED 'SPEED' true true false 4 Long 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,SPEED,-1,-1;SURVEYOR 'SURVEYOR' true true false 20 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,SURVEYOR,-1,-1;FMSS 'FMSS' true true false 10 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,FMSS,-1,-1;UnitCode 'UnitCode' true true false 10 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,UnitCode,-1,-1;Name 'Name' true true false 255 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,Name,-1,-1;AltName 'AltName' true true false 255 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,AltName,-1,-1;ShortName 'ShortName' true true false 16 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,ShortName,-1,-1;IsExtant 'IsExtant' true true false 1 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,IsExtant,-1,-1;IsSensitive 'IsSensitive' true true false 1 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,IsSensitive,-1,-1;FNotes 'FNotes' true true false 255 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,FNotes,-1,-1;FCategory 'FCategory' true true false 16 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,FCategory,-1,-1;MapMethod 'MapMethod' true true false 4 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,MapMethod,-1,-1;HError 'HError' true true false 16 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,HError,-1,-1;VError 'VError' true true false 16 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,VError,-1,-1;MapSource 'MapSource' true true false 255 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,MapSource,-1,-1;SourceDate 'SourceDate' true true false 8 Date 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,SourceDate,-1,-1;EditDate 'EditDate' true true false 8 Date 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,EditDate,-1,-1;EditNotes 'EditNotes' true true false 255 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,EditNotes,-1,-1;TrafficFlow 'TrafficFlow' true true false 255 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,TrafficFlow,-1,-1;TrafficDirection 'TrafficDirection' true true false 255 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,TrafficDirection,-1,-1;GlobalID 'GlobalID' false false true 38 Long 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,GlobalID,-1,-1;RoadClass 'RoadClass' true true false 2 Short 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,RoadClass,-1,-1;RoadClassText 'RoadClassText' true true false 50 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,RoadClassText,-1,-1;RoadAccess 'RoadAccess' true true false 50 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,RoadAccess,-1,-1;FeatureID 'FeatureID' true true false 38 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,FeatureID,-1,-1;GeometryID 'GeometryID' true true false 38 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,GeometryID,-1,-1;Source 'Source' true true false 50 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,Source,-1,-1;L_T_Add 'L_T_Add' true true false 8 Double 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,L_T_Add,-1,-1;L_F_Add 'L_F_Add' true true false 8 Double 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,L_F_Add,-1,-1;R_T_Add 'R_T_Add' true true false 8 Double 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,R_T_Add,-1,-1;R_F_Add 'R_F_Add' true true false 8 Double 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,R_F_Add,-1,-1;Street_Name 'Street_Name' true true false 255 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,Street_Name,-1,-1;Street_Type 'Street_Type' true true false 255 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,Street_Type,-1,-1;Zip_L 'Zip_L' true true false 8 Double 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,Zip_L,-1,-1;Zip_R 'Zip_R' true true false 8 Double 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,Zip_R,-1,-1;R_City 'R_City' true true false 255 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,R_City,-1,-1;L_City 'L_City' true true false 255 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,L_City,-1,-1;State_L 'State_L' true true false 255 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,State_L,-1,-1;State_R 'State_R' true true false 255 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,State_R,-1,-1;State 'State' true true false 255 Text 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,State,-1,-1;Shape_Length 'Shape_Length' false true true 8 Double 0 0 ,First,#,K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads,Shape_Length,-1,-1" # K:\Infrastructure_FMSS\Transportation\Transportation.gdb\yell_roads</Process><Process ToolSource="C:\Program Files (x86)\ArcGIS\ArcToolbox\Toolboxes\Data Management Tools.tbx\CopyFeatures" Date="20101027" Time="141033">CopyFeatures K:\Infrastructure_FMSS\Transportation\Transportation_imports_20101027_1400.gdb\yell_roads K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads # 0 0 0</Process><Process ToolSource="C:\Program Files\ArcGIS\ArcToolbox\Toolboxes\Conversion Tools.tbx\FeatureClassToFeatureClass" Date="20101202" Time="092301">FeatureClassToFeatureClass K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads Yell_Roads # "TYPE 'TYPE' true true false 20 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,TYPE,-1,-1;SURFACE 'SURFACE' true true false 20 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,SURFACE,-1,-1;SURVEY_DAT 'SURVEY_DATE' true true false 20 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,SURVEY_DAT,-1,-1;SPEED 'SPEED' true true false 4 Long 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,SPEED,-1,-1;SURVEYOR 'SURVEYOR' true true false 20 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,SURVEYOR,-1,-1;FMSS 'FMSS' true true false 10 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,FMSS,-1,-1;UnitCode 'UnitCode' true true false 10 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,UnitCode,-1,-1;Name 'Name' true true false 255 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,Name,-1,-1;AltName 'AltName' true true false 255 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,AltName,-1,-1;ShortName 'ShortName' true true false 16 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,ShortName,-1,-1;IsExtant 'IsExtant' true true false 1 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,IsExtant,-1,-1;IsSensitive 'IsSensitive' true true false 1 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,IsSensitive,-1,-1;FNotes 'FNotes' true true false 255 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,FNotes,-1,-1;FCategory 'FCategory' true true false 16 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,FCategory,-1,-1;MapMethod 'MapMethod' true true false 4 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,MapMethod,-1,-1;HError 'HError' true true false 16 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,HError,-1,-1;VError 'VError' true true false 16 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,VError,-1,-1;MapSource 'MapSource' true true false 255 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,MapSource,-1,-1;SourceDate 'SourceDate' true true false 8 Date 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,SourceDate,-1,-1;EditDate 'EditDate' true true false 8 Date 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,EditDate,-1,-1;EditNotes 'EditNotes' true true false 255 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,EditNotes,-1,-1;TrafficFlow 'TrafficFlow' true true false 255 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,TrafficFlow,-1,-1;TrafficDirection 'TrafficDirection' true true false 255 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,TrafficDirection,-1,-1;GlobalID 'GlobalID' false false true 38 Long 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,GlobalID,-1,-1;RoadClass 'RoadClass' true true false 2 Short 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,RoadClass,-1,-1;RoadClassText 'RoadClassText' true true false 50 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,RoadClassText,-1,-1;RoadAccess 'RoadAccess' true true false 50 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,RoadAccess,-1,-1;FeatureID 'FeatureID' true true false 38 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,FeatureID,-1,-1;GeometryID 'GeometryID' true true false 38 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,GeometryID,-1,-1;Source 'Source' true true false 50 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,Source,-1,-1;L_T_Add 'L_T_Add' true true false 8 Double 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,L_T_Add,-1,-1;L_F_Add 'L_F_Add' true true false 8 Double 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,L_F_Add,-1,-1;R_T_Add 'R_T_Add' true true false 8 Double 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,R_T_Add,-1,-1;R_F_Add 'R_F_Add' true true false 8 Double 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,R_F_Add,-1,-1;Street_Name 'Street_Name' true true false 255 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,Street_Name,-1,-1;Street_Type 'Street_Type' true true false 255 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,Street_Type,-1,-1;Zip_L 'Zip_L' true true false 8 Double 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,Zip_L,-1,-1;Zip_R 'Zip_R' true true false 8 Double 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,Zip_R,-1,-1;R_City 'R_City' true true false 255 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,R_City,-1,-1;L_City 'L_City' true true false 255 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,L_City,-1,-1;State_L 'State_L' true true false 255 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,State_L,-1,-1;State_R 'State_R' true true false 255 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,State_R,-1,-1;State 'State' true true false 255 Text 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,State,-1,-1;Shape_Length 'Shape_Length' false true true 8 Double 0 0 ,First,#,K:\Infrastructure_FMSS\Transportation\transportation.gdb\transportation\yell_roads,Shape_Length,-1,-1" # K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads</Process><Process ToolSource="C:\Program Files\ArcGIS\ArcToolbox\Toolboxes\Data Management Tools.tbx\RepairGeometry" Date="20101202" Time="151220">RepairGeometry K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads DELETE_NULL K:\Telecom_e911\Data\E911\Transportation1.gdb\Roads\Yell_Roads</Process><Process ToolSource="C:\Program Files (x86)\ArcGIS\ArcToolbox\Toolboxes\Conversion Tools.tbx\FeatureClassToFeatureClass" Date="20110510" Time="120028">FeatureClassToFeatureClass "Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads" S:\cguiles\Projects\G_Drive_Permanent_Layers\Infrastructure\Roads yell_roads_20110510.shp # "TYPE 'TYPE' true true false 20 Text 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,TYPE,-1,-1;SURFACE 'SURFACE' true true false 20 Text 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,SURFACE,-1,-1;SURVEY_DAT 'SURVEY_DATE' true true false 20 Text 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,SURVEY_DAT,-1,-1;SPEED 'SPEED' true true false 4 Long 0 10 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,SPEED,-1,-1;SURVEYOR 'SURVEYOR' true true false 20 Text 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,SURVEYOR,-1,-1;FMSS 'FMSS' true true false 10 Text 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,FMSS,-1,-1;UnitCode 'UnitCode' true true false 10 Text 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,UnitCode,-1,-1;Name 'Name' true true false 255 Text 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,Name,-1,-1;AltName 'AltName' true true false 255 Text 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,AltName,-1,-1;ShortName 'ShortName' true true false 16 Text 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,ShortName,-1,-1;IsExtant 'IsExtant' true true false 1 Text 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,IsExtant,-1,-1;IsSensitiv 'IsSensitive' true true false 1 Text 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,IsSensitive,-1,-1;FNotes 'FNotes' true true false 255 Text 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,FNotes,-1,-1;FCategory 'FCategory' true true false 16 Text 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,FCategory,-1,-1;MapMethod 'MapMethod' true true false 4 Text 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,MapMethod,-1,-1;HError 'HError' true true false 16 Text 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,HError,-1,-1;VError 'VError' true true false 16 Text 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,VError,-1,-1;MapSource 'MapSource' true true false 255 Text 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,MapSource,-1,-1;SourceDate 'SourceDate' true true false 36 Date 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,SourceDate,-1,-1;EditDate 'EditDate' true true false 36 Date 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,EditDate,-1,-1;EditNotes 'EditNotes' true true false 255 Text 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,EditNotes,-1,-1;TrafficFlo 'TrafficFlo' true true false 255 Text 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,TrafficFlow,-1,-1;TrafficDir 'TrafficDir' true true false 255 Text 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,TrafficDirection,-1,-1;RoadClass 'RoadClass' true true false 2 Short 0 5 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,RoadClass,-1,-1;RoadClassT 'RoadClassT' true true false 50 Text 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,RoadClassText,-1,-1;RoadAccess 'RoadAccess' true true false 50 Text 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,RoadAccess,-1,-1;FeatureID 'FeatureID' true true false 38 Text 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,FeatureID,-1,-1;GeometryID 'GeometryID' true true false 38 Text 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,GeometryID,-1,-1;Source 'Source' true true false 50 Text 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,Source,-1,-1;L_T_Add 'L_T_Add' true true false 8 Double 8 38 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,L_T_Add,-1,-1;L_F_Add 'L_F_Add' true true false 8 Double 8 38 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,L_F_Add,-1,-1;R_T_Add 'R_T_Add' true true false 8 Double 8 38 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,R_T_Add,-1,-1;R_F_Add 'R_F_Add' true true false 8 Double 8 38 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,R_F_Add,-1,-1;Street_Nam 'Street_Nam' true true false 255 Text 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,Street_Name,-1,-1;Street_Typ 'Street_Typ' true true false 255 Text 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,Street_Type,-1,-1;Zip_L 'Zip_L' true true false 8 Double 8 38 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,Zip_L,-1,-1;Zip_R 'Zip_R' true true false 8 Double 8 38 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,Zip_R,-1,-1;R_City 'R_City' true true false 255 Text 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,R_City,-1,-1;L_City 'L_City' true true false 255 Text 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,L_City,-1,-1;State_L 'State_L' true true false 255 Text 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,State_L,-1,-1;State_R 'State_R' true true false 255 Text 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,State_R,-1,-1;State 'State' true true false 255 Text 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,State,-1,-1;Address_ID 'Address_ID' true true false 8 Double 8 38 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,Address_ID,-1,-1;Shape_len 'Shape_len' false false true 0 Double 0 0 ,First,#,Database Connections\yell_transportation_dbo_default_version.sde\yell_transportation.DBO.yell_roads,Shape.len,-1,-1" # S:\cguiles\Projects\G_Drive_Permanent_Layers\Infrastructure\Roads\yell_roads_20110510.shp</Process></lineage><itemProps><itemLocation><linkage Sync="TRUE">file://\\FD-D38NTJH2\D$\Dropbox\BJH_ComputerFiles\Work\GIS_RS\Projects\2016YellowstoneFires\yell_roads</linkage><protocol Sync="TRUE">Local Area Network</protocol></itemLocation></itemProps><copyHistory><copy source="E:\MuddyWatersHardDriveCopy20140610\GYE_Wisc\GYE\ToFileBJH\yell_roads\yell_roads" dest="\\FD-D38NTJH2\D$\Dropbox\BJH_ComputerFiles\Work\GIS_RS\Projects\2016YellowstoneFires\yell_roads" date="20170607" time="13091800"></copy></copyHistory></DataProperties></Esri><dataIdInfo><envirDesc Sync="TRUE">Microsoft Windows Vista Version 6.1 (Build 7600) ; ESRI ArcCatalog 9.3.1.3500</envirDesc><dataLang><languageCode Sync="TRUE" value="en"></languageCode></dataLang><idCitation><resTitle Sync="TRUE">yell_roads</resTitle><presForm><PresFormCd Sync="TRUE" value="005"></PresFormCd></presForm></idCitation><spatRpType><SpatRepTypCd Sync="TRUE" value="001"></SpatRepTypCd></spatRpType><dataExt><geoEle><GeoBndBox esriExtentType="native"><westBL Sync="TRUE">487735.3965</westBL><eastBL Sync="TRUE">608175.0625</eastBL><northBL Sync="TRUE">4990217.5</northBL><southBL Sync="TRUE">4885748.762</southBL><exTypeCode Sync="TRUE">1</exTypeCode></GeoBndBox></geoEle></dataExt><geoBox esriExtentType="decdegrees"><westBL Sync="TRUE">-111.155789</westBL><eastBL Sync="TRUE">-109.62612</eastBL><northBL Sync="TRUE">45.065418</northBL><southBL Sync="TRUE">44.116931</southBL><exTypeCode Sync="TRUE">1</exTypeCode></geoBox></dataIdInfo><mdLang><languageCode Sync="TRUE" value="en"></languageCode></mdLang><mdStanName Sync="TRUE">ISO 19115 Geographic Information - Metadata</mdStanName><mdStanVer Sync="TRUE">DIS_ESRI1.0</mdStanVer><mdChar><CharSetCd Sync="TRUE" value="004"></CharSetCd></mdChar><mdHrLv><ScopeCd Sync="TRUE" value="005"></ScopeCd></mdHrLv><mdHrLvName Sync="TRUE">dataset</mdHrLvName><distInfo><distributor><distorTran><onLineSrc><orDesc Sync="TRUE">002</orDesc><linkage Sync="TRUE">file://\\inpyellgis\sac_personnel\cguiles\Projects\G_Drive_Permanent_Layers\Infrastructure\Roads\yell_roads.shp</linkage><protocol Sync="TRUE">Local Area Network</protocol></onLineSrc><transSize Sync="TRUE">0.617</transSize></distorTran><distorFormat><formatName Sync="TRUE">Shapefile</formatName></distorFormat></distributor></distInfo><refSysInfo><RefSystem><refSysID><identCode Sync="TRUE">NAD_1983_UTM_Zone_12N</identCode></refSysID></RefSystem></refSysInfo><spatRepInfo><VectSpatRep><topLvl><TopoLevCd Sync="TRUE" value="001"></TopoLevCd></topLvl><geometObjs Name="yell_roads"><geoObjTyp><GeoObjTypCd Sync="TRUE" value="001"></GeoObjTypCd></geoObjTyp><geoObjCnt Sync="TRUE">1651</geoObjCnt></geometObjs></VectSpatRep></spatRepInfo><mdDateSt Sync="TRUE">20110510</mdDateSt></metadata>
