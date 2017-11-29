@@ -3,41 +3,24 @@ library(sf)
 library(viridis)
 
 
-perim_path <- '/Users/tylerhoecker/GitHub/seed_addition_GYE/data/fire_perimeters/'
 
-fires <- c('Berry','Buffalo','Maple')
+GIS_path <- '/Users/tylerhoecker/Box Sync/PhD/GIS/GYE/'
 
-# Import fire perimeters and combine features
-berry <- st_read(paste0(perim_path,fires[1],'Fire')) %>% 
-  rename(acres = IR_Acres)
-buffalo <- st_read(paste0(perim_path,fires[2],'Fire')) %>% 
-  select(Id, acres, geometry)
-maple <- st_read(paste0(perim_path,fires[3],'Fire')) %>% 
-  select(Id, acres, geometry)
+fire_aspect_rast <- raster::brick(paste0(GIS_path,'aspect_fire_rast.tif'))
 
-perimeters <- rbind(berry,buffalo,maple)
+fire_spdf <- as(fire_aspect_rast, "SpatialPixelsDataFrame")
 
-rm(berry,buffalo,maple)
 
-# Import aspect 
-#library(raster)
-#library(rgdal)
 
-gen_path <- '/Users/tylerhoecker/GitHub/seed_addition_GYE/data/general_spatial/'
 
-DEM <- raster::raster('data/general_spatial/GYE_DEM_NAD83_UTM12N_30m_cuco.img')
+fire_aspect_df <- as(fire_aspect_rast, 'data.frame')
 
-DEM_crop <- raster::crop(DEM, as.vector(st_bbox(perimeters))) 
+#
+aspect_rast <- raster::raster(paste0(GIS_path,'aspect_fire_rast.tif'), band = 2)
 
-rm(DEM)
-  
-DEM_spdf <- as(DEM_crop, "SpatialPixelsDataFrame")
+aspect_spdf <- as(aspect_rast, "SpatialPixelsDataFrame")
 
-rm(DEM_crop)
-
-DEM_df <- as.data.frame(DEM_spdf)
-
-rm(DEM_spdf)
+fire_df <- as(aspect_fire_spdf, 'data.frame')
 
 colnames(DEM_df) <- c("value", "x", "y")
 
