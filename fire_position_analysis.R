@@ -6,17 +6,19 @@ library(viridis)
 
 GIS_path <- '/Users/tylerhoecker/Box Sync/PhD/GIS/GYE/'
 
-fire_aspect_rast <- raster::brick(paste0(GIS_path,'aspect_fire_rast.tif'))
+fire_aspect_rast <- raster::stack(paste0(GIS_path,'aspect_fire_rast.tif'))
+
+aspect_rast <- raster::raster(paste0(GIS_path,'aspect_fire_rast.tif'), band = 2)
+
+
+
+fireASCII <- read.csv(paste0(GIS_path,'aspect_fire.xyz'))
 
 fire_spdf <- as(fire_aspect_rast, "SpatialPixelsDataFrame")
-
-
-
 
 fire_aspect_df <- as(fire_aspect_rast, 'data.frame')
 
 #
-aspect_rast <- raster::raster(paste0(GIS_path,'aspect_fire_rast.tif'), band = 2)
 
 aspect_spdf <- as(aspect_rast, "SpatialPixelsDataFrame")
 
