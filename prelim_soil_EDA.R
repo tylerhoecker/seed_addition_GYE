@@ -1,13 +1,14 @@
 library(tidyverse)
 library(lubridate)
 library(cowplot)
+library(ggridges)
 
 # Define the month and year that the data were downloaded
 dataTime <- '2017-09'
 
-sites <- sub('(.*?_.*?)_.*','\\1',list.files('data'))
+sites <- sub('(.*?_.*?)_.*','\\1',list.files('data/soil_sensors/'))
 
-soilData <- map(paste0('data/',sites,'_',dataTime,'.csv'), read_csv) %>% 
+soilData <- map(paste0('data/soil_sensors/',sites,'_',dataTime,'.csv'), read_csv) %>% 
   `names<-` (sites) %>%
   bind_rows(.id = 'site') %>%
   mutate(time = parse_date_time(.$time, orders = 'mdy hs')) %>%
@@ -20,7 +21,7 @@ soilData <- map(paste0('data/',sites,'_',dataTime,'.csv'), read_csv) %>%
          port = sub(".*_","",.$key)) %>%
   mutate(measType = if_else(measType == 'mois',"Moisture","Temperature")) %>%
   select(site,aspect,date,hour,port,measType,value) %>%
-  group_by(site,aspect,date,measType) %>% # Change site for aspect
+  group_by(aspect,date,measType) %>% # Change site for aspect
   summarize(dayMin = min(value),
          dayMean = mean(value),
          dayMax = max(value)) 
@@ -29,8 +30,8 @@ soilSouth <- filter(soilData, aspect == 'S')
 soilFlat <- filter(soilData, aspect == 'F')
 soilNorth <- filter(soilData, aspect == 'N')
 
-colVals <- rev(c('S' = '#E69F00', 'F' = '#009E73', 'N' = '#0072B2'))
-legLabs <- rev(c('South','Flat','North'))
+colVals <- rev(c('S' = '#E69F00', 'N' = '#0072B2','F' = '#009E73'))
+legLabs <- rev(c('South','North','Flat'))
 alphaVals <- 0.4
 sizeVals <- 1
 
@@ -105,6 +106,35 @@ plot_grid(seriesPlot,moisthistPlot,temphistPlot,
 
 # ---------
 # By Site
+soilData <- map(paste0('data/soil_sensors/',sites,'_',dataTime,'.csv'), read_csv) %>% 
+  `names<-` (sites) %>%
+  bind_rows(.id = 'site') %>%
+  mutate(time = parse_date_time(.$time, orders = 'mdy hs')) %>%
+  separate(site, into = c('site','aspect'), sep = '_') %>%
+  separate(time, into = c('date','hour'), sep = " ") %>%
+  mutate(date = as.POSIXct(date)) %>%
+  gather(key, value, 5:ncol(.)) %>%
+  mutate(aspect = as.factor(aspect),
+         measType = as.factor(sub("_.*","",.$key)),
+         port = sub(".*_","",.$key)) %>%
+  mutate(measType = if_else(measType == 'mois',"Moisture","Temperature")) %>%
+  select(site,aspect,date,hour,port,measType,value) %>%
+  group_by(site,aspect,date,measType) %>% # Change site for aspect
+  summarize(dayMin = min(value),
+            dayMean = mean(value),
+            dayMax = max(value)) 
+
+# Ridgeline plot!
+ggplot(soilData) +
+  geom_density_ridges(aes(x = dayMean, y = site, fill = aspect),
+                      alpha = alphaVals) +
+  scale_fill_manual(values = colVals, name = 'Aspect', labels = legLabs) +
+  scale_color_manual(values = colVals, name = 'Aspect', labels = legLabs) +
+  facet_wrap(~measType, scales = 'free') +
+  theme_th()
+
+
+# 
 ggplot(soilData) +
   geom_ribbon(aes(x = date, ymin = dayMin, ymax = dayMax, fill = aspect),
               alpha = alphaVals) +
