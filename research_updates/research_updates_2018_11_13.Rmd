@@ -1,0 +1,190 @@
+---
+title: "Research Update"
+author: "Tyler Hoecker"
+date: "11/13/2018"
+output: html_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, error = FALSE)
+library(tidyverse)
+library(lubridate)
+library(lme4)
+```
+
+```{r, include = F}
+source('code/read_soil_data.R')
+soil_sum <- soil_df %>% 
+  filter(time >= as.POSIXct(c("2018-06-20 00:00:00")) & time <= as.POSIXct(c("2018-08-20 00:00:00"))) %>% 
+  group_by(site, aspect, time, variable) %>%
+  summarise(value = mean(value)) %>% 
+  spread(variable, value) %>% 
+  group_by(site, aspect) %>% 
+  summarise_at(vars(mois, temp),
+               funs(low = quantile(., 0.05), 
+                    med = quantile(., 0.50), 
+                    high = quantile(., 0.95))
+               , na.rm = T) 
+
+# ATMOS data
+source('code/read_atmos_data.R') #creats 'atmos_df'
+atmos_sum <- atmos_df %>% 
+  filter(time >= as.POSIXct(c("2018-06-20 00:00:00")) & time <= as.POSIXct(c("2018-08-20 00:00:00")),
+         aspect != 'Grizz') %>% 
+  group_by(site, aspect) %>%
+  summarise_at(vars(air_temp:solar),
+               funs(low = quantile(., 0.05), 
+                     med = quantile(., 0.50), 
+                     high = quantile(., 0.95)), na.rm = T) %>% 
+  mutate(solar_high = replace(solar_high, solar_high > 900 | solar_high < 840, NA)) 
+  
+
+# Import seedling data
+source('code/read_seedling_data.R')
+
+
+# Surival and germination figuring-------------------------------------------
+# Germinated
+germination <- seedlings %>% 
+  filter(variable == 'height', species != 'control') %>% 
+  select(site, aspect, species, frameID, cell, value) %>% 
+  mutate(germinated = if_else(is.na(value), 0, 1)) %>% 
+  unite(frameID, cell, col = 'uniqID', remove = FALSE) %>%
+  group_by(site, aspect, species, frameID, uniqID) %>% 
+  summarise(germinated = max(germinated)) %>% 
+  group_by(site, aspect, species, frameID) #%>% 
+  #mutate(problem = if_else(sum(germinated) == 0, 'Yes','No')) %>% 
+  #filter(problem == 'No') 
+  
+
+# Survived
+survival <- seedlings %>%
+  filter(variable == 'height', species != 'control') %>% 
+  mutate(survived = if_else(date > as.POSIXct("2018-10-01") & value > 0, 1, 0)) %>% 
+  select(site, aspect, species, frameID, cell, survived) %>% 
+  unite(frameID, cell, col = 'uniqID') %>%
+  group_by(site, aspect, species, uniqID) %>% 
+  summarise(survived = max(survived, na.rm = T))  
+  
+
+establishment_df <- full_join(germination, survival) %>% 
+  ungroup()
+
+estb_abio_df <- establishment_df %>% 
+  full_join(atmos_sum, by = c('site','aspect')) %>% 
+  full_join(soil_sum, by = c('site','aspect')) %>% 
+  select(site, aspect, species, frameID, uniqID, germinated, survived,
+         air_temp_med, solar_high, solar_med, atms_press_med,
+         temp_high, temp_med, temp_low, 
+         mois_high, mois_med, mois_low, 
+         rel_hum_med, rel_hum_high) 
+```
+
+### New plots of germination and survival by aspect
+
+#### Germination
+```{r echo = FALSE, fig.dim = c(7, 5)}
+colVals <- c('Flat' = '#009E73','North' = '#0072B2','South' = '#E69F00')
+
+ggplot(estb_abio_df) +
+  geom_col(aes(x = aspect, y = germinated, fill = aspect)) +
+  #geom_errorbar(aes(x = aspect, ymin = low, ymax = high)) +
+  #geom_boxplot(aes(x = aspect, y = count, fill = aspect)) +
+  #scale_y_continuous(sec.axis = sec_axis(~./(50*5*4), name = "Percent seeds germinated")) +
+  scale_fill_manual(values = colVals, name = 'aspect') +
+  #scale_y_continuous(limits = c(0,150), breaks = seq(0,150,50)) +
+  labs(x = 'Aspect', y = 'Percent germinants survived') +  
+  facet_wrap(~species, ncol = 1, scales = 'free_y') +
+  theme_bw(base_size = 14) +
+  theme(strip.background = element_blank(),
+        axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
+```
+
+#### Survival
+```{r echo = FALSE, fig.dim = c(7, 5)}
+colVals <- c('Flat' = '#009E73','North' = '#0072B2','South' = '#E69F00')
+
+ggplot(estb_abio_df) +
+  geom_col(aes(x = aspect, y = survived, fill = aspect)) +
+  #geom_errorbar(aes(x = aspect, ymin = low, ymax = high)) +
+  #geom_boxplot(aes(x = aspect, y = count, fill = aspect)) +
+  #scale_y_continuous(sec.axis = sec_axis(~./(50*5*4), name = "Percent seeds germinated")) +
+  scale_fill_manual(values = colVals, name = 'aspect') +
+  #scale_y_continuous(limits = c(0,150), breaks = seq(0,150,50)) +
+  labs(x = 'Aspect', y = 'Percent germinants survived') +  
+  facet_wrap(~species, ncol = 1, scales = 'free_y') +
+  theme_bw(base_size = 14) +
+  theme(strip.background = element_blank(),
+        axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
+```
+
+
+
+
+### Exploring binary outcomes as a function of environmental variables  
+
+#### Bar plots of **germination** by environmental variable:  
+```{r echo = FALSE, fig.dim = c(12, 6)}
+temp <- estb_abio_df %>%
+  gather(variable, value, -site, -aspect, -species, -frameID, -uniqID, -germinated, -survived) 
+  
+ggplot(temp, aes(factor(germinated), y = value, fill=factor(germinated))) +
+  geom_boxplot() +
+  facet_wrap(~variable, scales="free_y", nrow = 2) +
+  scale_fill_grey(start = 0.8, end = 0.4) +
+  theme_bw(base_size = 12) 
+```
+
+
+#### Bar plots of **survival** by environmental variable:  
+```{r echo = FALSE, fig.dim = c(12, 6)}
+temp <- estb_abio_df %>%
+  gather(variable, value, -site, -aspect, -species, -frameID, -uniqID, -germinated, -survived) 
+  
+ggplot(temp, aes(factor(survived), y = value, fill=factor(survived))) +
+  geom_boxplot() +
+  facet_wrap(~variable, scales="free_y", nrow = 2) +
+  scale_fill_grey(start = 0.8, end = 0.4) +
+  theme_bw(base_size = 12) 
+```
+
+
+### Modeling binary outcomes as a function of environmental variables
+
+#### GLM with binomial (logit) link for germination
+```{r}
+m <- glm(germinated ~ mois_med + temp_med + air_temp_med + solar_high + rel_hum_high + 
+           as.factor(species), 
+           data = as.data.frame(estb_abio_df), family = 'binomial')
+summary(m)
+confint(m)
+exp(coef(m))
+```
+
+
+#### GLM with binomial (logit) link for survival
+```{r}
+m <- glm(survived ~ mois_med + temp_med + air_temp_med + solar_high + rel_hum_high + 
+           as.factor(species), 
+           data = as.data.frame(estb_abio_df), family = 'binomial')
+summary(m)
+confint(m)
+exp(coef(m))
+```
+
+#### Mixed-effects model with binomial (logit) link for germination
+Soil moisture, soil temp., air temp., 95th solar radiation, 95th rel. humidity are fixed effects. Species and site are random effects.
+```{r}
+m <- glmer(germinated ~ mois_med + temp_med + air_temp_med + solar_high + rel_hum_high + 
+             (1 | species) + (1 | site), 
+           data = as.data.frame(estb_abio_df), family = 'binomial', nAGQ=0)
+summary(m)
+```
+
+#### Mixed-effects model with binomial (logit) link for survival
+Soil moisture, soil temp., air temp., 95th solar radiation, 95th rel. humidity are fixed effects. Species and site are random effects.
+```{r}
+m <- glmer(survived ~ mois_med + temp_med + air_temp_med + solar_high + rel_hum_high + 
+             (1 | species) + (1 | site), 
+           data = as.data.frame(estb_abio_df), family = 'binomial', nAGQ=0)
+summary(m)
+```

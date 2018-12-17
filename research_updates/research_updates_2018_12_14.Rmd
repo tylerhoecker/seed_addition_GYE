@@ -1,0 +1,145 @@
+---
+title: "Research Update"
+author: "Tyler Hoecker"
+date: "12/16/2018"
+output: html_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, error = FALSE)
+knitr::opts_knit$set(root.dir = "/Users/tylerhoecker/GitHub/seed_addition_GYE/")
+library(broom)
+```
+
+### General patterns
+
+#### Details of calculations  
+We have looked at the general pattens already, but to review. Survival is calculated as the proportion of germinants that were still alive in October. "Establishment" is the product of survival and germination, or the count of living seedlings in October / the count of germinants. Proporitons are summarized three ways:  
+
+  + "per site": the mean of the proportions in each fire-aspect-frame that germinated/survived/established of all possible (50*5).   
+  + "per aspect": the mean of the proprotions in each aspect-frame.  
+  + "per fire": the mean of the proportions in each fire-framee.
+  
+Error bars in all cases are the 1 standard deviation of the same group from which the mean was calculated.
+
+#### Key points  
+ + Germination, survival and establishment is generally lower in south-facing aspect (17/24 cases), and higher in north-facing aspects (15/24 cases). But, based on 1-SD error bars, differences are probably not "significant" in all cases (especially north versus flat).
+ + Pattern is more clear when looking at a per-site basis (fire-aspect). Maybe suggesting interaction of aspect with fire?
+ + However, differences by site alone appear insignificant (huge overlap between error bars)
+ + Variation by site is different for germination, survival, establishment (e.g., average germination at Berry-Huck, but low survival).
+
+```{r, echo=FALSE, code = readLines("/Users/tylerhoecker/GitHub/seed_addition_GYE/code/read_summarize_plot_seedling.R"), fig.dim = c(12, 6)}
+```
+
+### Question 1:  
+#### Are germination, survival and establishment significantly different among aspects and fire? How do PICO and PSME vary in their sensitivity to aspect and fire?
+
+#### Approach: ANOVA by aspect and by fire
+For each respone (germination, survival, establishment). Fire could be considered a proxy for elevation, or general abiotic hetereogeneity, or "random effect", that is not explained by aspect.
+
+First, transform data to meet assumption of normality for ANOVA. Use arcsine-square-root transform per Ives 2018 sensu Larson and Marx 1981. They are still zero-inflated...
+```{r, echo=FALSE, code = readLines("/Users/tylerhoecker/GitHub/seed_addition_GYE/code/analysis_aov_models.R"), fig.dim = c(12, 6)}
+```
+
+#### ANOVA by aspect  
+Comparison of means by aspect, tables only show p-values less than or equal to 0.10
+Notice:    
+
+  + PSME survival does not vary by aspect.
+  + PSME may be, in general, less sensitive to aspect (consistent with hypotheses)
+  + Biggest contrast is South-Flat for PICO. 
+
+```{r, echo=FALSE}
+knitr::kable(aov_aspect, digits = 3, caption = "ANOVA")
+knitr::kable(tukey_aspect, digits = 3, caption = "Tukey's multiple comparisons")
+```
+
+#### ANOVA by fire  
+Comparison of means by fire, tables only show p-values less than or equal to 0.10
+Notice:    
+
+  + PSME establishment does not vary by fire.
+  + Buffalo and Berry-Glade appear to be opposite ends of spectrum  
+  + Big contrast in germination between Buffal and Berry-Glade for both species
+  + Maple and Berry-Glade may be most similar?
+  
+```{r, echo=FALSE}
+knitr::kable(aov_site, digits = 3, caption = "ANOVA by fire")
+knitr::kable(tukey_site, digits = 3, caption = "Tukey's multiple comparisons by fire")
+```
+
+
+
+#### Approach: Linear model of proportion success as a function of aspect 
+Results identical to above, but linear model provides coeffecient with direction and magnitude. Again, only showing results with p-values < 0.10. Note this is modeling a transformation of response, so difficult to interperet coeffecient values. 
+
+Notice that this table is identical to ANOVA above, but R syntax (not shown) is different. Just for reference, related to recent conversation about interpreting R output. 
+```{r, echo=FALSE}
+knitr::kable(anova_lm_aspect, digits = 3, caption = "Overall effect")
+```
+
+Note that (Intercept) refers to coeffecient for factor level 1, which is flat-aspect. No coeffecient for "overall", just p-value from ANOVA. Coeffecients are tied to specific factor levels (north, south, flat). Is this different from SAS?
+```{r, echo=FALSE}
+knitr::kable(lm_aspect, digits = 3, caption = "Coeffecients for each aspect")
+```
+
+Additional information provided by linear model approach:
+
+  + Negative coeffecient for establishment and germination of PICO on south-facing aspects
+  + Highest magnitude effects are for survival of PICO on south-facing aspects and flat aspects 
+  + Positive coeffecient for flat and north-facing aspects for PSME.
+  + **Take-away:** biggest effect of aspect is on survival. That matches expectations. Germination is probably "locked in" genetically, and there is no moisture limitation early in the year. Survival (if you germinate, do you survive?) is strongly influenced by summertime variability in abiotic conditions. Establishment is product of both, so effect is tempered.  
+
+General summary statistics for the models
+```{r, echo=FALSE}
+knitr::kable(lm_aspect_glance, digits = 3, caption = "Summary of lm(success ~ aspect)")
+```
+
+
+Here is a linear model with reponse on original scale. P-values are very similar, so maybe easier interpretation is worth violating normality assumptions?
+```{r, echo=FALSE}
+knitr::kable(lm_aspect_orig, digits = 3, caption = "Original scale of response variable (proportion of seedlings ____)")
+```
+
+Let's talk through interpretation of coeffecients on this scale.
+
+
+
+#### Approach: Multiple linear regression of proportion success as a function of aspect, fire and interaction of aspect and fire.
+This table is obnoxious, but take-aways are generally the same as above. Some interaction terms become a bit difficult to interpret, and are artifacts of variability among sites. But, this model does nicely summarize the key effects of aspect and fire:
+
+  + South-facing aspects bad for germination (in PICO), survival and establishment
+  + Aspect effects are stronger for PICO than for PSME
+  + Buffalo had low success in all responses everywhere except North
+  + Berry-Huck had low success in all responses everywhere except South
+  + Germination has higher relative R2 for model as whole when consider fire and aspect. Confounds take-away from aspect-alone model (where survival and establishment were higher than germination), suggests an unaccounted for effect of site. 
+  
+```{r, echo=FALSE}
+knitr::kable(mlr_aspect, digits = 3, caption = "MLR of proportion ____ as fxn of aspect, fire, and interaction")
+```
+
+Summary statistics for the MLR models. Key point: including fire improves model all of the models.
+```{r, echo=FALSE}
+knitr::kable(mlr_aspect_glance, digits = 3, caption = "Summary of lm(success ~ aspect + fire + aspect:fire)")
+```
+
+
+#### Approach: Generalized linear mixed-effects model
+Started down this road... but a number of issues came up. I think a GLMM of counts as a function of environmental variation + fire (fixed) + frame (random) with a Poisson link function would be a good approach, but I need to read more to apply it appropriately. I think it is OK to proceed with making hypotheses about environemntal variables before nailing down the approach. 
+Refs: Martin et al. 2005 (zero-inflation), Welsh et al. 1996, Dobbie & Welsh 2001 (two-part Poisson model)
+
+### Developing hypotheses and metrics for specific environmental variables
+
+#### Soil moisture  
+
+Soil moisture is a predictor variable I hypothesize to be important for survival and establishment.
+
+Key idea that came out of meeting with Kate is to develop a cumulative metric of soil moisture stress. Based on an assumption that soil moisture stress is additive/cumulative, versus a brief "shock" to the system (like a short spike in temperature might be).
+
+One approach is to model a unit of time as a function of soil moisture, fit a curve, and integrate the area under the curve. Below is a working example. This is a log-log model, which is what I used for a model of hydraulic conductance as a function of soil moisture for class. It may not be the appropriate model, but I'm not sure how to determine the best model *a priori* (need to do more reading...).
+
+![](/Users/tylerhoecker/GitHub/seed_addition_GYE/research_updates/soil_moisture_metric_loglog.png)
+
+#### Vapor pressure defecit
+
+Vapor pressure deficit is the 2nd  
+
