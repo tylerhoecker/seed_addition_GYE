@@ -18,7 +18,8 @@ seedlings <- read_csv(this_version) %>%
          fire = Fire,
          rep = Direction) %>% 
   select(-Aspect, date, fire, species, rep, frameID, variable, cell, value) %>% 
-  modify_at(c('aspect','fire','species','variable'), as_factor)
+  modify_at(c('aspect','fire','species','variable'), as_factor) %>% 
+  mutate(aspect = fct_relevel(aspect, 'North','Flat','South'))
 
   
 

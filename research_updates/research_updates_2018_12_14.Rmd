@@ -1,7 +1,7 @@
 ---
 title: "Research Update"
 author: "Tyler Hoecker"
-date: "12/16/2018"
+date: "12/17/2018"
 output: html_document
 ---
 ```{r setup, include=FALSE}
@@ -117,14 +117,14 @@ This table is obnoxious, but take-aways are generally the same as above. Some in
 knitr::kable(mlr_aspect, digits = 3, caption = "MLR of proportion ____ as fxn of aspect, fire, and interaction")
 ```
 
-Summary statistics for the MLR models. Key point: including fire improves model all of the models.
+Summary statistics for the MLR models. Key point: including fire improves fit all of the models.
 ```{r, echo=FALSE}
 knitr::kable(mlr_aspect_glance, digits = 3, caption = "Summary of lm(success ~ aspect + fire + aspect:fire)")
 ```
 
 
 #### Approach: Generalized linear mixed-effects model
-Started down this road... but a number of issues came up. I think a GLMM of counts as a function of environmental variation + fire (fixed) + frame (random) with a Poisson link function would be a good approach, but I need to read more to apply it appropriately. I think it is OK to proceed with making hypotheses about environemntal variables before nailing down the approach. 
+Started down this road... but a number of issues came up. I think a GLMM of counts as a function of environmental variation + fire (fixed) + frame (random) with a Poisson link function would be a good approach, but I need to read more to apply it appropriately. 
 Refs: Martin et al. 2005 (zero-inflation), Welsh et al. 1996, Dobbie & Welsh 2001 (two-part Poisson model)
 
 ### Developing hypotheses and metrics for specific environmental variables
@@ -139,7 +139,16 @@ One approach is to model a unit of time as a function of soil moisture, fit a cu
 
 ![](/Users/tylerhoecker/GitHub/seed_addition_GYE/research_updates/soil_moisture_metric_loglog.png)
 
+Further considerations:
+
+  + Current approach bins soil moisture into 0.001 classes by rounding, then counts the number of hours in each bin. It is 'time agnostic'. Should it  count the number of consecutive days below a threshold instead of total days in each bin?
+  + How to deal with missing data? E.g., if data were missing mid-summer, it could skew results toward higher moisture.
+  + Soil moisture seem to follow a bi-modal distribution, is there a way to account for this? E.g., a loess fit?
+  + How to decide what range of dates to use?
+
+![](/Users/tylerhoecker/GitHub/seed_addition_GYE/research_updates/soil_moisture_metric_loess.png)
+
+
 #### Vapor pressure defecit
 
-Vapor pressure deficit is the 2nd  
 

@@ -40,7 +40,9 @@ soil_df <- map(raw_files, read_soil) %>%
   #mutate(date = as.POSIXct(date)) %>%
   gather(key, value, -fire,-aspect,-time) %>%
   separate(key, into = c('variable','port'), sep = '_') %>% 
-  modify_at(c('fire','aspect', 'variable'), as_factor) 
+  modify_at(c('fire','aspect', 'variable'), as_factor) %>% 
+  mutate(aspect = fct_relevel(aspect, 'North','Flat','South'))
+
 
 # END
 

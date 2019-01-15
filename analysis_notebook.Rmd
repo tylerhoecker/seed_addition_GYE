@@ -1,0 +1,112 @@
+---
+title: "Analysis Notebook"
+author: "Tyler Hoecker"
+date: "9/21/2018"
+output: html_document
+---
+
+### 9/21/18:  
+Working through the procedure to go from the raw ouput of the data loggers to an R format. Have it streamlined so that columns, headers, etc. do not need to be changed. 
+Issue emerged dealing with missing data, where if batteries dies (versus cable getting unplugged), those rows do not appear in data set. So, when plotting, they don't appear as missing, and the plot just connects a straight line between the dates. Ultimately I want to remove missing dates, but I want to be able to track those dates in R. So I had to manually add the dates where values are missing to: MPF, BHF
+
+Should add an elevation column to dataframe so can plot by that instead of 'site'
+
+### 9/24/18:  
+- Made changes to the import function in 'read_soil_data' after changing the site names to Fire1-Fire2_Aspect, instead of FFA. Took a while to figure out the grep, but it works for now. 
+- Worked on seedling allometry data. I think this will work! They have a pretty clean relationship, r  = 0.86 using the model from ecophysiology ( log[basa^2] + log[height] ). Made scatter plots to show Monica. 
+- Put everything into an RMarkdown, which I will use to show Monica the progress.
+- Plotting seedling counts, not tracking individuals, over time.
+
+### 9/26/18:  
+- Met with Monica, good meeting. Her suggestions:
+    - switch axes to biomass~height/basal
+    - plot temp data over top of seed survival to see if events line up with drops in seedlings
+    - Order of operations for analysis: 1. Germination 2. Survival 3. Variation in biomass
+    
+### 10/3/18:
+Revisited rose plots of wind data for Nate.
+
+### 10/4/18:
+Starting to work on incorporating weather data. Learned that read_excel is much faster if you can avoid producing warnings... so came up with a slightly better way to read in the data. The funtioncs in "read_soil_data.R" and "read_atmos_data.R" work very similarly, pretty quick given how much data are read. They import with read_excel, pick out columns and name them (this part is NOT GENERAL), and make sure they are classed properly. 
+Does it make sense to make ATMOS data VERY long? I.E., should the column be 'varibale' and 'value'?
+
+### 10/10/18
++ Putting weather + seedling work into RMarkdown
++ Making manual edits to seedling data based on notes.... Ok that is not really going to be feasible. Changed one set that was clear. Will have to rely on averages by aspect. 
++ Changed Buffalo north and south sites manually, to make Excel cells NOT a formula. Not sure why this is... but interferes with reading in NAs.
++ Looking at differences between air temperature and soil temperature
+
+### 10/24/18
++ Went through and fixed any discrepencies in tag numbers. Does not include October visit to Maple and Buffalo, which have not been uploaded yet due to issue with Kobo.
++ Went through and looked at all of the dates that cells with heights recorded were sampled. Found some mis-labeled frameIDs, but could not detect any mistakes in the cell IDs. The cells that I found earlier that were measured only once or twice must then have been the result of a wrong frame ID, not a wrong cell ID. 
++ Got the data uploaded! Yay! Wow that was stressful. Then accidentally re-wrote the running_update file, so I had to re-do a bunch of the fixes that I made. 
++ Adding Buffalo-South manually (because we didn't do it in the field because we didn't know the frameIDs...)
++ Saved a season-end version of the data as "seedling_data_complete.csv" in the GitHub folder
++ Filled in: {2018-07-30	berry_huck	flat	pico	nw	95 E_2} because it was there for weeks, was missing one week, and then back. Must have been missed. Used numbers from previous week (24, 100)
++ Changed: {2018-08-11	berry_glade	south	pico	sw	35 6_C} to -999/DEAD because it was "dead" the week before and after
++ Deleted {2018-07-03	berry_glade	north	pmse	sw	1224 5_B} because the values were crazy and not consisten with other weeks.
++ Deleted {2018-07-31	berry_glade	north	pmse	ne	1789 6_B} because it didn't have a height, or other weeks, only basal one week.
++ Moved {2018-07-31	berry_glade	north	pmse	center	1267 4_B} to {5_B}
++ Estimated basal for {2018-07-31	berry_glade	north	pmse	center	1267 6_C}, 81, same as week before, had height, was missing basal.
+
+
+### 10/25/18
++ Started making changes in GitHub/running_update instead of 'complete', but when I went make to complete, the ones I had just moved to line up didn't make sense anymore... The method I am using now is better, where it is sorted down to frame and the dates are successive rows, it is clear where they are missing and relatively easy to move them. I am changing too many to list but only when they are very obvious and w/o conflicts in new cells. 
++ All changes from yesterday are not being used...
++ Estimated:
+    + {7/17/18	berry_glade	flat	pico	ne	1434 5_B} one missing week, made it average of weeks on either side.
+    + 1355	7/31/18	berry_glade	north	pico	center	1355 9_A} one missing week, made it average of weeks on either side.
+    + A few others estimated by interpolaton...
++ I think the data are good now. Pretty thorough multiple checks through and no gaps left. Caught a few dozen issues, not all are recorded here, but only made very obvious changes.
++ Plots look good, no more spurious increases.
+
+### 10/26/18
++ Progress on GCC talk... going to work on plotting number of seedlings as a function of previous two weeks temperature.
+
+
+## Key Points GCC talk:
++ All aspects show declines over the summer
++ South facing aspects are almost always the lowest, and north facing almost always the highest
+    + Effect is magnified with more seedlings (if low, aspect less important)
++ Declines are concurrent with soil moisture
+    + Summer minimal determines rates, no chance to recover with later moisture, further declines even after fall rains
+  
+### 11/08/18
++ Lots of messing around the last day until 10AM today trying to figure out issues with from frameIDs etc. They are solved! Totals add up correctly when figured many different ways. Built tibble that shows for each individual cell whether it germinated or not. 
++ Now I need to tie these data to the environmental data, and that will be the basis for the mixed-effects logistic regression. 
++ First step is the MELR for germination, then for survival, then add complexity.
+
+### 11/12/18
++ Been working on logistic regression of germination and survival as a function of the environmental parameters. Using glm and glmer with family = binomial in both. The mixed effects (-er) does not seem to be adding information at this point. The germination model has significant terms, the survival model does not, except species. Need some help to interpret these results, not convinced. Bar plots suggest effects are similar for both survival and germination.
+
+### 12/13/18
++ Sitting back down to this... Converting things to proportions; making dataframes by frame, site, aspect, and calculating means/st. devs for those. Double-checking that survival is proprotion of germinated. Calculated proportions as:
+
+- Germination: 1 for every cell (in every frame) for every measurement period where there is a value. Germination = max(), so if there is a 1 at any point during the summer, the cell gets a 1 for germinated. Summarized, so no duplicated dates. Single value (0,1) per cell. Then, per frame (fire, aspect, frameID), total count of unique cells divided by 50 (total possible).
+- Final measurement/ "established": 1 for every cell that has a value when we sampled in October, it would also have to have germinated. Then, per frame, total count of cells. Could calculate from germination proportion * survival proportion.
+- Survival: Per site (fire, aspect), total count at final measurement divided by germination count.
+
++ Looking at histograms of distributions. The are skewed. Using arcsine-sqroot transform per Tony's stats manual. Seems acceptible, but still many zeros.
+
+### 12/14/18
++ Adding error bars to bar plots. These are looking finalized, for the general patterns by site and aspect. Now to move on to modeling. Will put progress in 'Research_Update_2018_12_17.Rmd'
+
++ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

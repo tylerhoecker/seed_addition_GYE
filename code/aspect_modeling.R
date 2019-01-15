@@ -25,6 +25,21 @@ temp <- counts %>%
 
 summary(temp)
 
+# For RMarkdown
+# Specified as count of germination/survival/establishment as a function of aspect and fire (as fixed effects), with random effect for frame nested in aspect nested in fire. `glmer(value ~ aspect + fire + (1 | fire:aspect:frameID), data = ., family = "poisson")` 
+# Unclear: fire is significant when specified as a fixed effect, but not when it is listed as random effect. No significance for nested random effect of frameID. I think I am specifying the model correctly, but not 100%.
+# 
+# 
+# ```{r, echo=FALSE, code = readLines("/Users/tylerhoecker/GitHub/seed_addition_GYE/code/analysis_modeling.R")}
+# ```
+# 
+# ```{r, echo=FALSE}
+# knitr::kable(glm_aspect, digits = 3, caption = "GLMM coeffecients")
+# knitr::kable(glm_aspect_glance, digits = 3, caption = "GLMM statistics")
+# ```
+
+
+
 # # THE MODEL - mixed-effects logisitic regression --------------------------
 # 
 # m <- glm(germinated ~ mois_med + temp_med + air_temp_med + solar_high + rel_hum_high +
