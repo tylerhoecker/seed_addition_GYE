@@ -11,13 +11,6 @@ source('code/read_summarize_seedling.R')
 # Anwer: Yes, between N-S for PICO @ 0.01, F-S for PICO @ 0.05, and N-S for PSME at 0.05.
 # ------------------------------------------------------------------------------
 
-# Transform data, then show both ways (all fires and aspects together for clarity)
-# Using arsine-square-root transform per Ives 2018 sensu Larson and Marx 1981
-proportions <- proportions %>% 
-  mutate(asinsqrt = asin(sqrt(value))) %>%
-  rename(original = value) %>% 
-  gather(version, value, asinsqrt, original)
-
 # Plot distributions of values
 ggplot(proportions) +
   geom_histogram(aes(x = value), binwidth = 0.05, fill = 'grey10') +

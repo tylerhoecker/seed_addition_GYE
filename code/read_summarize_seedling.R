@@ -30,4 +30,10 @@ proportions <- full_join(germination, final) %>%
   mutate(value = if_else(is.na(value), 0, value)) %>% 
   mutate(period = factor(period, levels = c('germination','survival','establishment')))
 
+# Transform data, then show both ways (all fires and aspects together for clarity)
+# Using arsine-square-root transform per Ives 2018 sensu Larson and Marx 1981
+proportions <- proportions %>% 
+  mutate(asinsqrt = asin(sqrt(value))) %>%
+  rename(original = value) %>% 
+  gather(version, value, asinsqrt, original)
 

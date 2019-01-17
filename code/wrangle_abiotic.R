@@ -1,14 +1,49 @@
+# Right now this is a working script to test out different approaches for summarizing 
+# abiotic data. 
+# The percentile/ecdf approach was copied over to `soil_mois_ecdf.R` on 1/15/18,
+# for easy calling from `abiotic_modeling.R`
+
+
+# Decide on a time period of interest:
+start_time <- as.POSIXct(c("2018-06-01 00:00:00"))
+end_time <- as.POSIXct(c("2018-09-01 00:00:00"))
+
+
 # Load soil data for sure in either method. Produces `soil_df`
 source('code/read_soil_data.R')
 
-# Two options for a soil moisture index: AUC of log-log model, and percentile (ecdf)
 
+# Examine covariance between soil moisture and temperature 
+# There is a significant, but weak negative correlation of r = -0.24/ r2 = 0.04
+# ------------------------------------------------------------------------------
+
+mois_temp <- soil_df %>% 
+  # Just soil moisture and no missing values 
+  filter(!is.na(value)) %>% 
+  # Just the summer 
+  filter(time >= start_time & time <= end_time) %>% 
+  # Truncate negative values to 0
+  mutate(value = if_else(value < 0, 0, value)) %>% 
+  # Average all 4 ports
+  group_by(fire, aspect, time, variable) %>%
+  summarise(value = mean(value)) %>% 
+  spread(variable, value) %>% 
+  group_by(fire, aspect) %>% 
+  sample_n(100)
+
+mois_temp %>% 
+  ggplot() +
+  geom_point(aes(x = mois, y = temp)) 
+
+cor.test(mois_temp$mois, mois_temp$temp)
+
+# Two options for a soil moisture index: AUC of log-log model, and percentile (ecdf)
 # Log-log exponential model ----------------------------------------------------
 soil_sum <- soil_df %>% 
   # Just soil moisture and no missing values 
   filter(!is.na(value), variable == 'mois') %>% 
   # Just the summer 
-  filter(time >= as.POSIXct(c("2018-06-01 00:00:00")) & time <= as.POSIXct(c("2018-09-01 00:00:00"))) %>% 
+  filter(time >= start_time & time <= end_time) %>% 
   # Truncate negative values to 0
   mutate(value = if_else(value < 0, 0, value)) %>% 
   # Average all 4 ports
@@ -36,6 +71,7 @@ loglog_fn <- function(data){
 loglog_df <- soil_sum %>% 
   group_by(fire, aspect) %>% 
   do(loglog_fn(.))
+
 
 lab_dates <- pretty(soil_sum$date)
 
