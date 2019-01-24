@@ -13,86 +13,55 @@ source('code/atmos_data_prep.R') # creates `atmos_df` (complete) and `atmos_pred
 # Run seedling import/summary scripts. Creates `germination`, `final`, `proprotions`, `seed_per`.
 source('code/read_summarize_seedling.R')
 
+# Read in topographic indices from CSV (done using built-in GDAL DEM tools in QGIS3: https://www.gdal.org/gdaldem.html)
+dem_idx <- read_csv('data/dem_indices.csv')
 
 # Start with a dataframe of seedling data and soil moisture and temperature
-seeds_soil_df <- full_join(proportions, soil_preds, by = c('fire','aspect')) %>% 
+complete_df <- proportions %>% 
+  full_join(., soil_preds, by = c('fire','aspect')) %>% 
+  full_join(., atmos_preds) %>% 
+  full_join(., dem_idx) %>% 
   filter(version == 'original') %>% 
   rename(proportion = value) %>% 
   # Dealing only with 'establishment'
   filter(period == 'establishment') %>% 
-  unite(site, fire, aspect, remove = F) 
-
+  unite(site, fire, aspect, remove = F) %>% 
+  ungroup() %>% 
+  modify_at(c('site', 'fire', 'aspect'), as.factor) 
 
 # Exploratory Analysis ----------------------------------------------------
 colVals <- c('Flat' = '#009E73','North' = '#0072B2','South' = '#E69F00')
 
-seeds_soil_df %>%
-  group_by(fire, aspect, species, frameID, period) %>% 
-  gather(abiotic, abiotic_value, mois_max:temp_q75) %>% 
-  # Plot
-  ggplot() +
-  geom_point(aes(x = abiotic_value, y = proportion, fill = aspect), shape = 21, size = 2, alpha = 0.6) +
-  facet_grid(species~abiotic, scales="free") +
-  scale_fill_manual(values = colVals, name = 'aspect') +
-  theme_bw(base_size = 10) 
+# Correlation
+
+library(GGally)
+complete_df %>% 
+  ungroup() %>% 
+  select(proportion, mois_q50, temp_q75, air_temp_q50, vpd_q50, tpi, tri, aspect_deg) %>% 
+  ggpairs()
+
 
 # THE MODELS ---------------------------
+model_df <- complete_df %>% 
+  mutate(count = as.integer(proportion*50)) %>% 
+  select(site, fire, aspect, species, frameID, count, 
+         starts_with('mois_'),  starts_with('temp_'),
+         dem_elev, tri, tpi, slope, aspect_deg) %>% 
+  as.data.frame()
+  
 
 library(lme4)
-m <- glmer(proportion*50 ~ mois_q75 + (1 | fire),
-           family = 'poisson', control = glmerControl(optimizer = "bobyqa"),
-           data = as.data.frame(seeds_soil_df))
+m <- glmer(count ~ species + mois_q50 + temp_q50 + tri + (1|fire) ,
+           family = poisson(link = 'log'), 
+           data = model_df)
 summary(m)
+plot(m)
 
-
-m <- glm(proportion*50 ~ mois_q75*species*fire,
-         family = 'poisson',
-         data = as.data.frame(seeds_soil_df))
-
+m <- stan_glmer(count ~ mois_q50 + temp_q50 + tri + (1|species) + (1|fire) + (1|site),
+                family = poisson(link = 'log'), 
+                data = model_df)
 summary(m)
+pairs(m)
 
 
-
-
-
-### EXTRA
-covariates <- germ_abiotic_df %>% 
-  ungroup() %>% 
-  na.omit() %>% 
-  as.data.frame()
-
-GGally::ggpairs(covariates)
-
-ggplot(temp, aes(x = aspect, y = value)) +
-  geom_jitter(alpha = .1) +
-  geom_violin(aes(fill = aspect), alpha = .75) +
-  scale_fill_manual(values = colVals, name = 'aspect') +
-  facet_wrap(~variable, scales = 'free')
-
-# # Surival and germination figuring-------------------------------------------
-# # Germinated
-# germination <- seedlings %>% 
-#   filter(variable == 'height', species != 'control') %>% 
-#   select(site, aspect, species, frameID, cell, value) %>% 
-#   mutate(germinated = if_else(is.na(value), 0, 1)) %>% 
-#   unite(frameID, cell, col = 'uniqID', remove = FALSE) %>%
-#   group_by(site, aspect, species, frameID, uniqID) %>% 
-#   summarise(germinated = max(germinated)) %>% 
-#   group_by(site, aspect, species, frameID) #%>% 
-#   #mutate(problem = if_else(sum(germinated) == 0, 'Yes','No')) %>% 
-#   #filter(problem == 'No') 
-#   
-# 
-# # Survived
-# survival <- seedlings %>%
-#   filter(variable == 'height', species != 'control') %>% 
-#   mutate(survived = if_else(date > as.POSIXct("2018-10-01") & value > 0, 1, 0)) %>% 
-#   select(site, aspect, species, frameID, cell, survived) %>% 
-#   unite(frameID, cell, col = 'uniqID') %>%
-#   group_by(site, aspect, species, uniqID) %>% 
-#   summarise(survived = max(survived, na.rm = T))  
-#   
-# 
-# establishment_df <- full_join(germination, survival) %>% 
-#   ungroup()
 

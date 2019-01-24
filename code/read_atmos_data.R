@@ -28,7 +28,7 @@ atmos_df <- map(raw_files, read_atmos) %>%
   bind_rows(.id = 'site') %>%   
   #mutate(time = parse_date_time(.$time, orders = 'mdy hs')) %>%
   separate(site, into = c('fire','aspect'), sep = "_") %>% 
-  modify_at(c('fire','aspect'), as_factor)
-
+  modify_at(c('fire','aspect', 'variable'), as_factor) %>% 
+  mutate(aspect = fct_relevel(aspect, 'North','South','Grizz'))
 # END
   

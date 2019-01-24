@@ -91,7 +91,22 @@ Does it make sense to make ATMOS data VERY long? I.E., should the column be 'var
 ### 12/14/18
 + Adding error bars to bar plots. These are looking finalized, for the general patterns by site and aspect. Now to move on to modeling. Will put progress in 'Research_Update_2018_12_17.Rmd'
 
-+ 
+### 1/17/19
++ Some streamlining of data prep process so that it happens in independent scripts
++ Much considering of empirical cumulative distribution function. Plotting ecdf's for all sites does reveal some separation. For soil moisture, sites appear most distinct at 50th percentile. Less variability among sites in soil temperature, biggest separation is at 75th percentile or above. What is the best way to decide which percentile to us?
++ Calculatd VPD. Ends up being very easy from ATMOS, because Ea (atmospheric pressure) and RH (relative humiidity) are already given. So, Es = Ea/RH and VPD = Es - Ea. See ATMOS manual and Buck 1981. 
++ The problem with the met data is that we lose 1/3 of the sites... so there is already a lack of data because we only have 1 set of measurements per site, and then we reduce the information further. 
+
+### 1/18/19
++ Was calculating VPD wrong! Was using atmospheric pressure as if it were atm vapor pressure... its not! 
++ So, even though the ATMOS calculates Es to calculate RH, it doesn't save it. The device can be set to record Ea instead of RH, but I didn't do that. Wouldn't save the step of calculating Es anyway. 
+
+### 1/23/19
++ Finalized VPD calculation, it's correct now, based on info from ATMOS. Had to calculate ES using air temp, derive EA from RH and subtract. 
++ Spent some time this week also looking at GLMM. I think this is the right direction, but there are many ways to parameterize the model, so not sure what's correct.
++ Today I have been calculating geographic position indices (aspect, slope, TPI, TRI) to include in the model. There may be effects that are not accounted for by soil moisture / env. data we collected.
++ Saved that information as: dem_indices.csv in GitHub/seed-addition/data folder.
++ Still messing with glmer... I think I have a good model here, but is it right???
 
 
 

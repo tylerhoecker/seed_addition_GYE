@@ -57,7 +57,8 @@ soil_sum <- soil_df %>%
             date = median(time))
 
 loglog_fn <- function(data){
-  exp_model <- lm(log(hours) ~ log(value), data = data)
+  exp_model <- lm(log(hours) ~ value, data = data)
+  #exp_model <- lm(hours ~ poly(value, 2), data = data)
   new_x <- seq(0.01, 0.30, length.out = 1000)
   prediction <- predict(exp_model, list(value = new_x), se.fit = T)
   new_y <- prediction$fit
@@ -88,32 +89,29 @@ ggplot() +
 # ECDF approach ----------------------------------------------------------------
 soil_sum <- soil_df %>% 
   # Just soil moisture and no missing values 
-  filter(!is.na(value), variable == 'mois') %>% 
-  select(-variable) %>% 
+  filter(!is.na(value)) %>% 
   # Just the summer 
   filter(time >= as.POSIXct(c("2018-06-01 00:00:00")) & time <= as.POSIXct(c("2018-09-01 00:00:00"))) %>% 
   # Truncate negative values to 0 [not sure why there are negative values...]
   mutate(value = if_else(value < 0, 0, value)) %>% 
   # Average all 4 ports
-  group_by(fire, aspect, time) %>%
+  group_by(fire, aspect, time, variable) %>%
   summarise(value = mean(value)) 
 
 
-ecdf_fn <- function(x){
-  Fn <- ecdf(unique(x))
-  pctls <- Fn(x)
-  return(data.frame('value' = x, 'prctl' = pctls))
-}
+# ecdf_fn <- function(x){
+#   Fn <- ecdf(unique(x))
+#   pctls <- Fn(x)
+#   return(data.frame('value' = x, 'prctl' = pctls))
+# }
 
-ecdf_soil <- soil_sum %>% 
-  group_by(fire, aspect) %>% 
-  do(quantile(.$value, seq(0.1,0.9, by = 0.1)))
 
-ecdf_soil <- soil_sum %>% 
-  nest(-fire,-aspect) %>%
-  mutate(Quantiles = map(data, ~ quantile(.$value, c(.5, .75, .90, .99))),
-         Quantiles = map(Quantiles, ~ bind_rows(.) %>% gather())) %>% 
-  unnest(Quantiles)
+# Not working with both temp and moisture....
+# ecdf_soil <- soil_sum %>% 
+#   nest() %>%
+#   mutate(Quantiles = map(data, ~ quantile(.$value, c(.5, .75, .90, .99))),
+#          Quantiles = map(Quantiles, ~ bind_rows(.) %>% gather())) %>% 
+#   unnest(Quantiles)
 
 
 
@@ -121,29 +119,63 @@ colVals <- c('Flat' = '#009E73','North' = '#0072B2','South' = '#E69F00')
 
 ggplot(soil_sum) +
   stat_ecdf(aes(x = value, color = aspect, group = interaction(aspect, fire)), size = 1) +
-  geom_rug(data = sample_n(soil_sum, 150), aes(x = value), alpha = 0.3) +
+  #geom_rug(data = sample_n(soil_sum, 150), aes(x = value), alpha = 0.3) +
   scale_color_manual(values = colVals, name = 'aspect') +
-  #facet_grid(~fire) +
-  theme_bw(base_size = 12)
+  facet_grid(fire~variable, scales = 'free') +
+  theme_bw(base_size = 12) +
+  labs(x = 'sensor value (VWC, deg. C)', y = 'Cumulative probability')
 
-ggplot(soil_sum) +
-  geom_density(aes(x = value, fill = aspect, group = interaction(aspect, fire)), alpha = 0.5) +
-  scale_fill_manual(values = colVals, name = 'aspect') +
-  facet_grid(~fire) +
-  theme_bw(base_size = 12)
+plot_df <- soil_df %>% 
+  # no missing values 
+  filter(!is.na(value)) %>% 
+  # Just the summer 
+  filter(time >= start_time & time <= end_time) %>% 
+  # Truncate negative values to 0 [not sure why there are negative values...]
+  mutate(value = if_else(value < 0, 0, value)) %>% 
+  # Average all 4 ports
+  group_by(fire, aspect, time, variable) %>%
+  summarise(value = mean(value)) %>%  
+  spread(variable, value) %>% 
+  group_by(fire, aspect)
 
+ggplot(sample_n(plot_df, 500), aes(x = mois, y = temp)) +
+  geom_point(alpha = 0.7) +
+  geom_smooth(method = 'lm') +
+  theme_bw(base_size = 14)
 
+ggplot(soil_preds) +
+  geom_point(aes(x = mois_q50, y = temp_q50))
 
 # Vapor pressure defecit -------------------------------------------------------
-source('code/read_atmos_data.R') #creats 'atmos_df'
-atmos_sum <- atmos_df %>%
-  # Filter dates to just summer
-  filter(time >= as.POSIXct(c("2018-06-01 00:00:00")) & time <= as.POSIXct(c("2018-09-01 00:00:00")),
-         aspect != 'Grizz') 
+# Load and prep meteorological data (air temperature and VPD)
+source('code/atmos_data_prep.R') # creates `atmos_df` (complete) and `atmos_preds` (summarized)
+
+# Correlation
+combined <- soil_sum %>% 
+  spread(variable, value) %>% 
+  full_join(., atmos_df) %>% 
+  select(fire:temp, air_temp, vpd) %>% 
+  group_by(fire, aspect) %>% 
+  sample_n(100) %>% 
+  ungroup() %>% 
+  select(-fire, -aspect, -time)
+
+library(GGally)
+ggpairs(combined, alpha = 0.5)
+
+plot_df <- soil_sum %>% 
+  spread(variable, value) %>% 
+  full_join(., atmos_df) %>% 
+  select(fire:temp, vpd) %>% 
+  rename(soil_mois = mois, soil_temp = temp) %>% 
+  gather(variable, value, soil_mois:vpd) 
 
 
-
-
-# # ATMOS data
-
+ggplot(plot_df) +
+  stat_ecdf(aes(x = value, color = aspect, group = interaction(aspect, fire)), size = 1) +
+  #geom_rug(data = sample_n(soil_sum, 150), aes(x = value), alpha = 0.3) +
+  scale_color_manual(values = colVals, name = 'aspect') +
+  facet_grid(fire~variable, scales = 'free') +
+  theme_bw(base_size = 12) +
+  labs(x = 'sensor value (VWC, deg. C, kPa)', y = 'Cumulative probability')
 

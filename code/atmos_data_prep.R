@@ -1,21 +1,31 @@
+library(lubridate)
 # Import ATMOS data
 source('code/read_atmos_data.R') #creats 'atmos_df'
 
 # Summarize ATMOS data
-atmos_preds <- atmos_df %>% 
+atmos_df <- atmos_df %>% 
   # Just summer
   filter(time >= start_time & time <= end_time,
          # Ignore 'Grizz' for now
          aspect != 'Grizz',
          # Remove NAs
          !is.na(air_temp)) %>% 
-  group_by(fire, aspect) %>%
-  # Saturation vapor pressure (es) is calculated automatically by the ATMOS 41 using the 
-  # Magnus-Tetens equation in Buck 1981, and used to calculate RH as: RH = ea / (es * air temp).
-  # es is not saved by the data logger, but is easily back-calculated using the 
-  # supplied values for ea and RH, as: es = ea / RH.
-  # See ATMOS 41 manual: http://library.metergroup.com/Manuals/20635_ATMOS41_Manual_Web.pdf 
-  mutate(vpd = (atms_press / rel_hum) - atms_press) %>% 
+  # Summarize at hourly, to align with soil moisture
+  mutate(time = floor_date(time, 'hour')) %>% 
+  group_by(fire, aspect, time) %>% 
+  summarize_all(mean) %>% 
+  # Truncate RH at 1
+  mutate(rel_hum = if_else(rel_hum >= 1, 1, rel_hum),
+         # The ATMOS 41 measures RH and temperature and computes vapor pressure (es) 
+         # using the Magnus-Tetens eq. from Buck 1981. es is not saved by the 
+         # data logger, so must be re-calculated using: 
+         # es = 0.6108 * exp(17.502 * T / (T + 240.97)). Then, ea = RH*es; then VPD = es - ea. 
+         # ATMOS 41 manual: http://library.metergroup.com/Manuals/20635_ATMOS41_Manual_Web.pdf 
+         es = 0.6108 * exp((17.502 * air_temp) / (air_temp + 240.97)),
+         vpd = es - rel_hum * es) 
+
+# Caclulate percentiles and pull out just air temp and vpd
+atmos_preds <- atmos_df %>% 
   select(air_temp, vpd) %>% 
   gather(variable, value, air_temp, vpd) %>%
   group_by(fire, aspect, variable) %>% 

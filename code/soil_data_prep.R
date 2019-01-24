@@ -11,7 +11,9 @@ soil_preds <- soil_df %>%
   mutate(value = if_else(value < 0, 0, value)) %>% 
   # Average all 4 ports
   group_by(fire, aspect, time, variable) %>%
-  summarise(value = mean(value)) %>% 
+  summarise(value = mean(value)) %>%
+  # Concert soil moisture (VMC) to %
+  mutate(value = if_else(variable == 'mois', value*100, value)) %>% 
 # Caclulate 50th and 75th percentiles.
   group_by(fire, aspect, variable) %>% 
   summarise(q50 = quantile(value, 0.50),
