@@ -108,6 +108,9 @@ Does it make sense to make ATMOS data VERY long? I.E., should the column be 'var
 + Saved that information as: dem_indices.csv in GitHub/seed-addition/data folder.
 + Still messing with glmer... I think I have a good model here, but is it right???
 
+### 1/25/19
++ Will try to make a glmm for germination and put together a summary of germination and survival models before trying to work with a known-fate model per JPs suggestion.
+
 
 
 

@@ -6,7 +6,7 @@
 
 # Decide on a time period of interest:
 start_time <- as.POSIXct(c("2018-06-01 00:00:00"))
-end_time <- as.POSIXct(c("2018-09-01 00:00:00"))
+end_time <- as.POSIXct(c("2018-11-01 00:00:00"))
 
 
 # Load soil data for sure in either method. Produces `soil_df`
