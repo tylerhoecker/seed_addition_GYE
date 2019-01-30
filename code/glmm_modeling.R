@@ -123,7 +123,7 @@ model_df <- complete_df %>%
   
 # Method 1: GLMM with a log-link and Poisson family.
 library(lme4)
-m <- glmer(count ~ species*(temp_max + mois_q50 + dev_north + tri) + (1|fire/aspect),
+m <- glmer(count ~ species*(temp_max + mois_q50) + (1|fire) + (1|fire:aspect),
            family = poisson(link = 'log'), 
            data = model_df,
            control=glmerControl(optimizer="bobyqa"))
@@ -142,9 +142,10 @@ effects <- allEffects(m)
 
 # Method using zero-inflated approach
 library(glmmTMB)
-m <- glmmTMB(count ~ species + temp_max + mois_q50 + dev_north + tri + (1|fire:aspect),
+m <- glmmTMB(count ~ species + temp_max + mois_q50 + dev_north + tri + (1|fire) + (1|fire:aspect),
              ziformula = ~.,
              family = poisson(link = 'log'), 
+             REML = T,
              data = model_df)
 summary(m)
 plot(allEffects(m, residuals = TRUE))

@@ -110,10 +110,39 @@ Does it make sense to make ATMOS data VERY long? I.E., should the column be 'var
 
 ### 1/25/19
 + Will try to make a glmm for germination and put together a summary of germination and survival models before trying to work with a known-fate model per JPs suggestion.
++ These models are not really making sense... I think summarizing the information at the site-level is a major constraint. Even though there is variation in the counts, there is very limited variation in the abiotic data from which to model the counts. 
 
+### 1/29/19
++ Been working through GLMMs the last few days, using resources from Robbie. 
++ Also plotted linear relationships for every predictor, which is helpful. Based on them we should be able to fit a model. 
++ Trying various diagnostics from the lectures Robbie gave me. Things still seem a bit funny... but not horrible. 
++ The coeffectients, though, don't necesarily jive with expectations. Topographic roughness is best predictor...
++ Re-scaling predictors removes an error from glmer about scales, but doesn't change results.
++ Questions that have emerged:
+    - Should species be modeled separately or included as a model term? I'm leaning toward the latter.
+    - How do I interpret correlation between the intercept and among fixed effects?
+    - Which optimizer should I use?
+    - Should I use fire and aspect as random effects? Or fire and site ("singular fit") or just site?
+    - Why does R2 improve in models that include non-significant terms?
+    - What does the warning of "singular fit" indicate? My sense is not enough information to estimate effects
+    - Should I use a negative binomial or a poisson (log) link family?
+    - Should I use the zero-inflated version. Things become insignificant... doesn't that mean less anti-consevative?
 
+### 1/30/19 
 
+I think I have a model that makes sense and is good:
+```{r}
+m <- glmer(count ~ species*(temp_max + mois_q75 + dev_north + tri) + (1|fire) + (1|fire:aspect), #species + 
+           family = poisson(link = 'log'), 
+           data = model_df,
+           control=glmerControl(optimizer="bobyqa"))
+```
++ This gives random effects for aspect nested in fire and for fire alone
++ 
++ Comparing partial R2s between models with and without generic landscape position metrics (TRI and dev. from N), suggests that measured variable (temp_max and mois) explain ~50% of variability, models that include position metrics explain ~70%. 
 
++ I should try to fit a model that uses all timepoints: glmer(count ~ previous two weeks abiotic). Using a random effect for frameID will account for the correlation in repeated measures, in addition to random effects for site.
+    
 
 
 
