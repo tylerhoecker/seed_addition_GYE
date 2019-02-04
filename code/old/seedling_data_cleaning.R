@@ -1,4 +1,4 @@
-this_version <- 'data/seed_addition_2018_running_update.csv'
+this_version <- 'data/seedling_data_complete.csv'
 
 checkA <- read_csv(this_version) %>% 
   select(-starts_with('height_header'),-starts_with('basal_header'), 
@@ -27,12 +27,13 @@ repeat_measures <- read_csv(this_version) %>%
   separate(cell, into = c('variable','y_cell','x_cell'), sep = '_') %>%
   unite(x_cell, y_cell, col = 'cell', remove = F) %>% 
   filter(variable == 'height', !is.na(value)) %>% 
-  group_by(Fire, Aspect, Species, frameID, cell) %>% 
+  group_by(Fire, Aspect) %>% 
+  summarise(max(date))
   #tally()
   summarise(count = n(),
             minheight = min(value),
             maxheight = max(value),
-            first = date[1],
+            first = date[[1]],
             second = date[2],
             third = date[3],
             fourth = date[4],

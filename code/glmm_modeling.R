@@ -23,8 +23,8 @@ source('code/read_summarize_seedling.R')
 
 # Read in topographic indices from CSV (done using built-in GDAL DEM tools in QGIS3: https://www.gdal.org/gdaldem.html)
 dem_idx <- read_csv('data/dem_indices.csv') %>% 
-  # Convert aspect to continuous measure
-  mutate(dev_north = if_else(aspect_deg > 180, abs(aspect_deg - 360), aspect_deg))
+  # Convert aspect to continuous measure per Beers et al. 1966 J. For.
+  mutate(dev_ne = cos( (45*pi/180) - (aspect_deg*pi/180) ) + 1 )
 
 # Start with a dataframe of seedling data and soil moisture and temperature
 complete_df <- proportions %>% 
@@ -52,18 +52,6 @@ complete_df %>%
   select(-c(utm_zone, easting, northing, elev, aspect_deg)) %>% 
   gather(., variable, value, -(site:proportion),-count) %>% 
   
-  ggplot(aes(x = value, y = count)) +
-  geom_point(aes(color = aspect)) +
-  geom_smooth(method = 'lm', color = 'black') +
-  scale_color_manual(values = colVals) +
-  facet_wrap(~variable, scales = 'free') +
-  theme_bw(base_size = 12)
-
-# Just plot the ones I will use moving forward
-complete_df %>%
-  mutate(count = as.integer(proportion*50)) %>% 
-  select(-c(utm_zone, easting, northing, elev)) %>% 
-  gather(., variable, value, -(site:proportion),-count) %>% 
   ggplot(aes(x = value, y = count)) +
   geom_point(aes(color = aspect)) +
   geom_smooth(method = 'lm', color = 'black') +
@@ -103,7 +91,7 @@ library(GGally)
 complete_df %>% 
   mutate(count = as.integer(proportion*50)) %>% 
   ungroup() %>% 
-  select(count, temp_max, tri, dev_north, mois_q75) %>% 
+  select(count, temp_max, tri, dev_ne, mois_q75) %>% 
   ggpairs() + theme_bw()
 # Must eliminate slope because of high correlation with TRI (0.993), all other
 # correlations are less than |0.5|
@@ -113,20 +101,21 @@ complete_df %>%
 model_df <- complete_df %>% 
   #filter(species == 'psme') %>% #,species == 'pico'
   mutate(count = as.integer(proportion*50)) %>% 
-  select(site, fire, aspect, species, frameID, count,
-         temp_max, tri, dev_north, mois_q50) %>%
+  select(-c(utm_zone, easting, northing)) %>%
   # Re-scaling the predictors eliminates the error about rescaling from glm
   # the results are very similar except for the p-value for the intercept
-  mutate_at(vars(temp_max, mois_q50, tri), scale) %>% 
+  mutate_at(vars(temp_q50, temp_q75, temp_max, mois_q50, mois_q75, dev_ne, tri, slope), scale) %>% 
   as.data.frame() 
 
   
 # Method 1: GLMM with a log-link and Poisson family.
 library(lme4)
-m <- glmer(count ~ species*(temp_max + mois_q50) + (1|fire) + (1|fire:aspect),
+m <- glmer(count ~ species*(temp_max + mois_q50 + dev_ne + tri) + (1|fire),
            family = poisson(link = 'log'), 
            data = model_df,
            control=glmerControl(optimizer="bobyqa"))
+drop1(m)
+
 summary(m)
 dotplot(ranef(m, condVar = T))
 qqmath(ranef(m))
@@ -142,7 +131,7 @@ effects <- allEffects(m)
 
 # Method using zero-inflated approach
 library(glmmTMB)
-m <- glmmTMB(count ~ species + temp_max + mois_q50 + dev_north + tri + (1|fire) + (1|fire:aspect),
+m <- glmmTMB(count ~ species + temp_max + mois_q50 + dev_ne + tri + (1|fire),
              ziformula = ~.,
              family = poisson(link = 'log'), 
              REML = T,

@@ -61,6 +61,10 @@ tukey_fire_cld <- proportions %>%
 colVals <- c('Flat' = '#009E73','North' = '#0072B2','South' = '#E69F00')
 
 # Full breakdown (, aspect, period)
+# Plot the original values 
+proportions <- proportions %>% 
+  filter(version == 'original')
+
 dodge <- position_dodge(width = 0.9)
 
 ggplot(proportions, aes(x = fire, y = value, fill = aspect, group = aspect)) +

@@ -16,16 +16,12 @@ final <- seedlings %>%
   group_by(fire, aspect, species, frameID, cell) %>% 
   summarise(final = max(survived, na.rm = T)) 
 
-# Calculate survival
-seeds_per = 50
-trays_per = 5
-
 # Proportion of germination, survival and their product, establishment for each frame. 
 proportions <- full_join(germination, final) %>% 
   group_by(fire, aspect, species, frameID) %>% 
-  summarise(germination = sum(germinated, na.rm = T) / seeds_per,
+  summarise(germination = sum(germinated, na.rm = T) / n(),
             survival = sum(final, na.rm = T) / sum(germinated, na.rm = T),
-            establishment = sum(final, na.rm = T) / seeds_per) %>% 
+            establishment = sum(final, na.rm = T) / n()) %>% 
   gather(period, value, germination, survival, establishment) %>% 
   mutate(value = if_else(is.na(value), 0, value)) %>% 
   mutate(period = factor(period, levels = c('germination','survival','establishment')))
@@ -36,4 +32,21 @@ proportions <- proportions %>%
   mutate(asinsqrt = asin(sqrt(value))) %>%
   rename(original = value) %>% 
   gather(version, value, asinsqrt, original)
+
+
+# proportions %>% 
+#   filter(fire %in% c('Berry-Glade', 'Berry-Huck')) %>%
+#   group_by(species, period) %>% 
+#   summarise(min = min(value),
+#             max = max(value),
+#             mean = mean(value),
+#             median = median(value),
+#             sd = sd(value),
+#             n_response = as.integer(sum(value)*50),
+#             n_possible = n()*50) %>% 
+#   write_csv('establishment_rates_combined.csv')
+           
+
+
+
 
