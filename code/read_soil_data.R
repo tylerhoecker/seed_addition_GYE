@@ -41,7 +41,18 @@ soil_df <- map(raw_files, read_soil) %>%
   gather(key, value, -fire,-aspect,-time) %>%
   separate(key, into = c('variable','port'), sep = '_') %>% 
   modify_at(c('fire','aspect', 'variable'), as_factor) %>% 
-  mutate(aspect = fct_relevel(aspect, 'North','Flat','South'))
+  mutate(aspect = fct_relevel(aspect, 'North','Flat','South')) %>% 
+  # no missing values 
+  filter(!is.na(value)) %>% 
+  # Just the summer 
+  filter(time >= start_time & time <= end_time) %>% 
+  # Truncate negative values to 0 [not sure why there are negative values...]
+  mutate(value = if_else(value < 0, 0, value)) %>% 
+  # Average all 4 ports
+  group_by(fire, aspect, time, variable) %>%
+  summarise(value = mean(value)) %>% 
+  # Concert soil moisture (VMC) to %
+  mutate(value = if_else(variable == 'mois', value*100, value)) 
 
 
 # END

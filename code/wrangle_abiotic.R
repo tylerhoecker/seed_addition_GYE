@@ -6,7 +6,7 @@
 
 # Decide on a time period of interest:
 start_time <- as.POSIXct(c("2018-06-01 00:00:00"))
-end_time <- as.POSIXct(c("2018-11-01 00:00:00"))
+end_time <- as.POSIXct(c("2018-10-01 00:00:00"))
 
 
 # Load soil data for sure in either method. Produces `soil_df`
@@ -57,7 +57,7 @@ soil_sum <- soil_df %>%
             date = median(time))
 
 loglog_fn <- function(data){
-  exp_model <- lm(log(hours) ~ value, data = data)
+  exp_model <- lm(log(hours) ~ log(value), data = data)
   #exp_model <- lm(hours ~ poly(value, 2), data = data)
   new_x <- seq(0.01, 0.30, length.out = 1000)
   prediction <- predict(exp_model, list(value = new_x), se.fit = T)
@@ -73,9 +73,6 @@ loglog_df <- soil_sum %>%
   group_by(fire, aspect) %>% 
   do(loglog_fn(.))
 
-
-lab_dates <- pretty(soil_sum$date)
-
 ggplot() +
   geom_point(data = soil_sum, aes(x = value, y = hours, color = as.numeric(date)), alpha = 0.7) + #, 
   #geom_smooth(data = soil_sum, aes(x = value, y = hours), se = F, color = 'black', size = 1.1) +
@@ -84,6 +81,21 @@ ggplot() +
   coord_cartesian(ylim = c(0,50)) +
   facet_grid(aspect~fire) +
   theme_bw(base_size = 12)
+
+mois_auc <- loglog_df %>% 
+  group_by(fire, aspect) %>% 
+  do(auc = DescTools::AUC(.$value, .$hours))
+
+mois_auc %>% 
+  unnest(auc) %>% 
+  arrange(auc)
+
+auc_test <- DescTools::AUC(x, y)
+
+
+lab_dates <- pretty(soil_sum$date)
+
+
 
 
 # ECDF approach ----------------------------------------------------------------

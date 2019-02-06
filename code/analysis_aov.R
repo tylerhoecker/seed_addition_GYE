@@ -13,10 +13,11 @@ source('code/read_summarize_seedling.R')
 
 # Plot distributions of values
 ggplot(proportions) +
-  geom_histogram(aes(x = value), binwidth = 0.05, fill = 'grey10') +
+  geom_histogram(aes(x = value), fill = 'grey10') +
   facet_grid(version~species+period) +
   coord_cartesian(ylim = c(0,30)) +
-  theme_bw(base_size = 12)
+  theme_bw(base_size = 12) +
+  labs(x = 'Proportion', y = 'Count')
 
 
 # Now do ANOVA and Tukey's Multiple comparisons --------------------------------
@@ -27,13 +28,16 @@ aov_aspect_fire_pico <- proportions %>%
   filter(version == 'asinsqrt') %>% 
   group_by(species, period) %>% 
   do(tidy(aov(value ~ aspect*fire, data = .))) %>% 
-  filter(species == 'pico')
+  filter(species == 'pico') %>% 
+  mutate_at(vars(df, sumsq, meansq, statistic, p.value), round, 3)
 
 aov_aspect_fire_psme <- proportions %>%
   filter(version == 'asinsqrt') %>% 
   group_by(species, period) %>% 
   do(tidy(aov(value ~ aspect*fire, data = .))) %>% 
-  filter(species == 'psme')
+  filter(species == 'psme') %>% 
+  mutate_at(vars(df, sumsq, meansq, statistic, p.value), round, 3)
+
 
 # Tukey multiple pairwise comparisons
 tukey_aspect <- proportions %>%
@@ -62,14 +66,32 @@ colVals <- c('Flat' = '#009E73','North' = '#0072B2','South' = '#E69F00')
 
 # Full breakdown (, aspect, period)
 # Plot the original values 
-proportions <- proportions %>% 
-  filter(version == 'original')
 
 dodge <- position_dodge(width = 0.9)
 
 ggplot(proportions, aes(x = fire, y = value, fill = aspect, group = aspect)) +
   stat_summary(fun.y = mean, geom = "bar", position = "dodge") + 
   stat_summary(fun.data = mean_se, geom = "errorbar", position = dodge, width = 0.25) +
+  scale_fill_manual(values = colVals, name = 'aspect') +
+  facet_grid(species~period) +
+  #coord_cartesian(ylim = c(0,0.8)) +
+  theme_bw(base_size = 14) +
+  theme(strip.background = element_blank(),
+        axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)) +
+  labs(x = 'Fire', y = 'Proportion')
+
+# Showing +/- 1.96* standard error...
+statistics_df <- proportions %>% 
+  filter(version == 'original') %>% 
+  group_by(fire, aspect, species, period) %>% 
+  summarise(mean = mean(value),
+            se = sd(value)/sqrt(n()),
+            lower = mean-(1.96*se),
+            upper = mean+(1.96*se))
+
+ggplot(statistics_df) +
+  geom_col(aes(x = fire, y = mean, fill = aspect, group = aspect), position = "dodge") +
+  geom_errorbar(aes(x = fire, ymin = lower, ymax = upper, group = aspect), position = dodge, width = 0.25) +
   scale_fill_manual(values = colVals, name = 'aspect') +
   facet_grid(species~period) +
   #coord_cartesian(ylim = c(0,0.8)) +
@@ -87,10 +109,12 @@ ggplot(proportions) +
   geom_text(data = tukey_aspect_cld, aes(x = lhs, y = -0.05, label = letters), fontface = 'bold') +
   scale_fill_manual(values = colVals, name = 'aspect') +
   facet_grid(species~period) +
-  coord_cartesian(ylim = c(-0.06,0.81)) +
+  coord_cartesian(ylim = c(-0.06,0.75)) +
   theme_bw(base_size = 14) +
   theme(strip.background = element_blank(),
-        axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
+        axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)) +
+  labs(x = 'Aspect', y = 'Proportion')
+
 
 
 # By fire (fire, period)
@@ -99,8 +123,9 @@ ggplot(proportions, aes(x = fire, y = value)) +
   stat_summary(fun.data = mean_se, geom = "errorbar", position = dodge, width = 0.25) +
   geom_text(data = tukey_fire_cld, aes(x = lhs, y = -0.05, label = letters), fontface = 'bold') +
   facet_grid(species~period) +
-  coord_cartesian(ylim = c(-0.06,1)) +
+  coord_cartesian(ylim = c(-0.06,0.75)) +
   theme_bw(base_size = 14) +
   theme(strip.background = element_blank(),
-        axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
+        axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)) +
+  labs(x = 'Fire', y = 'Proportion')
 

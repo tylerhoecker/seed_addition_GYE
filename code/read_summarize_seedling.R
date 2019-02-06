@@ -16,23 +16,21 @@ final <- seedlings %>%
   group_by(fire, aspect, species, frameID, cell) %>% 
   summarise(final = max(survived, na.rm = T)) 
 
+
 # Proportion of germination, survival and their product, establishment for each frame. 
 proportions <- full_join(germination, final) %>% 
-  group_by(fire, aspect, species, frameID) %>% 
+  group_by(fire, aspect, species) %>% 
   summarise(germination = sum(germinated, na.rm = T) / n(),
             survival = sum(final, na.rm = T) / sum(germinated, na.rm = T),
             establishment = sum(final, na.rm = T) / n()) %>% 
   gather(period, value, germination, survival, establishment) %>% 
   mutate(value = if_else(is.na(value), 0, value)) %>% 
-  mutate(period = factor(period, levels = c('germination','survival','establishment')))
-
-# Transform data, then show both ways (all fires and aspects together for clarity)
-# Using arsine-square-root transform per Ives 2018 sensu Larson and Marx 1981
-proportions <- proportions %>% 
+  mutate(period = factor(period, levels = c('germination','survival','establishment'))) %>% 
+  # Transform data, then show both ways (all fires and aspects together for clarity)
+  # Using arsine-square-root transform per Ives 2018 sensu Larson and Marx 1981
   mutate(asinsqrt = asin(sqrt(value))) %>%
   rename(original = value) %>% 
   gather(version, value, asinsqrt, original)
-
 
 # proportions %>% 
 #   filter(fire %in% c('Berry-Glade', 'Berry-Huck')) %>%

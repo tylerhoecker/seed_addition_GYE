@@ -44,19 +44,22 @@ sample_days <- alive %>%
   summarise(end = unique(day),
             start = end - 13) %>% 
   select(fire, aspect, start, end)
-
-alive_sub <- alive %>% 
-  filter(fire == 'Berry-Glade',
-         aspect == 'North',
-         species == 'pico')
-soil_sub <- soil_df %>% 
-  filter(fire == 'Berry-Glade',
-         aspect == 'North')
-
 test <- 
-  full_join(sample_days, soil_sub) %>%
+  full_join(sample_days, soil_df) %>%
   filter(day >= start & day < end) %>% 
-  group_by(fire, aspect, start, ed)
+  group_by(fire, aspect, start, end, variable) %>% 
+  summarise(value = mean(value)) %>% 
+  mutate(day = end) %>% 
+  full_join(alive) %>% 
+  filter(!is.na(value)) 
+
+# MONDAY
+# go back and keep hourly measures, then do means. Calculate cumulative measures too
+# then try using all groups, should be the same
+# Random effect for site to account for repeat measures...? Or group to site-level then random site.
 
 
 
+ggplot(test) +
+  geom_point(aes(x = value, y = alive, color = aspect)) +
+  facet_grid(~variable)

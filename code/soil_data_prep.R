@@ -3,26 +3,25 @@ source('code/read_soil_data.R')
 
 # Select just soil moisture during summer and average to hourly.
 soil_preds <- soil_df %>% 
-  # no missing values 
-  filter(!is.na(value)) %>% 
-  # Just the summer 
-  filter(time >= start_time & time <= end_time) %>% 
-  # Truncate negative values to 0 [not sure why there are negative values...]
-  mutate(value = if_else(value < 0, 0, value)) %>% 
-  # Average all 4 ports
-  group_by(fire, aspect, time, variable) %>%
-  summarise(value = mean(value)) %>%
-  # Concert soil moisture (VMC) to %
-  mutate(value = if_else(variable == 'mois', value*100, value)) %>% 
-# Caclulate 50th and 75th percentiles.
   group_by(fire, aspect, variable) %>% 
+  # Issue with Maple soil moisture - sensor not calibrated correctly... >:o
+  mutate(value = if_else(fire == 'Maple' & variable == 'mois', value-10, value)) %>% 
   summarise(q50 = quantile(value, 0.50),
             q75 = quantile(value, 0.75),
             min = min(value),
-            max = max(value)) %>% 
-  gather(quant, value, q50:max) %>% 
+            max = max(value),
+            dry_hours = sum(value < 10),
+            hot_hours = sum(value > 30)) %>% 
+  gather(quant, value, -c(fire,aspect,variable)) %>% 
   unite(temp, variable, quant) %>% 
-  spread(temp, value)
+  spread(temp, value) %>% 
+  select(-mois_hot_hours, -temp_dry_hours)
+
+# ggplot(soil_df) +
+#   geom_histogram(aes(x = value)) +
+#   geom_vline(xintercept = 10) +
+#   facet_grid(variable~fire+aspect) +
+#   theme_bw()
 
 # This is a very neat approach using purrr, 
 # but I don't really understand what's happening, so I'm using the method above for now instead.
