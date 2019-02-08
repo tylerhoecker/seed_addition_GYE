@@ -19,7 +19,7 @@ final <- seedlings %>%
 
 # Proportion of germination, survival and their product, establishment for each frame. 
 proportions <- full_join(germination, final) %>% 
-  group_by(fire, aspect, species) %>% 
+  group_by(fire, aspect, species, frameID) %>% 
   summarise(germination = sum(germinated, na.rm = T) / n(),
             survival = sum(final, na.rm = T) / sum(germinated, na.rm = T),
             establishment = sum(final, na.rm = T) / n()) %>% 
@@ -28,7 +28,7 @@ proportions <- full_join(germination, final) %>%
   mutate(period = factor(period, levels = c('germination','survival','establishment'))) %>% 
   # Transform data, then show both ways (all fires and aspects together for clarity)
   # Using arsine-square-root transform per Ives 2018 sensu Larson and Marx 1981
-  mutate(asinsqrt = asin(sqrt(value))) %>%
+  mutate(asinsqrt = asin(sign(value) * sqrt(abs(value)))) %>%
   rename(original = value) %>% 
   gather(version, value, asinsqrt, original)
 

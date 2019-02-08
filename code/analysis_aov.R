@@ -24,19 +24,17 @@ ggplot(proportions) +
 library(broom)
 library(multcomp)
 # One-way ANOVA test for differences in means among aspects, for each species: PICO different, PSME not
-aov_aspect_fire_pico <- proportions %>%
+aov_aspect_fire_model <- proportions %>%
   filter(version == 'asinsqrt') %>% 
   group_by(species, period) %>% 
-  do(tidy(aov(value ~ aspect*fire, data = .))) %>% 
-  filter(species == 'pico') %>% 
-  mutate_at(vars(df, sumsq, meansq, statistic, p.value), round, 3)
+  do(glance(aov(value ~ aspect*fire, data = .))) %>% 
+  mutate_if(is.numeric, round, 4) 
 
-aov_aspect_fire_psme <- proportions %>%
+aov_aspect_fire_terms <- proportions %>%
   filter(version == 'asinsqrt') %>% 
   group_by(species, period) %>% 
   do(tidy(aov(value ~ aspect*fire, data = .))) %>% 
-  filter(species == 'psme') %>% 
-  mutate_at(vars(df, sumsq, meansq, statistic, p.value), round, 3)
+  mutate_if(is.numeric, round, 4) 
 
 
 # Tukey multiple pairwise comparisons
@@ -66,10 +64,12 @@ colVals <- c('Flat' = '#009E73','North' = '#0072B2','South' = '#E69F00')
 
 # Full breakdown (, aspect, period)
 # Plot the original values 
+props_plot <- proportions %>% 
+  filter(version == 'original')
 
 dodge <- position_dodge(width = 0.9)
 
-ggplot(proportions, aes(x = fire, y = value, fill = aspect, group = aspect)) +
+ggplot(props_plot, aes(x = fire, y = value, fill = aspect, group = aspect)) +
   stat_summary(fun.y = mean, geom = "bar", position = "dodge") + 
   stat_summary(fun.data = mean_se, geom = "errorbar", position = dodge, width = 0.25) +
   scale_fill_manual(values = colVals, name = 'aspect') +
@@ -81,7 +81,7 @@ ggplot(proportions, aes(x = fire, y = value, fill = aspect, group = aspect)) +
   labs(x = 'Fire', y = 'Proportion')
 
 # Showing +/- 1.96* standard error...
-statistics_df <- proportions %>% 
+statistics_df <- props_plot %>% 
   filter(version == 'original') %>% 
   group_by(fire, aspect, species, period) %>% 
   summarise(mean = mean(value),
@@ -100,32 +100,37 @@ ggplot(statistics_df) +
         axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
 
 
-# By aspect, sites group (aspect, period)
-ggplot(proportions) +
+# By aspect 
+text_ys <- c(0.3,0.3,0.2, 0.7,0.65,0.2, 0.2,0.2,0.1, 
+             0.2,0.2,0.2, 0.4,0.25,0.25, 0.1,0.1,0.1)
+
+ggplot(props_plot) +
   stat_summary(aes(x = aspect, y = value, fill = aspect, group = aspect),
                fun.y = mean, geom = "bar", position = "dodge") + 
   stat_summary(aes(x = aspect, y = value, fill = aspect, group = aspect),
                fun.data = mean_se, geom = "errorbar", position = dodge, width = 0.25) +
-  geom_text(data = tukey_aspect_cld, aes(x = lhs, y = -0.05, label = letters), fontface = 'bold') +
+  geom_text(data = tukey_aspect_cld, aes(x = lhs, y = text_ys, label = letters), fontface = 'bold') +
   scale_fill_manual(values = colVals, name = 'aspect') +
   facet_grid(species~period) +
   coord_cartesian(ylim = c(-0.06,0.75)) +
   theme_bw(base_size = 14) +
   theme(strip.background = element_blank(),
         axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)) +
-  labs(x = 'Aspect', y = 'Proportion')
+  labs(x = '', y = 'proportion of seeds')
 
 
+# By fire 
+text_ys <- c(0.35,0.3,0.2,0.3,    0.7,0.3,0.6,0.7,    0.25,0.15,0.15,0.15, 
+             0.2,0.15,0.15,0.15,  0.3,0.25,0.45,0.35, 0.1,0.1,0.1,0.1)
 
-# By fire (fire, period)
-ggplot(proportions, aes(x = fire, y = value)) +
+ggplot(props_plot, aes(x = fire, y = value)) +
   stat_summary(fun.y = mean, geom = "bar", position = "dodge") + 
   stat_summary(fun.data = mean_se, geom = "errorbar", position = dodge, width = 0.25) +
-  geom_text(data = tukey_fire_cld, aes(x = lhs, y = -0.05, label = letters), fontface = 'bold') +
+  geom_text(data = tukey_fire_cld, aes(x = lhs, y = text_ys, label = letters), fontface = 'bold') +
   facet_grid(species~period) +
   coord_cartesian(ylim = c(-0.06,0.75)) +
   theme_bw(base_size = 14) +
   theme(strip.background = element_blank(),
         axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)) +
-  labs(x = 'Fire', y = 'Proportion')
+  labs(x = 'fire', y = 'proportion of seeds')
 

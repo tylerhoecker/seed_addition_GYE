@@ -5,7 +5,7 @@ source('code/read_soil_data.R')
 soil_preds <- soil_df %>% 
   group_by(fire, aspect, variable) %>% 
   # Issue with Maple soil moisture - sensor not calibrated correctly... >:o
-  mutate(value = if_else(fire == 'Maple' & variable == 'mois', value-10, value)) %>% 
+  mutate(value = if_else(fire == 'Maple' & variable == 'mois', value-5, value)) %>% 
   summarise(q50 = quantile(value, 0.50),
             q75 = quantile(value, 0.75),
             min = min(value),
@@ -17,10 +17,13 @@ soil_preds <- soil_df %>%
   spread(temp, value) %>% 
   select(-mois_hot_hours, -temp_dry_hours)
 
-# ggplot(soil_df) +
+# soil_df %>%
+#   filter(variable == 'mois') %>%
+#   #mutate(value = if_else(fire == 'Maple', value-5, value)) %>% 
+#   ggplot() +
 #   geom_histogram(aes(x = value)) +
 #   geom_vline(xintercept = 10) +
-#   facet_grid(variable~fire+aspect) +
+#   facet_grid(aspect~fire) +
 #   theme_bw()
 
 # This is a very neat approach using purrr, 

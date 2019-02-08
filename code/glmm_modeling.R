@@ -2,13 +2,11 @@
 # Decide on a time period of interest:
 start_time <- as.POSIXct(c("2018-06-01 00:00:00"))
 end_time <- as.POSIXct(c("2018-10-01 00:00:00"))
+
 # Calculates quantiles and cumulative predictors
 source('code/soil_data_prep.R') # creates `soil_df` (complete) and `soil_preds` (summarized)
 
-# Load and prep meteorological data (air temperature and VPD)
-#source('code/atmos_data_prep.R') # creates `atmos_df` (complete) and `atmos_preds` (summarized)
-
-# Loading seedling data and calculate counts------------------------------------
+# Load seedling data and calculate counts for each response---------------------
 source('code/read_seedling_data.R')
 seedling_response <- seedlings %>% 
   filter(variable == 'height', species != 'control') %>%
@@ -24,7 +22,7 @@ dem_idx <- read_csv('data/dem_indices.csv') %>%
   select(-c(utm_zone, easting, northing, elev, aspect_deg)) 
   
 
-# Start with a dataframe of seedling data and soil moisture and temperature
+# Create a dataframe that combines the seedling responses, measured soil predictors, and DEM stuff
 complete_df <- seedling_response %>% 
   full_join(., soil_preds, by = c('fire','aspect')) %>% 
   #full_join(., atmos_preds) %>% # Comment out for germination, because no ATMOS data that early...
@@ -40,7 +38,7 @@ colVals <- c('Flat' = '#009E73','North' = '#0072B2','South' = '#E69F00')
 complete_df %>%
   gather(variable, value, -(fire:established)) %>% 
   # Linear relationships much stronger without Maple!!
-  filter(fire != 'Maple') %>% 
+  #filter(fire != 'Maple') %>% 
   
   ggplot(aes(x = value, y = established)) +
   geom_point(aes(color = aspect)) +
@@ -59,10 +57,17 @@ complete_df %>%
 # correlations are less than |0.5|
 
 
-# THE GLMM MODELS --------------------------------------------------------------
+
+
+## THE MODELS ------------------------------------------------------------------
+library(MuMIn) # For psuedo-r-squared 
+library(lme4)  # For glmer
+library(effects) # For glmm effects plotting
+
+
 model_df <- complete_df %>% 
   #filter(species == 'psme') %>% #,species == 'pico'
-  #filter(fire != 'Maple') %>% 
+  filter(fire != 'Maple') %>% 
   
   # Re-scaling the predictors eliminates the error about rescaling from glm
   # the results are very similar except for the p-value for the intercept
@@ -75,9 +80,9 @@ model_fn <- function(x){
         control=glmerControl(optimizer="bobyqa"))
 }
 
-
-# Make a list of formulas
-formulas <- c("established ~ species + (1|fire)", 
+# Selecting the best GLMM using sensor data ------------------------------------
+# Make a list of formulas, all logical combinations of soil data
+soil_formulas <- c("established ~ species + (1|fire)", 
               "established ~ species*(mois_dry_hours + (1|fire))",
               "established ~ species*(mois_q50 + (1|fire))",
               "established ~ species*(mois_q75 + (1|fire))",
@@ -95,35 +100,59 @@ formulas <- c("established ~ species + (1|fire)",
               "established ~ species*(mois_dry_hours + temp_max + (1|fire))",
               "established ~ species*(mois_dry_hours + temp_q50 + (1|fire))")
 
-models_df <- tibble(
-    forms = formulas,
-    model_obj = map(formulas, model_fn),
+
+soil_models <- tibble(
+    forms = soil_formulas,
+    model_obj = map(soil_formulas, model_fn),
     fit = map(model_obj, glance),
     terms = map(model_obj, tidy),
     marg_pR2 = map_dbl(map(model_obj, r.squaredGLMM), mean(1:3)),
     comp_pR2 = map_dbl(map(model_obj, r.squaredGLMM), mean(4:6))) %>% 
   unnest(fit) %>% 
   arrange(AIC) 
-models_df
+soil_models$forms
 
-map(models_df$model_obj, summary)[[1]]
+# Fixed Effects of top model
+plot(allEffects(soil_models$model_obj[[1]], residuals = TRUE))
 
+# Residuals of top model
+plot(soil_models$model_obj[[1]])
+
+
+# Selecting the best GLMM using DEM data ------------------------------------
+# Make a list of formulas, all logical combinations of soil data
+dem_formulas <- c("established ~ species + (1|fire)", 
+              "established ~ species*(dev_ne + (1|fire))",
+              "established ~ species*(dev_ne + tri + (1|fire))",
+              "established ~ species*(dev_ne + tri + slope + (1|fire))",
+              "established ~ species*(dev_ne + slope + (1|fire))",
+              "established ~ species*(tri + slope + (1|fire))")
+
+dem_models <- tibble(
+  forms = dem_formulas,
+  model_obj = map(dem_formulas, model_fn),
+  fit = map(model_obj, glance),
+  terms = map(model_obj, tidy),
+  marg_pR2 = map_dbl(map(model_obj, r.squaredGLMM), mean(1:3)),
+  comp_pR2 = map_dbl(map(model_obj, r.squaredGLMM), mean(4:6))) %>% 
+  unnest(fit) %>% 
+  arrange(AIC) 
+dem_models$forms
+
+
+# Fixed Effects of top model
 library(effects)
-plot(allEffects(models_df$model_obj[[1]], residuals = TRUE))
+plot(allEffects(dem_models$model_obj[[1]], residuals = TRUE))
 
-dotplot(ranef(m, condVar = T))
-qqmath(ranef(m))
-plot(m)
-library(effects)
-plot(allEffects(m, residuals = TRUE))
-VarCorr(m)
-library(MuMIn)
-r.squaredGLMM(m)
+# Residuals of top model
+plot(dem_models$model_obj[[1]])
 
-# Explore effects
-effects <- allEffects(m)
 
-# Method using zero-inflated approach
+
+
+
+
+# Method using zero-inflated approach-------------------------------------------
 library(glmmTMB)
 m <- glmmTMB(count ~ species + temp_max + temp_q50 + mois_q50 + dev_ne + tri + (1|fire),
              ziformula = ~.,
