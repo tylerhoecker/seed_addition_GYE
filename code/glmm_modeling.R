@@ -4,6 +4,7 @@ start_time <- as.POSIXct(c("2018-06-01 00:00:00"))
 end_time <- as.POSIXct(c("2018-10-01 00:00:00"))
 
 # Calculates quantiles and cumulative predictors
+############ NOTE THE ADJUSTMENT MADE TO MAPLE SITES!! CHECK SCRIPT ############
 source('code/soil_data_prep.R') # creates `soil_df` (complete) and `soil_preds` (summarized)
 
 # Load seedling data and calculate counts for each response---------------------
@@ -19,8 +20,13 @@ seedling_response <- seedlings %>%
 dem_idx <- read_csv('data/dem_indices.csv') %>% 
   # Convert aspect to continuous measure per Beers et al. 1966 J. For.
   mutate(dev_ne = cos( (45*pi/180) - (aspect_deg*pi/180) ) + 1 ) %>% 
-  select(-c(utm_zone, easting, northing, elev, aspect_deg)) 
-  
+  dplyr::select(-c(utm_zone, easting, northing, aspect_deg)) 
+
+# Elevation
+dem_idx %>% 
+  group_by(fire) %>% 
+  summarise(m = mean(dem_elev)) %>% 
+  arrange(m)
 
 # Create a dataframe that combines the seedling responses, measured soil predictors, and DEM stuff
 complete_df <- seedling_response %>% 
@@ -29,7 +35,7 @@ complete_df <- seedling_response %>%
   full_join(., dem_idx, by = c('fire','aspect')) %>% 
   # Dealing only with 'establishment'
   ungroup() %>% 
-  modify_at(c('site', 'fire', 'aspect'), as.factor) 
+  modify_at(c('site', 'fire', 'aspect','species'), as.factor) 
 
 # Exploratory Analysis ---------------------------------------------------------
 
@@ -67,11 +73,12 @@ library(effects) # For glmm effects plotting
 
 model_df <- complete_df %>% 
   #filter(species == 'psme') %>% #,species == 'pico'
-  filter(fire != 'Maple') %>% 
+  #filter(fire != 'Maple') %>% 
   
   # Re-scaling the predictors eliminates the error about rescaling from glm
   # the results are very similar except for the p-value for the intercept
-  mutate_at(vars(temp_hot_hours, temp_q50, temp_q75, temp_max, mois_dry_hours, mois_q50, mois_q75, dev_ne, tri, slope), scale) 
+  mutate_at(vars(temp_hot_hours, temp_q50, temp_q75, temp_max, mois_dry_hours, mois_q50, mois_q75, 
+                 dev_ne, tri, slope, dem_elev), scale) 
 
 model_fn <- function(x){
   glmer(formula = as.formula(x),
@@ -80,25 +87,38 @@ model_fn <- function(x){
         control=glmerControl(optimizer="bobyqa"))
 }
 
+
+
+glob_mod <- 
+  glmer(formula = established ~ species*(mois_q50 + mois_q75 + mois_dry_hours + temp_q50 + temp_q75 + temp_max) + (1|fire),
+        family = poisson(link = 'log'), 
+        data = model_df,
+        control=glmerControl(optimizer="bobyqa"),
+        na.action="na.fail")
+
+test <- dredge(glob_mod, m.lim = c(0,4))
+
+
 # Selecting the best GLMM using sensor data ------------------------------------
 # Make a list of formulas, all logical combinations of soil data
-soil_formulas <- c("established ~ species + (1|fire)", 
-              "established ~ species*(mois_dry_hours + (1|fire))",
-              "established ~ species*(mois_q50 + (1|fire))",
-              "established ~ species*(mois_q75 + (1|fire))",
-              "established ~ species*(temp_hot_hours + (1|fire))", 
-              "established ~ species*(temp_max + (1|fire))",
-              "established ~ species*(temp_q50 + (1|fire))",
-              # multi-term
-              "established ~ species*(mois_q50 + temp_max + (1|fire))",
-              "established ~ species*(mois_q50 + temp_q50 + (1|fire))",
-              "established ~ species*(mois_q50 + temp_hot_hours + (1|fire))",
-              "established ~ species*(mois_q75 + temp_max + (1|fire))",
-              "established ~ species*(mois_q75 + temp_q50 + (1|fire))",
-              "established ~ species*(mois_q75 + temp_hot_hours + (1|fire))",
-              "established ~ species*(mois_dry_hours + temp_hot_hours + (1|fire))",
-              "established ~ species*(mois_dry_hours + temp_max + (1|fire))",
-              "established ~ species*(mois_dry_hours + temp_q50 + (1|fire))")
+soil_formulas <- 
+  c("established ~ species + (1|fire)", 
+    "established ~ species*(mois_dry_hours + (1|fire))",
+    "established ~ species*(mois_q50 + (1|fire))",
+    "established ~ species*(mois_q75 + (1|fire))",
+    "established ~ species*(temp_hot_hours + (1|fire))", 
+    "established ~ species*(temp_max + (1|fire))",
+    "established ~ species*(temp_q50 + (1|fire))",
+    # multi-term
+    "established ~ species*(mois_q50 + temp_max + (1|fire))",
+    "established ~ species*(mois_q50 + temp_q50 + (1|fire))",
+    "established ~ species*(mois_q50 + temp_hot_hours + (1|fire))",
+    "established ~ species*(mois_q75 + temp_max + (1|fire))",
+    "established ~ species*(mois_q75 + temp_q50 + (1|fire))",
+    "established ~ species*(mois_q75 + temp_hot_hours + (1|fire))",
+    "established ~ species*(mois_dry_hours + temp_hot_hours + (1|fire))",
+    "established ~ species*(mois_dry_hours + temp_max + (1|fire))",
+    "established ~ species*(mois_dry_hours + temp_q50 + (1|fire))")
 
 
 soil_models <- tibble(
@@ -112,6 +132,9 @@ soil_models <- tibble(
   arrange(AIC) 
 soil_models$forms
 
+summary(soil_models$model_obj[[1]])
+
+
 # Fixed Effects of top model
 plot(allEffects(soil_models$model_obj[[1]], residuals = TRUE))
 
@@ -121,12 +144,27 @@ plot(soil_models$model_obj[[1]])
 
 # Selecting the best GLMM using DEM data ------------------------------------
 # Make a list of formulas, all logical combinations of soil data
-dem_formulas <- c("established ~ species + (1|fire)", 
-              "established ~ species*(dev_ne + (1|fire))",
-              "established ~ species*(dev_ne + tri + (1|fire))",
-              "established ~ species*(dev_ne + tri + slope + (1|fire))",
-              "established ~ species*(dev_ne + slope + (1|fire))",
-              "established ~ species*(tri + slope + (1|fire))")
+
+predictors <- c('dev_ne', 'tri', 'slope', 'dem_elev')
+
+expand.grid(predictors, predictors, predictors, predictors)
+
+dem_formulas <- 
+  c("established ~ species + (1|fire)", 
+    "established ~ species*(dev_ne + (1|fire))",
+    "established ~ species*(dev_ne + tri + (1|fire))",
+    "established ~ species*(dev_ne + tri + slope + (1|fire))",
+    "established ~ species*(dev_ne + tri + slope + dem_elev + (1|fire))",
+    "established ~ species*(dev_ne + slope + dem_elev, (1|fire))",
+    "established ~ species*(dev_ne + slope + dem_elev, (1|fire))",
+    
+    "established ~ species*(dev_ne + dem_elev + (1|fire))",
+    "established ~ species*(tri + slope + (1|fire))",
+    "established ~ species*(tri + dem_elev + (1|fire))",
+    "established ~ species*(slope + dem_elev + (1|fire))")
+
+
+
 
 dem_models <- tibble(
   forms = dem_formulas,
@@ -139,6 +177,7 @@ dem_models <- tibble(
   arrange(AIC) 
 dem_models$forms
 
+summary(dem_models$model_obj[[1]])
 
 # Fixed Effects of top model
 library(effects)

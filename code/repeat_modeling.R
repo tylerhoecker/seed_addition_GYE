@@ -1,3 +1,4 @@
+library(lubridate)
 # Import seedling data
 source('code/read_seedling_data.R')
 
@@ -35,15 +36,14 @@ soil_df <- soil_df %>%
   # Average all 4 ports
   mutate(day = date(time))  %>% 
   group_by(fire, aspect, variable, day) %>%
-  summarise(value = mean(value)) %>%
-  # Concert soil moisture (VMC) to %
-  mutate(value = if_else(variable == 'mois', value*100, value))  
+  summarise(value = mean(value))   
 
 sample_days <- alive %>% 
   group_by(fire, aspect, day) %>% 
   summarise(end = unique(day),
             start = end - 13) %>% 
   select(fire, aspect, start, end)
+
 test <- 
   full_join(sample_days, soil_df) %>%
   filter(day >= start & day < end) %>% 
@@ -51,7 +51,16 @@ test <-
   summarise(value = mean(value)) %>% 
   mutate(day = end) %>% 
   full_join(alive) %>% 
-  filter(!is.na(value)) 
+  filter(!is.na(value)) %>% 
+  filter(variable == 'mois')
+
+library(gganimate)
+
+ggplot(test, aes(x = alive, y = value, color = aspect)) +
+  geom_point() +
+  geom_smooth(color = 'black') +
+  transition_states(day) 
+
 
 # MONDAY
 # go back and keep hourly measures, then do means. Calculate cumulative measures too

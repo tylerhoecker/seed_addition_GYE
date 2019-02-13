@@ -20,7 +20,7 @@ read_soil <- function(file_name){
                      na = '#N/A',
                      skip = 3,
                      col_names = FALSE) %>%
-    select(time = 1, 
+    dplyr::select(time = 1, 
            mois_1 = 2, temp_1 = 3, 
            mois_2 = 4, temp_2 = 5,
            mois_3 = 6, temp_3 = 7,

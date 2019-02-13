@@ -12,7 +12,6 @@ end_time <- as.POSIXct(c("2018-10-01 00:00:00"))
 # Load soil data for sure in either method. Produces `soil_df`
 source('code/read_soil_data.R')
 
-
 # Examine covariance between soil moisture and temperature 
 # There is a significant, but weak negative correlation of r = -0.24/ r2 = 0.04
 # ------------------------------------------------------------------------------

@@ -145,7 +145,25 @@ m <- glmer(count ~ species*(temp_max + mois_q75 + dev_north + tri) + (1|fire) + 
     
 
 
+### Week of 2/04
+Good progress on the models.   
+- Decision was made with MGT to not include DEM-derived metrics in the same model as measured metrics. So that simplified model selection.   
+- Coded and effecient routine for estimating many models from a list of formulas, and choosing the top one based on AIC.  
+- Realized potentially significant issue with soil moisture values: Maple are systemically higher. This means either the Maple measurements are off, or all of the others are. Investigated, found that the soil sensor should be calibrated before use... so I think it is related to soil texture or chemistry. Excluding Maple from the models, or bluntly subtrating 0.1 from all of the values, greatly improve model fit. 
+- Estimated separate model using DEM-derived variables. This model is just as good. It is disappoinitng in a way, but could be an interesting route to go esp. for management focus, makes a predictive map based on DEM potentially useful. 
+- Also summarized the dataset into two-week intervals, with all of the same metrics within the previous two weeks. Now I just need to try estimating a model from those data, that accounts for repeated measures. 
 
+### Questions / Points for meeting with Winslow and Monica on 2/18:
+- Review ANOVA results, figures
+    - Is survival an interesting thing to include?
+    - Like emphasis on establishment?
+- Like exploratory figures and maps? Need anything else for pub?
+- Soil sensor issue: Maple systematically off... See histogram
+    - Exclude?
+    - Legitimate way to correct? What did Winslow do?
+    - Ignore?
+- GLMMs won't make great sense until Maple issue is resolved... but in the meantime, take-aways are:
+    - 
 
 
 

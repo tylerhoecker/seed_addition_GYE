@@ -1,10 +1,10 @@
 library(tidyverse)
-library(Hmisc)
+
 
 this_version <- 'data/seedling_data_complete.csv'
 
 seedlings <- read_csv(this_version) %>% 
-  select(-starts_with('height_header'),-starts_with('basal_header'), 
+  dplyr::select(-starts_with('height_header'),-starts_with('basal_header'), 
          -ends_with('_note'), -`_id`,-`_uuid`,-`_submission_time`,-`_index`) %>% 
   gather(cell, value, -date,-Fire,-Aspect,-Species,-Direction,-frameID,-Notes) %>% 
   separate(cell, into = c('variable','y_cell','x_cell'), sep = '_') %>%
@@ -17,9 +17,11 @@ seedlings <- read_csv(this_version) %>%
   rename(species = Species,
          fire = Fire,
          rep = Direction) %>% 
-  select(-Aspect, date, fire, species, rep, frameID, variable, cell, value) %>% 
+  dplyr::select(-Aspect, date, fire, species, rep, frameID, variable, cell, value) %>% 
   modify_at(c('aspect','fire','species','variable'), as_factor) %>% 
-  mutate(aspect = fct_relevel(aspect, 'North','Flat','South'))
+  mutate(aspect = fct_relevel(aspect, 'North','Flat','South'),
+         species = if_else(species == 'pico', 'PICO', as.character(species)),
+         species = if_else(species == 'psme','PSME', as.character(species))) 
 
   
 

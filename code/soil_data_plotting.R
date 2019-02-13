@@ -3,6 +3,135 @@
 # Ports 1-3 are inside seed-addition frames, port 5 is outside. Ports are renamed 1-4, with 4 becoming "empty" and then removed.
 # This does not work with the "Berry-Old" sites because their ports were arranged differently.
 
+#---------------------------------------------------------------------------
+# Edited on 2/8 to use updated version of soil_df
+# Decide on a time period of interest:
+start_time <- as.POSIXct(c("2018-06-01 00:00:00"))
+end_time <- as.POSIXct(c("2018-10-01 00:00:00"))
+
+
+# Load soil data for sure in either method. Produces `soil_df`
+source('code/read_soil_data.R')
+
+soil_data <- soil_df %>% 
+  #mutate(time = parse_date_time(.$time, orders = 'mdy hs')) %>%
+  separate(time, into = c('date','hour'), sep = " ") %>%
+  mutate(date = as.POSIXct(date),
+         value = if_else(variable == 'mois', value / 100, value),
+         variable = if_else(variable == 'mois','Soil water content','Soil temperature')) %>%
+  # mutate(aspect = as.factor(aspect),
+  #        measType = if_else(measType == 'mois',"Moisture","Temperature")) %>%
+  group_by(fire, aspect, date, variable) %>% # Change site for aspect
+  #drop_na() %>% 
+  summarize(dayMin = min(value, na.rm = T),
+            dayMean = mean(value, na.rm = T),
+            dayMax = max(value, na.rm = T)) 
+
+
+colVals <- rev(c('South' = '#E69F00', 'North' = '#0072B2','Flat' = '#009E73'))
+#legLabs <- rev(c('South','North','Flat'))
+alphaVals <- 0.4
+sizeVals <- 1
+
+ggplot(soil_data) +
+  geom_ribbon(aes(x = date, ymin = dayMin, ymax = dayMax, fill = aspect),
+              alpha = alphaVals) +
+  geom_line(aes(x = date, y = dayMean, color = aspect), size = 0.85) +
+  scale_fill_manual('Aspect', values = colVals) +
+  scale_color_manual('Aspect', values = colVals) +
+  facet_grid(variable ~ fire, scales = 'free') +
+  theme_bw(base_size = 12) +
+  labs(x = '', y = bquote('Daily mean & range ('*~m^3*''*~m^-3*','*~degree *C*')')) +
+  theme(strip.background = element_blank(),
+        plot.subtitle = element_text(hjust = 0.5, face = 'bold'))
+
+
+##------
+
+
+
+
+
+
+
+
+
+
+
+
+soilSouth <- filter(soil_data, aspect == 'South')
+soilFlat <- filter(soil_data, aspect == 'Flat')
+soilNorth <- filter(soil_data, aspect == 'North')
+
+seriesPlot <- 
+  ggplot() +
+  #South
+  geom_ribbon(data = soilSouth,
+              aes(x = date, ymin = dayMin, ymax = dayMax, fill = aspect),
+              alpha = alphaVals) +
+  geom_line(data = soilSouth,
+            aes(x = date, y = dayMean, color = aspect), 
+            size = sizeVals) +
+  #Flat
+  geom_ribbon(data = soilFlat,
+              aes(x = date, ymin = dayMin, ymax = dayMax, fill = aspect),
+              alpha = alphaVals) +
+  geom_line(data = soilFlat,
+            aes(x = date, y = dayMean, color = aspect), 
+            size = sizeVals) +
+  #North
+  geom_ribbon(data = soilNorth,
+              aes(x = date, ymin = dayMin, ymax = dayMax, fill = aspect),
+              alpha = alphaVals) +
+  geom_line(data = soilNorth,
+            aes(x = date, y = dayMean, color = aspect), 
+            size = sizeVals) +
+  
+  facet_wrap(~fire+variable, scales = 'free_y', ncol = 2) +
+  scale_fill_manual(values = colVals, name = 'Aspect', labels = legLabs) +
+  scale_color_manual(values = colVals, name = 'Aspect', labels = legLabs) +
+  labs(x = 'Day', y = 'Daily mean and range of measurement\n (mm/m3, deg. C)') +
+  theme_bw() +
+  theme(legend.position="none")
+
+temphistPlot <- 
+  ggplot(filter(soilData, measType == 'Temperature')) +
+  geom_histogram(aes(x = dayMean, fill = aspect), 
+                 bins = 50, position = 'identity', alpha = alphaVals) +
+  geom_histogram(aes(x = dayMean, color = aspect), 
+                 bins = 50, fill = 'transparent', position = 'identity') +
+  xlim(0,50) +
+  coord_flip() +
+  facet_wrap(~measType, scales = 'free_y') +
+  scale_fill_manual(values = colVals, name = 'Aspect', labels = legLabs) +
+  scale_color_manual(values = colVals, name = 'Aspect', labels = legLabs) +
+  labs(y = 'Count') +
+  theme_th() +
+  theme(axis.title.y = element_blank(),
+        legend.position = c(0.75,0.8),
+        legend.background = element_rect('transparent'))
+
+moisthistPlot <- 
+  ggplot(filter(soilData, measType == 'Moisture')) +
+  geom_histogram(aes(x = dayMean, fill = aspect), 
+                 bins = 50, position = 'identity', alpha = alphaVals) +
+  geom_histogram(aes(x = dayMean, color = aspect), 
+                 bins = 50, fill = 'transparent', position = 'identity') +
+  xlim(0,0.4) +
+  coord_flip() +
+  facet_wrap(~measType, scales = 'free_y') +
+  scale_fill_manual(values = colVals, name = 'Aspect', labels = legLabs) +
+  scale_color_manual(values = colVals, name = 'Aspect', labels = legLabs) +
+  labs(y = 'Count') +
+  theme_th() +
+  theme(axis.title.y = element_blank(),
+        legend.position="none")
+
+plot_grid(seriesPlot,moisthistPlot,temphistPlot, 
+          ncol = 3, rel_widths = c(1,0.25,0.25))
+
+
+# ---------
 library(tidyverse)
 library(lubridate)
 
@@ -45,7 +174,7 @@ soil_data <- soil_df %>%
   summarize(dayMin = min(value, na.rm = T),
             dayMean = mean(value, na.rm = T),
             dayMax = max(value, na.rm = T)) 
- 
+
 
 
 colVals <- rev(c('South' = '#E69F00', 'North' = '#0072B2','Flat' = '#009E73'))
@@ -91,80 +220,6 @@ ggplot(soil_data_summer) +
   theme_bw(base_size = 14)
 
 
-#---------------------------------------------------------------------------
-soilSouth <- filter(soild_data_2018, aspect == 'S')
-soilFlat <- filter(soild_data_2018, aspect == 'F')
-soilNorth <- filter(soild_data_2018, aspect == 'N')
-
-seriesPlot <- 
-  ggplot() +
-  #South
-  geom_ribbon(data = soilSouth,
-              aes(x = date, ymin = dayMin, ymax = dayMax, fill = aspect),
-              alpha = alphaVals) +
-  geom_line(data = soilSouth,
-            aes(x = date, y = dayMean, color = aspect), 
-            size = sizeVals) +
-  #Flat
-  geom_ribbon(data = soilFlat,
-              aes(x = date, ymin = dayMin, ymax = dayMax, fill = aspect),
-              alpha = alphaVals) +
-  geom_line(data = soilFlat,
-            aes(x = date, y = dayMean, color = aspect), 
-            size = sizeVals) +
-  #North
-  geom_ribbon(data = soilNorth,
-              aes(x = date, ymin = dayMin, ymax = dayMax, fill = aspect),
-              alpha = alphaVals) +
-  geom_line(data = soilNorth,
-            aes(x = date, y = dayMean, color = aspect), 
-            size = sizeVals) +
-  
-  facet_wrap(~site+variable, scales = 'free_y', ncol = 2) +
-  scale_fill_manual(values = colVals, name = 'Aspect', labels = legLabs) +
-  scale_color_manual(values = colVals, name = 'Aspect', labels = legLabs) +
-  labs(x = 'Day', y = 'Daily mean and range of measurement\n (mm/m3, deg. C)') +
-  theme_bw() +
-  theme(legend.position="none")
-
-temphistPlot <- 
-  ggplot(filter(soilData, measType == 'Temperature')) +
-  geom_histogram(aes(x = dayMean, fill = aspect), 
-                 bins = 50, position = 'identity', alpha = alphaVals) +
-  geom_histogram(aes(x = dayMean, color = aspect), 
-                 bins = 50, fill = 'transparent', position = 'identity') +
-  xlim(0,50) +
-  coord_flip() +
-  facet_wrap(~measType, scales = 'free_y') +
-  scale_fill_manual(values = colVals, name = 'Aspect', labels = legLabs) +
-  scale_color_manual(values = colVals, name = 'Aspect', labels = legLabs) +
-  labs(y = 'Count') +
-  theme_th() +
-  theme(axis.title.y = element_blank(),
-        legend.position = c(0.75,0.8),
-        legend.background = element_rect('transparent'))
-
-moisthistPlot <- 
-  ggplot(filter(soilData, measType == 'Moisture')) +
-  geom_histogram(aes(x = dayMean, fill = aspect), 
-                 bins = 50, position = 'identity', alpha = alphaVals) +
-  geom_histogram(aes(x = dayMean, color = aspect), 
-                 bins = 50, fill = 'transparent', position = 'identity') +
-  xlim(0,0.4) +
-  coord_flip() +
-  facet_wrap(~measType, scales = 'free_y') +
-  scale_fill_manual(values = colVals, name = 'Aspect', labels = legLabs) +
-  scale_color_manual(values = colVals, name = 'Aspect', labels = legLabs) +
-  labs(y = 'Count') +
-  theme_th() +
-  theme(axis.title.y = element_blank(),
-        legend.position="none")
-
-plot_grid(seriesPlot,moisthistPlot,temphistPlot, 
-          ncol = 3, rel_widths = c(1,0.25,0.25))
-
-
-# ---------
 # By Site
 soilData <- map(paste0('data/soil_sensors/',sites,'_',dataTime,'.csv'), read_csv) %>% 
   `names<-` (sites) %>%
