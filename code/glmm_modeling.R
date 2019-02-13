@@ -47,7 +47,7 @@ complete_df %>%
   #filter(fire != 'Maple') %>% 
   
   ggplot(aes(x = value, y = established)) +
-  geom_point(aes(color = aspect)) +
+  geom_point(aes(color = aspect, shape = fire)) +
   geom_smooth(method = 'lm', aes(linetype = species), color = 'black', se = F) +
   scale_color_manual(values = colVals) +
   facet_wrap(~variable, scales = 'free') +
@@ -70,76 +70,32 @@ library(MuMIn) # For psuedo-r-squared
 library(lme4)  # For glmer
 library(effects) # For glmm effects plotting
 
-
+# Rescale predictors
 model_df <- complete_df %>% 
-  #filter(species == 'psme') %>% #,species == 'pico'
-  #filter(fire != 'Maple') %>% 
-  
-  # Re-scaling the predictors eliminates the error about rescaling from glm
-  # the results are very similar except for the p-value for the intercept
-  mutate_at(vars(temp_hot_hours, temp_q50, temp_q75, temp_max, mois_dry_hours, mois_q50, mois_q75, 
-                 dev_ne, tri, slope, dem_elev), scale) 
+  mutate_at(vars(-c(fire,aspect,species,germinated,established)), scale) 
 
-model_fn <- function(x){
-  glmer(formula = as.formula(x),
-        family = poisson(link = 'log'), 
-        data = model_df,
-        control=glmerControl(optimizer="bobyqa"))
-}
-
-
-
-glob_mod <- 
-  glmer(formula = established ~ species*(mois_q50 + mois_q75 + mois_dry_hours + temp_q50 + temp_q75 + temp_max) + (1|fire),
+# Selecting the best GLMM using sensor data ------------------------------------
+global_mod <- 
+  glmer(formula = established ~ species*(mois_q50 + mois_q75 + mois_dry_hours + 
+                                         temp_min + temp_hot_hours + temp_q50 + temp_q75 + temp_max) + 
+                                (1|fire),
         family = poisson(link = 'log'), 
         data = model_df,
         control=glmerControl(optimizer="bobyqa"),
         na.action="na.fail")
 
-test <- dredge(glob_mod, m.lim = c(0,4))
+glmm_dredge <- dredge(global_mod, m.lim = c(0,3))
 
+top_model <- get.models(glmm_dredge, subset = 1)[[1]]
 
-# Selecting the best GLMM using sensor data ------------------------------------
-# Make a list of formulas, all logical combinations of soil data
-soil_formulas <- 
-  c("established ~ species + (1|fire)", 
-    "established ~ species*(mois_dry_hours + (1|fire))",
-    "established ~ species*(mois_q50 + (1|fire))",
-    "established ~ species*(mois_q75 + (1|fire))",
-    "established ~ species*(temp_hot_hours + (1|fire))", 
-    "established ~ species*(temp_max + (1|fire))",
-    "established ~ species*(temp_q50 + (1|fire))",
-    # multi-term
-    "established ~ species*(mois_q50 + temp_max + (1|fire))",
-    "established ~ species*(mois_q50 + temp_q50 + (1|fire))",
-    "established ~ species*(mois_q50 + temp_hot_hours + (1|fire))",
-    "established ~ species*(mois_q75 + temp_max + (1|fire))",
-    "established ~ species*(mois_q75 + temp_q50 + (1|fire))",
-    "established ~ species*(mois_q75 + temp_hot_hours + (1|fire))",
-    "established ~ species*(mois_dry_hours + temp_hot_hours + (1|fire))",
-    "established ~ species*(mois_dry_hours + temp_max + (1|fire))",
-    "established ~ species*(mois_dry_hours + temp_q50 + (1|fire))")
-
-
-soil_models <- tibble(
-    forms = soil_formulas,
-    model_obj = map(soil_formulas, model_fn),
-    fit = map(model_obj, glance),
-    terms = map(model_obj, tidy),
-    marg_pR2 = map_dbl(map(model_obj, r.squaredGLMM), mean(1:3)),
-    comp_pR2 = map_dbl(map(model_obj, r.squaredGLMM), mean(4:6))) %>% 
-  unnest(fit) %>% 
-  arrange(AIC) 
-soil_models$forms
-
-summary(soil_models$model_obj[[1]])
+summary(top_model)
 
 
 # Fixed Effects of top model
-plot(allEffects(soil_models$model_obj[[1]], residuals = TRUE))
+plot(allEffects(top_model, residuals = TRUE))
 
 # Residuals of top model
-plot(soil_models$model_obj[[1]])
+plot(top_model)
 
 
 # Selecting the best GLMM using DEM data ------------------------------------
