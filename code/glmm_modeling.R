@@ -38,6 +38,18 @@ complete_df <- seedling_response %>%
   modify_at(c('site', 'fire', 'aspect','species'), as.factor) 
 
 # Exploratory Analysis ---------------------------------------------------------
+complete_df %>% 
+  dplyr::select(species, germinated, established) %>% 
+  gather(key, value, germinated,established) %>% 
+  mutate(log_val = if_else(value > 0, log(value), value)) %>% 
+  gather(trans, value, value, log_val) %>% 
+
+  ggplot() +
+  geom_histogram(aes(x = value), fill = 'black') +  
+  facet_wrap(trans~key+species, scales = 'free', ncol = 4) +
+  #coord_cartesian(ylim = c(0,30)) +
+  theme_bw(base_size = 12) +
+  labs(x = 'Proportion', y = 'Count')
 
 colVals <- c('Flat' = '#009E73','North' = '#0072B2','South' = '#E69F00')
 # Look at all possible variables
@@ -72,12 +84,13 @@ library(effects) # For glmm effects plotting
 
 # Rescale predictors
 model_df <- complete_df %>% 
+  filter(fire != 'Maple') %>% 
   mutate_at(vars(-c(fire,aspect,species,germinated,established)), scale) 
 
 # Selecting the best GLMM using sensor data ------------------------------------
 global_mod <- 
-  glmer(formula = established ~ species*(mois_q50 + mois_q75 + mois_dry_hours + 
-                                         temp_min + temp_hot_hours + temp_q50 + temp_q75 + temp_max) + 
+  glmer(formula = established ~ species*(mois_min + mois_q50 + mois_q75 + mois_dry_hours + 
+                                         temp_hot_hours + temp_q50 + temp_q75 + temp_max) + 
                                 (1|fire),
         family = poisson(link = 'log'), 
         data = model_df,

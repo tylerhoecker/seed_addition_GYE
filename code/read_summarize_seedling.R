@@ -20,19 +20,20 @@ final <- seedlings %>%
 # Proportion of germination, survival and their product, establishment for each frame. 
 proportions <- full_join(germination, final) %>% 
   group_by(fire, aspect, species, frameID) %>% 
-  summarise(germination = sum(germinated, na.rm = T) / n(),
-            survival = sum(final, na.rm = T) / sum(germinated, na.rm = T),
-            establishment = sum(final, na.rm = T) / n()) %>% 
-  gather(period, value, germination, survival, establishment) %>% 
+  summarise(Germination = sum(germinated, na.rm = T) / n(),
+            Survival = sum(final, na.rm = T) / sum(germinated, na.rm = T),
+            Establishment = sum(final, na.rm = T) / n()) %>% 
+  gather(period, value, Germination, Survival, Establishment) %>% 
   mutate(value = if_else(is.na(value), 0, value)) %>% 
-  mutate(period = factor(period, levels = c('germination','survival','establishment'))) %>% 
   # Transform data, then show both ways (all fires and aspects together for clarity)
   # Using arsine-square-root transform per Ives 2018 sensu Larson and Marx 1981
-  mutate(asinsqrt = asin(sign(value) * sqrt(abs(value)))) %>%
+  mutate(asinsqrt = asin(sign(value) * sqrt(abs(value))),
+         #logit = log( (value/(1-value)) )
+         logit = car::logit(value)) %>%
   rename(original = value) %>% 
-  gather(version, value, asinsqrt, original)
-
-# proportions %>% 
+  gather(version, value, original, asinsqrt, logit) %>% 
+  mutate(period = fct_relevel(period, 'Germination','Survival','Establishment')) 
+  # proportions %>% 
 #   filter(fire %in% c('Berry-Glade', 'Berry-Huck')) %>%
 #   group_by(species, period) %>% 
 #   summarise(min = min(value),

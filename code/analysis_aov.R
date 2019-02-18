@@ -8,7 +8,7 @@ source('code/read_summarize_seedling.R')
 # Plot distributions of values
 ggplot(proportions) +
   geom_histogram(aes(x = value), fill = 'grey10') +
-  facet_grid(version~species+period) +
+  facet_wrap(version~species+period, scales = 'free', ncol = 6) +
   coord_cartesian(ylim = c(0,30)) +
   theme_bw(base_size = 12) +
   labs(x = 'Proportion', y = 'Count')
@@ -105,21 +105,21 @@ aspect_plot_fn <- function(subset, y_axis, x_axis, title, multsize, label_ys){
           axis.title.y = y_axis) }
 
 estab_plot <- 
-  aspect_plot_fn(subset = 'establishment',
+  aspect_plot_fn(subset = 'Establishment',
                  y_axis = element_text(), 
                  x_axis = element_text(angle = 45, hjust = 1, vjust = 1),
                  title = 'Establishment', 
                  multsize = 2)
 
 surv_plot <- 
-  aspect_plot_fn(subset = 'survival',
+  aspect_plot_fn(subset = 'Survival',
                  y_axis = element_blank(), 
                  x_axis = element_text(angle = 45, hjust = 1, vjust = 1),
                  title = 'Survival', 
                  multsize = 1.2)
 
 germ_plot <-
-  aspect_plot_fn(subset = 'germination',
+  aspect_plot_fn(subset = 'Germination',
                  y_axis = element_blank(), 
                  x_axis = element_blank(),
                  title = 'Germination', multsize = 1.2)
@@ -150,21 +150,21 @@ fire_plot_fn <- function(subset, y_axis, x_axis, title, multsize, label_ys){
           axis.title.y = y_axis) }
 
 estab_plot <- 
-  fire_plot_fn(subset = 'establishment',
+  fire_plot_fn(subset = 'Establishment',
                  y_axis = element_text(), 
                  x_axis = element_text(angle = 45, hjust = 1, vjust = 1),
                  title = 'Establishment', 
                  multsize = 2)
 
 surv_plot <- 
-  fire_plot_fn(subset = 'survival',
+  fire_plot_fn(subset = 'Establishment',
                  y_axis = element_blank(), 
                  x_axis = element_text(angle = 45, hjust = 1, vjust = 1),
-                 title = 'Survival', 
+                 title = 'Establishment', 
                  multsize = 1.2)
 
 germ_plot <-
-  fire_plot_fn(subset = 'germination',
+  fire_plot_fn(subset = 'Germination',
                  y_axis = element_blank(), 
                  x_axis = element_blank(),
                  title = 'Germination', multsize = 1.2)
@@ -174,14 +174,32 @@ plot_grid(estab_plot, small, ncol = 2, rel_widths = c(2.3,1))
 
 
 
-
-
-
-
 #--------------------
+# BAR PLOTS
+dodge <- position_dodge(width = 0.9)
+
+# By aspect 
+text_ys <- c(0.3,0.3,0.2, 0.7,0.65,0.2, 0.2,0.2,0.1, 
+             0.2,0.2,0.2, 0.4,0.25,0.25, 0.1,0.1,0.1)
+
+ggplot(props_plot) +
+  stat_summary(aes(x = aspect, y = value, fill = aspect, group = aspect),
+               fun.y = mean, geom = "bar", position = "dodge") + 
+  stat_summary(aes(x = aspect, y = value, fill = aspect, group = aspect),
+               fun.data = mean_se, geom = "errorbar", position = dodge, width = 0.25) +
+  geom_text(data = tukey_aspect_cld, aes(x = lhs, y = text_ys, label = letters), fontface = 'bold') +
+  scale_fill_manual(values = colVals, name = 'Aspect') +
+  facet_grid(species~period) +
+  coord_cartesian(ylim = c(-0.06,0.75)) +
+  theme_bw(base_size = 14) +
+  theme(strip.background = element_blank(),
+        axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)) +
+  labs(x = '', y = 'Proportion of seeds')
+
 
 text_ys <- c(0.35,0.3,0.2,0.3,    0.7,0.3,0.6,0.7,    0.25,0.15,0.15,0.15, 
              0.2,0.15,0.15,0.15,  0.3,0.25,0.45,0.35, 0.1,0.1,0.1,0.1)
+
 
 ggplot(props_plot, aes(x = fire, y = value)) +
   stat_summary(fun.y = mean, geom = "bar", position = "dodge") + 
@@ -212,7 +230,6 @@ ggplot(statistics_df) +
   theme(strip.background = element_blank(),
         axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
 
-dodge <- position_dodge(width = 0.9)
 
 ggplot(props_plot, aes(x = fire, y = value, fill = aspect, group = aspect)) +
   stat_summary(fun.y = mean, geom = "bar", position = "dodge") + 
@@ -225,22 +242,5 @@ ggplot(props_plot, aes(x = fire, y = value, fill = aspect, group = aspect)) +
         axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)) +
   labs(x = 'Fire', y = 'Proportion')
 
-# By aspect 
-text_ys <- c(0.3,0.3,0.2, 0.7,0.65,0.2, 0.2,0.2,0.1, 
-             0.2,0.2,0.2, 0.25,0.25,0.25, 0.1,0.1,0.1)
-
-ggplot(props_plot) +
-  stat_summary(aes(x = aspect, y = value, fill = aspect, group = aspect),
-               fun.y = mean, geom = "bar", position = "dodge") + 
-  stat_summary(aes(x = aspect, y = value, fill = aspect, group = aspect),
-               fun.data = mean_se, geom = "errorbar", position = dodge, width = 0.25) +
-  geom_text(data = tukey_aspect_cld, aes(x = lhs, y = text_ys, label = letters), fontface = 'bold') +
-  scale_fill_manual(values = colVals, name = 'aspect') +
-  facet_grid(species~period) +
-  coord_cartesian(ylim = c(-0.06,0.75)) +
-  theme_bw(base_size = 14) +
-  theme(strip.background = element_blank(),
-        axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)) +
-  labs(x = '', y = 'proportion of seeds')
 
 

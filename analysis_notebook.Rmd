@@ -157,13 +157,25 @@ Good progress on the models.
 - Review ANOVA results, figures
     - Is survival an interesting thing to include?
     - Like emphasis on establishment?
+    - Tranformation: arc-sine or log? Counts or proportions? ANOVAs are on arc-sine proportions, but models are based on counts. If counts are used, then 'survival' doesn't make sense, it the same number as 'establishment'. 
 - Like exploratory figures and maps? Need anything else for pub?
 - Soil sensor issue: Maple systematically off... See histogram
     - Exclude?
     - Legitimate way to correct? What did Winslow do?
     - Ignore?
-- GLMMs won't make great sense until Maple issue is resolved... but in the meantime, take-aways are:
-    - 
+_ What do do with missing data? Esp. for repeat measure data...
+- Present current state of GLMMs: 
+    - Big Q: Aggregate to site-level, or keep all frame data?
+    - Currently using Poisson log-link on counts. Should I use binomial logit on proportions? Note inconsistency with ANOVA, and issue with survival (must be proprotion)
+    - Gettting counter-intuitive signs on moisture coeffecient sometimes, when Maple is included.
+    - Using 'dredge': an AIC-based exhaustive model selected constrained to 4 terms. Not foregoing ecological reasoning, just need a way to pick mois_q50 vs. mois_q75, for example. 
+    - Preliminary results:  
+        - Generally the GLMM results seem to support median soil moisture and maximum temperature
+        - Species definitely important, but not neccessarily interaction.
+- Present current state of repeat models
+- GLMMs won't make great sense until Maple issue is resolved... 
+
+
 
 
 
