@@ -26,8 +26,8 @@ atmos_df <- atmos_df %>%
 
 # Caclulate percentiles and pull out just air temp and vpd
 atmos_preds <- atmos_df %>% 
-  select(air_temp, vpd) %>% 
-  gather(variable, value, air_temp, vpd) %>%
+  dplyr::select(air_temp, vpd, solar, precip) %>% 
+  gather(variable, value, air_temp:precip) %>%
   group_by(fire, aspect, variable) %>% 
   summarise(q50 = quantile(value, 0.50),
             q75 = quantile(value, 0.75),

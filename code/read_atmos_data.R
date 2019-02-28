@@ -12,12 +12,12 @@ read_atmos <- function(file_name){
                      na = '#N/A',
                      skip = 3,
                      col_names = FALSE) %>%
-    select(time = 1, 
-           air_temp = 9, precip = 3, rel_hum = 10, atms_press = 11, solar = 2, 
-           wind_dir = 6, wind_speed = 7, wind_gust = 8, 
-           light_n = 4, light_dist = 5, 
-           precip_rate = 14, RH_temp = 15,
-           xaxis = 12, yaxis = 13)
+    dplyr::select(time = 1, 
+                  air_temp = 9, precip = 3, rel_hum = 10, atms_press = 11, solar = 2, 
+                  wind_dir = 6, wind_speed = 7, wind_gust = 8, 
+                  light_n = 4, light_dist = 5, 
+                  precip_rate = 14, RH_temp = 15,
+                  xaxis = 12, yaxis = 13)
   return(data)
 }
 

@@ -29,7 +29,7 @@ proportions <- full_join(germination, final) %>%
   # Using arsine-square-root transform per Ives 2018 sensu Larson and Marx 1981
   mutate(asinsqrt = asin(sign(value) * sqrt(abs(value))),
          #logit = log( (value/(1-value)) )
-         logit = car::logit(value)) %>%
+         logit = car::logit(value, adjust=0)) %>%
   rename(original = value) %>% 
   gather(version, value, original, asinsqrt, logit) %>% 
   mutate(period = fct_relevel(period, 'Germination','Survival','Establishment')) 

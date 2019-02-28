@@ -1,0 +1,136 @@
+---
+title: "Research Update"
+subtitle: "Exploratory and inferential analyses to date on seed-addition in short interval fire experiment"
+author: "Tyler Hoecker"
+date: "2/26/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_knit$set(root.dir = "/Users/tylerhoecker/GitHub/seed_addition_GYE/")
+```
+
+### Seed germination, survival and establishment data
+
+#### Distribution of seedling counts and transformations
+The arc-sine square-root tranformation was used to stabalize the variance before conducting ANOVA. I'm still unclear about why the logit transformation produces negative values, but I may be applying it incorrectly. 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+source("code/analysis_aov.R")
+count_histos
+```
+
+#### ANOVA of proportions in each response category, grouped by aspect and by site
+ANOVA and Tukey's HSD were used to identify significantly different groups at p < 0.05. Comparisons were made on transformed proportions, but data are plotted on original scale. Points show mean, error bars show bootstrapped 95% C.I., and colored points show values at the frame-level.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width=12}
+aspect_plot
+fire_plot
+```
+
+#### Time series of seedling counts
+No formal statistical analysis here, but these are useful for understanding mortalitiy over the seaon. These values are summarized at the site level. I think this speaks to the importance of both germination and survival. If you germinate low, there's nowhere to go. If you germinate higher, many will die, but difficult to tell if more died on south aspects than others. 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+counts <- seedlings %>% 
+  filter(variable == 'height', species != 'control', value > 0) %>% 
+  group_by(date, fire, species, aspect) %>%
+  summarize(count = n(),
+            prop = n()/(5*50))
+
+allMeasures <- seedlings %>% 
+  group_by(date, fire, species, aspect) %>% 
+  filter(variable == 'height', value < 0 | is.na(value)) %>% 
+  summarise(count = 0)
+
+ counts_full <- 
+  full_join(counts, allMeasures) %>% 
+  group_by(date, fire, species, aspect) %>% 
+  filter(species != 'control') %>% 
+  summarise(count = sum(count),
+            prop = count/(5*50)) 
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width=12}
+ggplot(counts_full) +
+  geom_line(aes(x = date, y = count, color = aspect), size = 1) +
+  geom_point(aes(x = date, y = count, fill = aspect), shape = 21, size =2) +
+  facet_wrap(~species+fire, ncol = 4, scales = 'free') +
+  scale_y_continuous(sec.axis = sec_axis(~.*0.4, name = "Percent of planted")) +
+  scale_x_datetime(limits = as.POSIXct(c("2018-06-15 00:00:00", "2018-10-30 00:00:00"))) +
+  scale_color_manual(values = colVals, name = 'aspect') +
+  scale_fill_manual(values = colVals, name = 'aspect') +
+  labs(x = 'Date', y = 'Count of living seedlings') +  
+  theme_bw(base_size = 14) +
+  theme(strip.background = element_blank(),
+        #strip.text.x = element_blank(),
+        axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
+```
+Plotted with variable axes, to highlight change within sites.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width=10}
+ggplot(counts_full) +
+  geom_line(aes(x = date, y = count, color = aspect), size = 1) +
+  geom_point(aes(x = date, y = count, fill = aspect), shape = 21, size =2) +
+  facet_wrap(~species+fire, ncol = 4) +
+  scale_y_continuous(sec.axis = sec_axis(~.*0.4, name = "Percent of planted")) +
+  scale_x_datetime(limits = as.POSIXct(c("2018-06-15 00:00:00", "2018-10-30 00:00:00"))) +
+  scale_color_manual(values = colVals, name = 'aspect') +
+  scale_fill_manual(values = colVals, name = 'aspect') +
+  labs(x = 'Date', y = 'Count of living seedlings') +  
+  theme_bw(base_size = 14) +
+  theme(strip.background = element_blank(),
+        #strip.text.x = element_blank(),
+        axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
+```
+Plotted with a fixed axis, to allow comparison among sites.
+
+******
+
+### Soil and environmental sensor data
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width=12}
+source('code/soil_data_plotting.R') 
+soil_time_plot
+```
+Soil temperature and moisture from April 15 - November 1st 2018. Lines are daily means, ribbons are daily minimum and maximum values.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width=12, fig.height=6}
+source('code/atmos_data_prep.R')
+
+atmos_df %>% 
+  dplyr::select(time, fire, aspect, air_temp, vpd, solar, precip) %>% 
+  gather(variable, value, air_temp:precip) %>%
+  separate(time, into = c('date','hour'), sep = " ") %>%
+  mutate(date = as.Date(date)) %>%
+  group_by(fire, aspect, date, variable) %>% # Change site for aspect
+  summarize(dayMin = min(value, na.rm = T),
+            dayMean = mean(value, na.rm = T),
+            dayMax = max(value, na.rm = T)) %>% 
+  
+  ggplot() +
+  geom_ribbon(aes(x = date, ymin = dayMin, ymax = dayMax, fill = aspect),
+              alpha = alphaVals, na.rm = FALSE) +
+  geom_line(aes(x = date, y = dayMean, color = aspect), size = 0.85) +
+  scale_fill_manual('Aspect', values = colVals) +
+  scale_color_manual('Aspect', values = colVals) +
+  facet_grid(variable ~ fire, scales = 'free') +
+  theme_bw(base_size = 14) +
+  labs(x = '', y = 'Daily mean & range') +
+  theme(strip.background = element_blank(),
+        plot.subtitle = element_text(hjust = 0.5, face = 'bold')) +
+  scale_x_date(date_breaks = "1 month", 
+               date_labels = "%b",
+               limits = as.Date(c("2018-04-15","2018-11-01")))
+```
+Air temperature ('air_temp', C), precipitation ('precip', mm), solar radiation ('solar', wm2), vapor pressure defecit ('vpd', kPA) at at 1.5 m from ~ June 15 - October 15, 2018. Lines show daily mean, ribbons show daily minimum and maxium.  
+
+******
+
+### Study area maps and schematic of experimental design
+
+![Study area and site maps. Red polygons indicate burned area perimeters, from the Monitoring Trends in Burn Severity (MTBS) data. Site locations are colored according to aspect, and labeled with their elevation in meters (derived from a 30 x 30 m DEM). Inset maps are labeled with the site name used in this study. Black lines show park administrative boundaries. Base map data from Google Satellite and ESRI Terrain products.](/Users/tylerhoecker/Box Sync/PhD/Dissertation/Seed_Addition/Analysis/figs/study_area_map_small.png)
+
+
+![Schematic illustration of experimental design. North-facing, south-facing and flat-aspect plots were installed in four recent short-interval fires. At each plot, 50 seeds were planted in five trays each for two conifer species. Five trays were not seeded. Soil moisture and temperature sensors were installed inside the central three trays, and one sensor outside..](/Users/tylerhoecker/Box Sync/PhD/Dissertation/Seed_Addition/Analysis/figs/seed_addition_design_small.png)
+
+
+
+

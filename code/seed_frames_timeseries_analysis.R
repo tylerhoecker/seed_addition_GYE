@@ -9,18 +9,18 @@ source('code/read_seedling_data.R')
 # Summarize counts
 counts <- seedlings %>% 
   filter(variable == 'height', species != 'control', value > 0) %>% 
-  group_by(date, site, species, aspect) %>%
+  group_by(date, fire, species, aspect) %>%
   summarize(count = n(),
             prop = n()/(5*50))
 
 allMeasures <- seedlings %>% 
-  group_by(date, site, species, aspect) %>% 
+  group_by(date, fire, species, aspect) %>% 
   filter(variable == 'height', value < 0 | is.na(value)) %>% 
   summarise(count = 0)
 
  counts_full <- 
   full_join(counts, allMeasures) %>% 
-  group_by(date, site, species, aspect) %>% 
+  group_by(date, fire, species, aspect) %>% 
   filter(species != 'control') %>% 
   summarise(count = sum(count),
             prop = count/(5*50)) 
@@ -28,7 +28,7 @@ allMeasures <- seedlings %>%
    
 # Summarize measurements
 meas_summ <- seedlings %>% 
-  group_by(date, site, species, variable, aspect) %>% 
+  group_by(date, fire, species, variable, aspect) %>% 
   summarize(med = quantile(value, 0.50, na.rm = T),
             lower = quantile(value, 0.05, na.rm = T),
             upper = quantile(value, 0.95, na.rm = T))
@@ -61,7 +61,7 @@ seedlings_time <-
   ggplot(counts_full) +
   geom_line(aes(x = date, y = count, color = aspect), size = 1) +
   geom_point(aes(x = date, y = count, fill = aspect), shape = 21, size =2) +
-  facet_wrap(~species+site, ncol = 4) +
+  facet_wrap(~species+fire, ncol = 4, scales = 'free') +
   scale_y_continuous(sec.axis = sec_axis(~.*0.4, name = "Percent of planted")) +
   scale_x_datetime(limits = as.POSIXct(c("2018-06-15 00:00:00", "2018-10-30 00:00:00"))) +
   scale_color_manual(values = colVals, name = 'aspect') +
@@ -69,7 +69,7 @@ seedlings_time <-
   labs(x = 'Date', y = 'Count of living seedlings') +  
   theme_bw(base_size = 14) +
   theme(strip.background = element_blank(),
-        strip.text.x = element_blank(),
+        #strip.text.x = element_blank(),
         axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
 
 # Abiotic through time
