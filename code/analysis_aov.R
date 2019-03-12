@@ -98,7 +98,7 @@ aspect_plot_fn <- function(subset, y_axis, x_axis, title, multsize, label_ys){
               color = 'black', size = 2*multsize, fontface = 'bold') +
     facet_wrap(~species) +
     labs(y = 'Proportion of seeds', subtitle = title) +
-    theme_bw(base_size = 11) +
+    theme_bw(base_size = 14) +
     theme(strip.background = element_blank(),
           plot.subtitle = element_text(hjust = 0.5, face = 'bold'),
           axis.text.x = x_axis,
@@ -107,7 +107,7 @@ aspect_plot_fn <- function(subset, y_axis, x_axis, title, multsize, label_ys){
 
 estab_plot <- 
   aspect_plot_fn(subset = 'Establishment',
-                 y_axis = element_text(), 
+                 y_axis = element_blank(),
                  x_axis = element_text(angle = 45, hjust = 1, vjust = 1),
                  title = 'Establishment', 
                  multsize = 2)
@@ -121,7 +121,7 @@ surv_plot <-
 
 germ_plot <-
   aspect_plot_fn(subset = 'Germination',
-                 y_axis = element_blank(), 
+                 y_axis = element_text(), , 
                  x_axis = element_text(angle = 45, hjust = 1, vjust = 1),
                  title = 'Germination', 
                  multsize = 2)

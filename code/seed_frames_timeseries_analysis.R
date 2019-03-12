@@ -1,6 +1,3 @@
-library(tidyverse)
-
-
 ## Seed-frame data ---------------------------------------------------------
 
 # Read in data from Kobo
@@ -53,15 +50,17 @@ atmos_data <- atmos_df %>%
 
 # Time series plotting ---------
 
-colVals <- c('flat' = '#009E73','north' = '#0072B2','south' = '#E69F00')
+colVals <- c('Flat' = '#009E73','North' = '#0072B2','South' = '#E69F00')
 legLabs <- c('Flat','North','South')
 
-# Counts, through time 
-seedlings_time <- 
-  ggplot(counts_full) +
+# Counts, through time
+counts_full %>% 
+  filter(species == 'PICO') %>% 
+#seedlings_time <- 
+  ggplot() +
   geom_line(aes(x = date, y = count, color = aspect), size = 1) +
   geom_point(aes(x = date, y = count, fill = aspect), shape = 21, size =2) +
-  facet_wrap(~species+fire, ncol = 4, scales = 'free') +
+  facet_wrap(~fire, ncol = 4) +
   scale_y_continuous(sec.axis = sec_axis(~.*0.4, name = "Percent of planted")) +
   scale_x_datetime(limits = as.POSIXct(c("2018-06-15 00:00:00", "2018-10-30 00:00:00"))) +
   scale_color_manual(values = colVals, name = 'aspect') +
@@ -70,7 +69,8 @@ seedlings_time <-
   theme_bw(base_size = 14) +
   theme(strip.background = element_blank(),
         #strip.text.x = element_blank(),
-        axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
+        axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1),
+        axis.title.y = element_blank())
 
 # Abiotic through time
 colVals2 <- c('Flat' = '#009E73','North' = '#0072B2','South' = '#E69F00')

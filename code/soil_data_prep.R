@@ -6,12 +6,12 @@ soil_preds <- soil_df %>%
   group_by(fire, aspect, variable) %>% 
   # Issue with Maple soil moisture - sensor not calibrated correctly...? >:o
   #mutate(value = if_else(fire == 'Maple' & variable == 'mois', value-10, value)) %>% 
-  summarise(q50 = quantile(value, 0.50),
-            q75 = quantile(value, 0.75),
-            min = min(value),
-            max = max(value),
-            dry_hours = sum(value < 10),
-            hot_hours = sum(value > 30)) %>% 
+  summarise(q50 = quantile(value, 0.50, na.rm = T),
+            q75 = quantile(value, 0.75, na.rm = T),
+            min = min(value, na.rm = T),
+            max = max(value, na.rm = T),
+            dry_hours = sum(value < 10, na.rm = T),
+            hot_hours = sum(value > 30, na.rm = T)) %>% 
   gather(quant, value, -c(fire,aspect,variable)) %>% 
   unite(temp, variable, quant) %>% 
   spread(temp, value) %>% 

@@ -19,7 +19,7 @@ final <- seedlings %>%
 
 # Proportion of germination, survival and their product, establishment for each frame. 
 proportions <- full_join(germination, final) %>% 
-  group_by(fire, aspect, species, frameID) %>% 
+  group_by(fire, aspect, species, frameID) %>% # Adjust by frame or site: frameID
   summarise(Germination = sum(germinated, na.rm = T) / n(),
             Survival = sum(final, na.rm = T) / sum(germinated, na.rm = T),
             Establishment = sum(final, na.rm = T) / n()) %>% 
@@ -32,7 +32,8 @@ proportions <- full_join(germination, final) %>%
          logit = car::logit(value, adjust=0)) %>%
   rename(original = value) %>% 
   gather(version, value, original, asinsqrt, logit) %>% 
-  mutate(period = fct_relevel(period, 'Germination','Survival','Establishment')) 
+  mutate(period = fct_relevel(period, 'Germination','Survival','Establishment'))
+
   # proportions %>% 
 #   filter(fire %in% c('Berry-Glade', 'Berry-Huck')) %>%
 #   group_by(species, period) %>% 

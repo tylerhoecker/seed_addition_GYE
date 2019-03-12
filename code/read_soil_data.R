@@ -47,7 +47,7 @@ soil_df <- map(raw_files, read_soil) %>%
   # Just the summer 
   filter(time >= start_time & time <= end_time) %>% 
   # Truncate negative values to 0 [not sure why there are negative values...]
-  mutate(value = if_else(value < 0, 0, value)) %>% 
+  mutate(value = if_else(value < 0 & variable == 'mois', as.numeric(NA), value)) %>% 
   # Average all 4 ports
   group_by(fire, aspect, time, variable) %>%
   summarise(value = mean(value, na.rm = T)) %>% 
