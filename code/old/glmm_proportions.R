@@ -1,3 +1,17 @@
+# Load and prep soil moisture and temperature predictor variables---------------
+# Decide on a time period of interest:
+start_time <- as.POSIXct(c("2018-06-01 00:00:00"))
+end_time <- as.POSIXct(c("2018-10-01 00:00:00"))
+
+source('code/soil_data_prep.R') # creates `soil_df` (complete) and `soil_preds` (summarized)
+
+# Response variables
+source('code/read_summarize_seedling.R')
+seedling_response <- proportions %>% 
+  filter(version == 'original') %>% 
+  dplyr::select(-version) %>% 
+  spread(period, value) 
+
 # Read in topographic indices from CSV (done using built-in GDAL DEM tools in QGIS3: https://www.gdal.org/gdaldem.html)
 dem_idx <- read_csv('data/dem_indices.csv') %>% 
   # Convert aspect to continuous measure per Beers et al. 1966 J. For.
@@ -10,50 +24,21 @@ dem_idx %>%
   summarise(m = mean(dem_elev)) %>% 
   arrange(m)
 
-# Load and prep soil moisture and temperature predictor variables---------------
-# Decide on a time period of interest:
-start_time <- as.POSIXct(c("2018-06-01 00:00:00"))
-end_time <- as.POSIXct(c("2018-10-01 00:00:00"))
-
-# Calculates quantiles and cumulative predictors
-############ NOTE THE ADJUSTMENT MADE TO MAPLE SITES!! CHECK SCRIPT ############
-source('code/soil_data_prep.R') # creates `soil_df` (complete) and `soil_preds` (summarized)
-
-# Load seedling data and calculate counts for each response---------------------
-# source('code/read_seedling_data.R')
-# seedling_response <- seedlings %>% 
-#   filter(variable == 'height', species != 'control') %>%
-#   mutate(germinated = if_else(is.na(value), 0, 1),
-#          established = if_else(date > as.POSIXct("2018-10-01") & value > 0, 1, 0)) %>% 
-#   group_by(fire, aspect, species) %>% 
-#   summarise_at(vars(germinated, established), sum, na.rm = T)
-
-source('code/read_summarize_seedling.R')
-seedling_response <- proportions %>% 
-  filter(version == 'original') %>% 
-  select(-version) %>% 
-  spread(period, value) 
-  
-
 # Create a dataframe that combines the seedling responses, measured soil predictors, and DEM stuff
 complete_df <- seedling_response %>% 
   full_join(., soil_preds, by = c('fire','aspect')) %>% 
-  #full_join(., atmos_preds) %>% # Comment out for germination, because no ATMOS data that early...
   full_join(., dem_idx, by = c('fire','aspect')) %>% 
   # Dealing only with 'establishment'
   ungroup() %>% 
   modify_at(c('site', 'fire', 'aspect','species'), as.factor) 
 
 # Exploratory Analysis ---------------------------------------------------------
-
 colVals <- c('Flat' = '#009E73','North' = '#0072B2','South' = '#E69F00')
-# Look at all possible variables
+
 complete_df %>%
   gather(variable, value, -(fire:Establishment)) %>% 
   filter(variable %in% c('temp_q50', 'mois_q50')) %>% 
-  # Linear relationships much stronger without Maple!!
-  #filter(fire != 'Maple') %>% 
-  
+
   ggplot(aes(x = value, y = Survival)) +
   geom_point(aes(color = aspect, shape = fire)) +
   geom_smooth(method = 'lm', aes(linetype = species), color = 'black', se = F) +
@@ -61,22 +46,11 @@ complete_df %>%
   facet_wrap(~variable, scales = 'free') +
   theme_bw(base_size = 12)
 
-# Examine correlation structure among predictors that seem significant
-# library(GGally)
-# complete_df %>% 
-#   ungroup() %>% 
-#   select(count, temp_max, tri, dev_ne, mois_q75) %>% 
-#   ggpairs() + theme_bw()
-# Must eliminate slope because of high correlation with TRI (0.993), all other
-# correlations are less than |0.5|
-
-
-
-
 ## THE MODELS ------------------------------------------------------------------
 library(MuMIn) # For psuedo-r-squared 
 library(lme4)  # For glmer
 library(effects) # For glmm effects plotting
+library(glmmTMB) # For zero-inflated
 
 # Rescale predictors
 model_df <- complete_df %>% 
@@ -85,10 +59,45 @@ model_df <- complete_df %>%
   mutate_at(vars(-c(fire,aspect,species,Germination,Survival,Establishment)), scale) 
 
 # Selecting the best GLMM using sensor data ------------------------------------
+# Zero-inflated GLMM using glmmTMB-----------------------------------------------
+# Still need to justify with a pre-hoc test of zero inflation.
+# What does it mean that ZI model is just intercept?
+# Parameter estimates are almost identical to regular glmm.
+
+# Dredge approach applied to ziglmmm's - takes while to run dredge here 
+library(glmmTMB)
+m <- glmmTMB(Establishment ~ species*(mois_min + mois_q50 + temp_q50 + temp_max) + (1|fire),
+             ziformula = ~ .,
+             family = 'binomial', 
+             weights = Germination, 
+             data = model_df)
+glmm_dredge <- dredge(m, m.lim = c(0,4))
+glmm_dredge
+top_model <- get.models(glmm_dredge, subset = 1)[[1]]
+summary(top_model)
+plot(allEffects(top_model, residuals = TRUE))
+r.squaredGLMM(top_model)
+
+# The best ziglmm model
+best_ziglmm <- glmmTMB(Survival ~ species + mois_min + mois_q50 + temp_q50 + (1 | fire),
+                       ziformula =  ~ (1 | fire),
+                       family = 'binomial', 
+                       weights = Germination*50, 
+                       #REML = T,
+                       data = model_df)
+
+summary(m)$AIC
+fixef(m)
+plot(m)
+plot(allEffects(m, residuals = TRUE))
+
+# Compare best ziglmm to non-zi
+
+
 
 # No interactions, otherwise too many paramters
 global_mod <- 
-  glmer(Survival ~ species + mois_dry_hours + mois_q50 + temp_max + temp_hot_hours + temp_q50 + (1|fire),
+  glmer(Survival ~ species + mois_min + mois_dry_hours + mois_q50 + temp_max + temp_hot_hours + temp_q50 + (1|fire),
         weights = Germination * 50,
         data = model_df,
         family="binomial",
@@ -103,86 +112,58 @@ summary(top_model)
 
 # With interactions using terms from top model
 global_mod <- 
-  glmer(Survival ~ species*(mois_min+mois_dry_hours+mois_q50+temp_q50) + (1|fire),
+  glmer(#Survival ~ species*(mois_min+mois_dry_hours+mois_q50+temp_q50) + (1|fire),
+        Survival ~ species*(mois_min + mois_q50 + temp_q50) + (1 | fire),
         weights = Germination * 50,
         data = model_df,
         family="binomial",
         control=glmerControl(optimizer="bobyqa"),
         na.action="na.fail")
 
-glmm_dredge <- dredge(global_mod, m.lim = c(0,5))
-glmm_dredge
-
-top_model <- get.models(glmm_dredge, subset = 1)[[1]]
-
-summary(global_mod)
+summary(global_mod)$AIC
 r.squaredGLMM(global_mod)
 
 # Fixed Effects of top model
-plot(allEffects(top_model, residuals = TRUE))
+plot(allEffects(global_mod, residuals = TRUE))
 
 # Residuals of top model
 plot(top_model)
 r.squaredGLMM(top_model)
 
-# Model space plotting
+# Model space plotting----------------------------------------------------------
+# Plot a 2-parameter model space based on the top model.
+
 label_df <- complete_df %>% 
   unite(name, fire,aspect, sep = ' ', remove = F) %>% 
-  group_by(name, aspect, mois_q50, mois_min) %>% 
+  group_by(name, aspect, mois_q50, temp_q50) %>% 
   summarise() 
 
-  
+
+plotObj <- 
 ggplot(complete_df) +
   # geom_point(data = label_df, aes(x = mois_q50, y = temp_q50, color = aspect), 
   #            shape = 16, alpha = 0.3, size = 25, stroke = 1.5) +
   # geom_point(data = label_df, aes(x = mois_q50, y = temp_q50, color = aspect), 
   #            shape = 21, size = 25, stroke = 0.7) +
-  geom_point(data = label_df, aes(x = mois_q50, y = mois_min), 
+  geom_point(data = label_df, aes(x = mois_q50/100, y = temp_q50), 
              shape = 21, color = 'black', fill = 'grey80', alpha = 0.3, size = 18, stroke = 0.7) +
-  scale_color_manual(values = colVals, guide = F) +
-  geom_jitter(aes(x = mois_q50, y = mois_min, fill = Survival, size = Germination * 50), 
-              shape = 21, width = 0.3, height = 0.3, alpha = 0.8) +
-  #geom_text(data = label_df, aes(x = mois_q50, y = temp_q50, label = name), nudge_x = .4, nudge_y = -.4) +
+  #scale_color_manual(values = colVals, guide = F) +
+  geom_jitter(aes(x = mois_q50/100, y = temp_q50, fill = Survival, size = Germination * 50),
+              shape = 21, width = 0.003, height = 0.2, alpha = 0.8) +
+  #geom_text(data = label_df, aes(x = mois_q50/100, y = temp_q50, label = name), nudge_x = -0.001) +
+  scale_x_continuous(limits = c(0.033,0.12), breaks = seq(0.03,0.12,0.03)) +
+  scale_y_continuous(limits = c(12,18), breaks = seq(12,18,2)) +
   scale_fill_viridis_c('Survival rate') +
-  scale_radius("Seeds germinated", range = c(2,12)) +
-  facet_wrap(~species) +
+  scale_radius("Seeds\ngerminated", range = c(1,12)) +
+  #facet_wrap(~species) +
   theme_bw(base_size = 14) +
-  #labs(x = 'Median soil moisture (%)', y = 'Median soil temperature (*C)') +
+  labs(x = 'Median soil moisture (vwc)', y = bquote('Median soil temperature ('*~degree *C*')')) +
   theme(strip.background = element_blank(),
         strip.text = element_text(face = 'bold'))
 
+legend <- cowplot::get_legend(plotObj)
 
-# Method using zero-inflated approach-------------------------------------------
-
-library(glmmTMB)
-m <- glmmTMB(Survival ~ species*(mois_min + mois_q50 + temp_q50 + temp_max) + (1|fire),
-             ziformula = ~ .,
-             family = 'binomial', 
-             weights = Germination * 50, 
-             #REML = T,
-             data = model_df)
-glmm_dredge <- dredge(m, m.lim = c(0,4))
-glmm_dredge
-top_model <- get.models(glmm_dredge, subset = 1)[[1]]
-summary(top_model)
-plot(allEffects(top_model, residuals = TRUE))
-r.squaredGLMM(top_model)
-
-
-m <- glmmTMB(Survival ~ mois_min + mois_q50 + species + temp_q50 + (1 | fire),
-             ziformula =  ~ (1 | fire),
-             family = 'binomial', 
-             weights = Germination * 50, 
-             #REML = T,
-             data = model_df)
-
-summary(m)$AIC
-fixef(m)
-
-plot(allEffects(m, residuals = TRUE))
-
-
-
+plot(legend)
 # Selecting the best GLMM using DEM data ------------------------------------
 ###################################################################################
 # Make a list of formulas, all logical combinations of soil data
@@ -287,4 +268,13 @@ library(broom)
 #   map(glance) %>% 
 #   bind_rows() %>% 
 #   mutate(forms = formulas)
+# library(rpart)
+# library(rpart.plot)
 # 
+# cart_model = rpart(Survival ~ species + mois_min + mois_q50 + temp_q50 + temp_max, 
+#                    data = complete_df, 
+#                    method ="class")
+# printcp(cart_model)
+# prp(cart_model)
+# 
+

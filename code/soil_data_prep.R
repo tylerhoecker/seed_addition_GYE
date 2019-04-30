@@ -4,14 +4,15 @@ source('code/read_soil_data.R')
 # Select just soil moisture during summer and average to hourly.
 soil_preds <- soil_df %>% 
   group_by(fire, aspect, variable) %>% 
+  mutate(value = if_else(variable == 'mois', value/100, value)) %>% 
   # Issue with Maple soil moisture - sensor not calibrated correctly...? >:o
   #mutate(value = if_else(fire == 'Maple' & variable == 'mois', value-10, value)) %>% 
   summarise(q50 = quantile(value, 0.50, na.rm = T),
             q75 = quantile(value, 0.75, na.rm = T),
             min = min(value, na.rm = T),
             max = max(value, na.rm = T),
-            dry_hours = sum(value < 10, na.rm = T),
-            hot_hours = sum(value > 30, na.rm = T)) %>% 
+            dry_hours = sum(value < .07, na.rm = T)/n(),
+            hot_hours = sum(value > 30, na.rm = T)/n()) %>% 
   gather(quant, value, -c(fire,aspect,variable)) %>% 
   unite(temp, variable, quant) %>% 
   spread(temp, value) %>% 

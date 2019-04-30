@@ -70,7 +70,7 @@ props_plot <- proportions %>%
 
 # Dataframes with Tukey labels
 aspect_group_labels <- proportions %>% 
-  full_join(tukey_aspect_cld) %>% 
+  full_join(., tukey_aspect_cld) %>% 
   filter(version == 'original') %>% 
   group_by(species, aspect, lhs, period, letters) %>% 
   summarise(y_position = max(value) + 0.05) %>% 
@@ -87,15 +87,15 @@ fire_group_labels <- proportions %>%
 aspect_plot_fn <- function(subset, y_axis, x_axis, title, multsize, label_ys){
     
   ggplot(filter(props_plot, period == subset), 
-         aes(x = aspect, y = value, color = aspect, fill = aspect)) +
-    geom_jitter(alpha = 0.6, size = 1*multsize) +
-    stat_summary(color = 'black', size = 0.3*multsize,
+         aes(x = aspect, y = value, fill = aspect)) +
+    geom_jitter(color = 'black', alpha = 0.3, size = 1*multsize, width = 0.2) +
+    stat_summary(size = 0.5*multsize, shape = 21,
                  fun.data = "mean_cl_boot", geom = "pointrange") +
     scale_color_manual(values = colVals, name = 'aspect', guide = F) +
     scale_fill_manual(values = colVals, name = 'aspect', guide = F) +
     geom_text(data = filter(aspect_group_labels, period == subset),
-      aes(x = aspect, y = y_position, label = letters), 
-              color = 'black', size = 2*multsize, fontface = 'bold') +
+      aes(x = aspect, y = label_ys, label = letters), 
+              color = 'black', size = 2.5*multsize) +
     facet_wrap(~species) +
     labs(y = 'Proportion of seeds', subtitle = title) +
     theme_bw(base_size = 14) +
@@ -110,6 +110,7 @@ estab_plot <-
                  y_axis = element_blank(),
                  x_axis = element_text(angle = 45, hjust = 1, vjust = 1),
                  title = 'Establishment', 
+                 label_ys = 0.33,
                  multsize = 2)
 
 surv_plot <- 
@@ -117,19 +118,21 @@ surv_plot <-
                  y_axis = element_blank(), 
                  x_axis = element_text(angle = 45, hjust = 1, vjust = 1),
                  title = 'Survival', 
+                 label_ys = 1.1,
                  multsize = 2)
 
 germ_plot <-
   aspect_plot_fn(subset = 'Germination',
-                 y_axis = element_text(), , 
+                 y_axis = element_text(), 
                  x_axis = element_text(angle = 45, hjust = 1, vjust = 1),
                  title = 'Germination', 
+                 label_ys = 0.45,
                  multsize = 2)
   
 #small <- plot_grid(germ_plot, surv_plot, ncol = 1, rel_heights = c(1,1.15))
 #plot_grid(estab_plot, small, ncol = 2, rel_widths = c(2.3,1))
 aspect_plot <- plot_grid(germ_plot, surv_plot, estab_plot, ncol = 3)
-
+aspect_plot
 # By fire  --------------------------------------------------------------------
 fire_plot_fn <- function(subset, y_axis, x_axis, title, multsize, label_ys){
   
