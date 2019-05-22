@@ -25,6 +25,7 @@ crs(site_points) <- crs(dem)
 
 # Calculate terrain indices from DEM
 aspect <- terrain(dem, opt = 'aspect', unit = 'degrees')
+# Convert aspect to continuous measure per Beers et al. 1966 J. For.
 dev_ne <- cos( (45*pi/180) - (aspect*pi/180) ) + 1 
 slope <- terrain(dem, opt = 'slope', unit = 'degrees')
 tpi <- terrain(dem, opt = 'TPI')
@@ -41,17 +42,14 @@ terrain_ind_df <- site_points@data %>%
   dplyr::select(fire, aspect)
 
 terrain_ind_df$elev = extract(dem, site_points)
-terrain_ind_df$asp_deg = extract(aspect, site_points)
+terrain_ind_df$dev_ne = extract(dev_ne, site_points)
 terrain_ind_df$slope = extract(slope, site_points)
 terrain_ind_df$tpi = extract(tpi, site_points)
-terrain_ind_df$tpi9 = extract(tpi9, site_points)
+#terrain_ind_df$tpi9 = extract(tpi9, site_points)
 terrain_ind_df$hli = extract(hli, site_points)
-terrain_ind_df$hsp = extract(hsp, site_points)
-terrain_ind_df$curv = extract(curv, site_points)
+#terrain_ind_df$hsp = extract(hsp, site_points)
+#terrain_ind_df$curv = extract(curv, site_points)
 
-# Convert aspect to continuous measure per Beers et al. 1966 J. For.
-terrain_ind_df <- terrain_ind_df %>% 
-  mutate(dev_ne = cos( (45*pi/180) - (asp_deg*pi/180) ) + 1 )
 
 # Import response variables (seedling germination, survival)--------------------
 source('code/read_summarize_seedling.R')
@@ -75,28 +73,6 @@ rescaled_df <- complete_df %>%
 # GLMMs -------------------------------------------------------------------------
 
 # Estimate a glmm of germination, with no zero-inflation component, save results
-germ_proxy_global <- 
-  glm(Survival ~ species + dev_ne + elev + tpi + tpi9 + hsp,
-      family = binomial(link = "logit"), 
-      weights = Germination*50,
-      data = rescaled_df,
-      na.action = 'na.fail')
-germ_proxy_dredge <- dredge(germ_proxy_global)
-germ_top_model <- get.models(germ_proxy_dredge, subset = 1)[[1]]
-summary(germ_top_model)
-PseudoR2(germ_top_model)
-
-surv_proxy_global <- 
-  glm(Survival ~ species + dev_ne + elev + tpi + tpi9,
-      family = binomial(link = "logit"), 
-      weights = Germination*50,
-      data = rescaled_df,
-      na.action = 'na.fail')
-surv_proxy_dredge <- dredge(surv_proxy_global)
-surv_top_model <- get.models(surv_proxy_dredge, subset = 1)[[1]]
-summary(surv_top_model)
-PseudoR2(surv_top_model)
-
 # Estimate a glm of germination, save results
 glmm_proxy_germ <-
   glm(Germination ~ species + dev_ne + elev + tpi,
@@ -162,6 +138,28 @@ terrain_stack <- stack(dev_ne, dem, tpi) %>%
   as.data.frame(xy = T, centroids = T)
 
 #writeRaster(terrain_stack, filename="terrain_indices.tif", options="INTERLEAVE=BAND", overwrite=TRUE)
+germ_proxy_global <- 
+  glm(Survival ~ species + dev_ne + elev + tpi + tpi9 + hsp,
+      family = binomial(link = "logit"), 
+      weights = Germination*50,
+      data = rescaled_df,
+      na.action = 'na.fail')
+germ_proxy_dredge <- dredge(germ_proxy_global)
+germ_top_model <- get.models(germ_proxy_dredge, subset = 1)[[1]]
+summary(germ_top_model)
+PseudoR2(germ_top_model)
+
+surv_proxy_global <- 
+  glm(Survival ~ species + dev_ne + elev + tpi + tpi9,
+      family = binomial(link = "logit"), 
+      weights = Germination*50,
+      data = rescaled_df,
+      na.action = 'na.fail')
+surv_proxy_dredge <- dredge(surv_proxy_global)
+surv_top_model <- get.models(surv_proxy_dredge, subset = 1)[[1]]
+summary(surv_top_model)
+PseudoR2(surv_top_model)
+
 
 
 
