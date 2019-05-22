@@ -176,8 +176,15 @@ _ What do do with missing data? Esp. for repeat measure data...
 - GLMMs won't make great sense until Maple issue is resolved... 
 
 
-
-
+## April 30, 2018
+Decent progress since last update, after focusing largely on prelims for month of March. 
+- Now have working models for germination and survival. Both use a generalized linear mixed model with a binomial link which is conditional on a zero-inflated model. 
+- GLMM is based on median soil moisture and temperature. ZI model is ~1, meaning equal (non-zero) likelihood for all observations, so it just removes the excess zeros from the predictions I guess? 
+- Have gone back and forth on thinking for model selection. Basically, using `dredge` for exhaustive model selection results in the inclusion of minimum moisture for survival with a illogical direction on the slope. Plus, including median and minimum is highly correlated. So, I am opting for a 'we chose these two versions of the predictors we measured for a priori reasons' argument. 
+- The survival model only uses data from July 8 to October 1st, to account for missing data. I think this still makes good sense ecologically, because it doesn't overlap with germination model and captures what we would expect to be the high-risk period of the summer. 
+- Only median soil moisture and species are significant terms in this model, but I included temperature so I that I could show it was non-significant when comparing with the germination model, and the coeffecient for moisture is very similar with or without. Does hurt AIC obv. though.
+- The germination model uses June 1 - June 15. This does eliminate some of the sites because they were off-line. I think that's OK, and there's nothing to be done. The model makes good sense. It uses both soil temperature and soil moisture, both are significant. The figure nicely shows how temperature drives the pattern but soil moisture bumps it up.
+- Neither have very strong explanatory power (pseudo r2 = 0.20), and a chunk of that is in the random effects
 
 
 

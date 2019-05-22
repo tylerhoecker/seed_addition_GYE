@@ -1,0 +1,181 @@
+fire,aspect ,forb,gram,rock,bare,char,litter,moss,total
+Buffalo,South,10,0,10,70,5,5,0,100
+Buffalo,South,35,15,0,40,0,10,0,100
+Buffalo,South,5,5,0,70,5,15,0,100
+Buffalo,South,5,0,1,18,75,1,0,100
+Buffalo,South,20,50,0,20,0,10,0,100
+Buffalo,South,5,0,30,65,0,0,0,100
+Buffalo,South,30,55,0,15,0,0,0,100
+Buffalo,South,25,0,10,58,2,5,0,100
+Buffalo,South,2,0,5,83,0,10,0,100
+Buffalo,South,10,20,10,50,5,5,0,100
+Buffalo,South,15,10,10,60,0,5,0,100
+Buffalo,South,10,0,20,70,0,0,0,100
+Buffalo,South,5,0,10,83,0,2,0,100
+Buffalo,South,25,0,10,55,0,10,0,100
+Buffalo,South,1,0,15,69,10,5,0,100
+Buffalo ,North,0,20,5,0,0,70,5,100
+Buffalo ,North,5,2,20,0,0,73,0,100
+Buffalo ,North,20,2,20,0,0,48,10,100
+Buffalo ,North,60,0,0,30,0,10,0,100
+Buffalo ,North,20,0,15,0,0,65,0,100
+Buffalo ,North,15,5,3,17,5,55,0,100
+Buffalo ,North,70,0,0,25,0,5,0,100
+Buffalo ,North,10,0,0,25,5,60,0,100
+Buffalo ,North,40,0,0,5,50,5,0,100
+Buffalo ,North,20,0,0,0,5,25,50,100
+Buffalo ,North,70,2,0,3,25,0,0,100
+Buffalo ,North,40,50,0,5,0,0,5,100
+Buffalo ,North,60,30,0,5,0,0,5,100
+Buffalo ,North,60,0,0,25,0,3,2,90
+Buffalo,North,60,0,0,10,0,0,30,100
+Buffalo ,Flat,2,60,0,10,3,5,20,100
+Buffalo ,Flat,10,0,1,84,0,5,0,100
+Buffalo ,Flat,10,85,0,5,0,0,0,100
+Buffalo ,Flat,2,33,0,45,0,10,10,100
+Buffalo ,Flat,5,30,0,65,0,0,0,100
+Buffalo ,Flat,20,75,0,3,0,2,0,100
+Buffalo ,Flat,0,70,10,10,0,0,10,100
+Buffalo ,Flat,0,50,0,40,0,10,0,100
+Buffalo ,Flat,20,40,0,30,0,10,0,100
+Buffalo ,Flat,20,55,0,15,0,10,0,100
+Buffalo ,Flat,5,60,0,25,0,10,0,100
+Buffalo ,Flat,5,25,0,70,0,0,0,100
+Buffalo ,Flat,15,80,0,5,0,0,0,100
+Buffalo ,Flat,58,10,0,30,1,1,0,100
+Buffalo ,Flat,0,100,0,0,0,0,0,100
+Maple,North,0,0,20,70,10,0,0,100
+Maple,North,0,0,20,70,10,0,0,100
+Maple,North,15,0,25,60,0,0,0,100
+Maple,North,0,0,25,75,0,0,0,100
+Maple,North,0,1,50,47,2,0,0,100
+Maple,North,10,0,45,40,2,3,0,100
+Maple,North,0,10,10,70,10,0,0,100
+Maple,North,10,0,20,40,30,0,0,100
+Maple,North,1,0,49,50,0,0,0,100
+Maple,North,10,0,20,60,10,0,0,100
+Maple,North,10,0,20,64,5,1,0,100
+Maple,North,5,0,20,70,5,0,0,100
+Maple,North,0,1,5,79,10,5,0,100
+Maple,North,5,1,20,69,5,0,0,100
+Maple,North,0,30,20,45,5,0,0,100
+Berry-Huck,Flat,20,5,5,30,0,40,0,100
+Berry-Huck,Flat,50,30,0,15,0,5,0,100
+Berry-Huck,Flat,50,30,0,0,0,20,0,100
+Berry-Huck,Flat,10,80,10,0,0,0,0,100
+Berry-Huck,Flat,80,0,15,0,0,5,0,100
+Berry-Huck,Flat,80,5,10,0,0,5,0,100
+Berry-Huck,Flat,15,0,2,78,0,5,0,100
+Berry-Huck,Flat,40,60,0,0,0,0,0,100
+Berry-Huck,Flat,30,55,0,15,0,0,0,100
+Berry-Huck,Flat,45,45,0,10,0,0,0,100
+Berry-Huck,Flat,55,45,0,0,0,0,0,100
+Berry-Huck,Flat,30,30,0,20,0,20,0,100
+Berry-Huck,Flat,35,35,5,20,0,5,0,100
+Berry-Huck,Flat,30,60,0,5,0,5,0,100
+Berry-Huck,Flat,60,30,0,5,0,5,0,100
+Berry-Huck,North,30,0,20,20,30,0,0,100
+Berry-Huck,North,10,0,10,30,30,20,0,100
+Berry-Huck,North,40,0,10,38,10,2,0,100
+Berry-Huck,North,25,0,10,10,55,0,0,100
+Berry-Huck,North,25,0,15,40,18,2,0,100
+Berry-Huck,North,5,0,0,20,70,5,0,100
+Berry-Huck,North,45,15,10,30,0,0,0,100
+Berry-Huck,North,10,0,5,70,10,5,0,100
+Berry-Huck,North,0,0,20,50,30,0,0,100
+Berry-Huck,North,3,0,5,75,15,2,0,100
+Berry-Huck,North,2,0,20,70,5,3,0,100
+Berry-Huck,North,20,0,45,45,10,0,0,100
+Berry-Huck,North,70,3,0,20,5,2,0,100
+Berry-Huck,North,0,0,40,30,30,0,0,100
+Berry-Huck,North,60,10,3,20,5,2,0,100
+Berry-Huck,South,5,90,3,2,0,0,0,100
+Berry-Huck,South,45,15,5,35,0,0,0,100
+Berry-Huck,South,20,30,10,38,0,2,0,100
+Berry-Huck,South,45,45,0,6,0,4,0,100
+Berry-Huck,South,25,20,5,30,0,20,0,100
+Berry-Huck,South,15,50,5,20,0,10,0,100
+Berry-Huck,South,30,60,0,5,0,5,0,100
+Berry-Huck,South,25,50,0,5,0,20,0,100
+Berry-Huck,South,10,50,5,30,0,5,0,100
+Berry-Huck,South,10,65,0,20,0,5,0,100
+Berry-Huck,South,40,40,10,0,5,5,0,100
+Berry-Huck,South,20,50,0,5,0,25,0,100
+Berry-Huck,South,2,0,56,40,0,2,0,100
+Berry-Huck,South,20,25,20,30,0,5,0,100
+Berry-Huck,South,10,70,0,15,0,5,0,100
+Berry-Glade,South,10,0,60,30,0,0,0,100
+Berry-Glade,South,30,60,0,10,0,0,0,100
+Berry-Glade,South,20,0,20,50,10,0,0,100
+Berry-Glade,South,0,0,30,30,40,0,0,100
+Berry-Glade,South,0,70,10,20,0,0,0,100
+Berry-Glade,South,20,30,5,45,0,0,0,100
+Berry-Glade,South,40,0,20,35,5,0,0,100
+Berry-Glade,South,20,0,10,55,15,0,0,100
+Berry-Glade,South,10,0,0,50,40,0,0,100
+Berry-Glade,South,90,10,0,0,0,0,0,100
+Berry-Glade,South,20,10,0,50,20,0,0,100
+Berry-Glade,South,5,1,20,64,10,0,0,100
+Berry-Glade,South,40,30,10,20,0,0,0,100
+Berry-Glade,South,30,0,20,20,30,0,0,100
+Berry-Glade,South,30,30,5,25,10,0,0,100
+Berry-Glade,Flat,0,20,50,30,0,0,0,100
+Berry-Glade,Flat,2,0,48,50,0,0,0,100
+Berry-Glade,Flat,0,0,40,60,0,0,0,100
+Berry-Glade,Flat,0,5,5,50,40,0,0,100
+Berry-Glade,Flat,0,2,35,48,15,0,0,100
+Berry-Glade,Flat,0,70,0,20,10,0,0,100
+Berry-Glade,Flat,30,0,0,20,50,0,0,100
+Berry-Glade,Flat,35,0,0,30,35,0,0,100
+Berry-Glade,Flat,5,0,45,50,0,0,0,100
+Berry-Glade,Flat,60,0,10,30,0,0,0,100
+Berry-Glade,Flat,5,0,10,65,20,0,0,100
+Berry-Glade,Flat,5,80,0,15,0,0,0,100
+Berry-Glade,Flat,2,10,2,86,0,0,0,100
+Berry-Glade,Flat,5,15,10,70,0,0,0,100
+Berry-Glade,Flat,0,60,10,30,0,0,0,100
+Berry-Glade,North,10,0,10,80,0,0,0,100
+Berry-Glade,North,0,0,10,90,0,0,0,100
+Berry-Glade,North,20,0,2,76,2,0,0,100
+Berry-Glade,North,5,0,1,84,10,0,0,100
+Berry-Glade,North,0,0,0,40,60,0,0,100
+Berry-Glade,North,2,0,28,70,0,0,0,100
+Berry-Glade,North,0,0,20,80,0,0,0,100
+Berry-Glade,North,50,0,10,40,0,0,0,100
+Berry-Glade,North,15,0,65,20,0,0,0,100
+Berry-Glade,North,30,0,20,35,5,0,0,90
+Berry-Glade,North,10,0,5,80,5,0,0,100
+Berry-Glade,North,40,0,0,58,2,0,0,100
+Berry-Glade,North,20,0,10,60,10,0,0,100
+Berry-Glade,North,10,0,10,80,0,0,0,100
+Berry-Glade,North,0,0,19,80,1,0,0,100
+Maple ,South,0,0,20,79,0,1,0,100
+Maple ,South,5,0,20,70,0,5,0,100
+Maple ,South,0,1,20,79,0,0,0,100
+Maple ,South,5,0,20,75,0,0,0,100
+Maple ,South,2,0,20,78,0,0,0,100
+Maple ,South,5,0,20,75,0,0,0,100
+Maple ,South,0,0,10,85,5,0,0,100
+Maple ,South,15,0,10,50,25,0,0,100
+Maple ,South,0,0,30,60,10,0,0,100
+Maple ,South,0,0,30,65,5,0,0,100
+Maple ,South,5,1,14,50,30,0,0,100
+Maple ,South,1,0,30,69,0,0,0,100
+Maple ,South,1,1,20,78,0,0,0,100
+Maple ,South,5,0,10,85,0,0,0,100
+Maple ,South,30,0,20,50,0,0,0,100
+Maple ,Flat,0,0,59,40,1,0,0,100
+Maple ,Flat,1,0,23,74,2,0,0,100
+Maple ,Flat,1,0,13,84,2,0,0,100
+Maple ,Flat,0,1,0,49,50,0,0,100
+Maple ,Flat,0,0,10,80,10,0,0,100
+Maple ,Flat,0,0,5,85,10,0,0,100
+Maple ,Flat,0,0,0,90,10,0,0,100
+Maple ,Flat,10,0,12,75,3,0,0,100
+Maple ,Flat,0,0,20,75,5,0,0,100
+Maple ,Flat,5,5,30,40,10,10,0,100
+Maple ,Flat,5,2,10,78,5,0,0,100
+Maple ,Flat,10,0,3,35,50,2,0,100
+Maple ,Flat,0,0,30,68,2,0,0,100
+Maple ,Flat,2,0,20,75,3,0,0,100
+Maple ,Flat,0,0,30,70,0,0,0,100

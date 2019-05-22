@@ -48,17 +48,16 @@ model_df <- complete_df %>%
   mutate_at(vars(-c(fire,aspect,species,Germination,Survival,Establishment)), scale) 
 
 # Zero-inflated GLMM using glmmTMB----------------------------------------------
-# Still need to justify with a pre-hoc test of zero inflation?
-ziglmm_survival <- glmmTMB(Survival ~ species + mois_q50 + temp_q50 + (1|fire),
-                           ziformula =  ~ 1,
-                           family = 'binomial', 
-                           weights = Germination*50,
-                           data = model_df)
-summary(ziglmm_survival)
-my_rsq(ziglmm_survival)
+glmm_survival <- glmer(Survival ~ species + mois_q50 + temp_q50 + (1|fire),
+                       family = 'binomial', 
+                       weights = Germination*50,
+                       data = model_df)
+summary(glmm_survival)
+r.squaredGLMM(glmm_survival)
+
 
 model_results <- 
-  summary(ziglmm_survival)$coefficients$cond %>% 
+  summary(glmm_survival)$coefficients$cond %>% 
   as.tibble(rownames = 'term') %>% 
   rename(sigma = `Std. Error`, coeffecient = Estimate, zval = `z value`, pval = `Pr(>|z|)`) %>% 
   filter(term != '(Intercept)') %>% 
@@ -89,32 +88,36 @@ ggplot(both_model_results) +
 
 # Make plots of predictions/model results
 # First, fit the model on unscaled variables
-ziglmm_survival <- glmmTMB(Survival ~ species + mois_q50 + temp_q50 + (1 | fire),
-                        ziformula =  ~ 1,
-                        family = 'binomial', 
-                        weights = Germination*50,
-                        data = complete_df)
-summary(ziglmm_survival)
+glmm_survival <- glmer(Survival ~ species + mois_q50 + temp_q50 + (1|fire),
+                       family = 'binomial', 
+                       weights = Germination*50,
+                       data = complete_df)
+
 # Make a data frame of predictions
 new_data <- 
   expand.grid(mois_q50 = seq(.02,.14,.002),
-              temp_q50 = mean(complete_df$temp_q50),
+              temp_q50 = seq(10,20,4),
               species =  c("PSME", "PICO"),
               fire = c("Berry-Glade","Berry-Huck","Buffalo","Maple"),
               Germination = 1) %>% 
-  mutate(pred_probs = predict(ziglmm_survival, type = 'response', newdata = .),
-         pred_low = pred_probs - predict(ziglmm_survival, type = 'response', newdata = ., se.fit = T)$se.fit,
-         pred_high = pred_probs + predict(ziglmm_survival, type = 'response', newdata = ., se.fit = T)$se.fit)  %>% 
-  group_by(species) %>% 
-  mutate(mois_color = mean(mois_q50))
+  mutate(pred_probs = predict(glmm_survival, type = 'response', newdata = .))  %>% 
+  group_by(species) %>%  
+  mutate(line_group = paste(temp_q50,fire))
+
+# pred_low = pred_probs - predict(ziglmm_survival, type = 'response', newdata = ., se.fit = T)$se.fit,
+# pred_high = pred_probs + predict(ziglmm_survival, type = 'response', newdata = ., se.fit = T)$se.fit
+
+complete_df <- complete_df %>% 
+  predict(ziglmm_survival, type = 'response', newdata = )
+
   
 # Plot predictions
 ggplot() +
   geom_jitter(data = complete_df,
              aes(x = mois_q50, y = Survival, size = Germination*50), alpha = 0.5) +
-  geom_ribbon(data = new_data, aes(x = mois_q50, ymin = pred_low, ymax = pred_high, group = fire), 
-              alpha = 0.3) +
-  geom_line(data = new_data, aes(x = mois_q50, y = pred_probs, group = fire), 
+  # geom_ribbon(data = new_data, aes(x = mois_q50, ymin = pred_low, ymax = pred_high, group = fire), 
+  #             alpha = 0.3) +
+  geom_line(data = new_data, aes(x = mois_q50, y = pred_probs, color = temp_q50, group = line_group), 
             size = 0.75) +
   facet_wrap(~species) +
   scale_x_continuous(breaks = seq(0.04,0.12,.02)) +
@@ -160,6 +163,16 @@ legend <- cowplot::get_legend(plotObj)
 plot(legend)
 
 # ------------------------------------------------------------------------------
+# # Still need to justify with a pre-hoc test of zero inflation?
+# ziglmm_survival <- glmmTMB(Survival ~ species + mois_q50 + temp_q50 + (1|fire),
+#                            ziformula =  ~ 1,
+#                            family = 'binomial', 
+#                            weights = Germination*50,
+#                            data = model_df)
+# summary(ziglmm_survival)
+# my_rsq(ziglmm_survival)
+# 
+
 # All-subsets model selection approach... this isn't really working....
 # Dredge approach applied to ziglmmm's - takes while to run dredge here 
 # library(glmmTMB)

@@ -1,0 +1,533 @@
+date,station_id,station_name,SWE,med_SWE,precip
+Oct-08,384,Canyon,0,0,0
+Nov-08,384,Canyon,0,15,25
+Dec-08,384,Canyon,53,77,86
+Jan-09,384,Canyon,140,139,163
+Feb-09,384,Canyon,218,207,241
+Mar-09,384,Canyon,264,267,287
+Apr-09,384,Canyon,345,313,373
+May-09,384,Canyon,373,264,470
+Jun-09,384,Canyon,0,0,521
+Jul-09,384,Canyon,0,0,671
+Aug-09,384,Canyon,0,0,696
+Sep-09,384,Canyon,0,0,726
+Oct-09,384,Canyon,0,0,0
+Nov-09,384,Canyon,36,15,76
+Dec-09,384,Canyon,76,77,114
+Jan-10,384,Canyon,122,139,160
+Feb-10,384,Canyon,155,207,196
+Mar-10,384,Canyon,178,267,221
+Apr-10,384,Canyon,203,313,246
+May-10,384,Canyon,180,264,335
+Jun-10,384,Canyon,0,0,414
+Jul-10,384,Canyon,0,0,508
+Aug-10,384,Canyon,0,0,521
+Sep-10,384,Canyon,0,0,544
+Oct-10,384,Canyon,0,0,0
+Nov-10,384,Canyon,8,15,46
+Dec-10,384,Canyon,107,77,145
+Jan-11,384,Canyon,218,139,254
+Feb-11,384,Canyon,279,207,315
+Mar-11,384,Canyon,343,267,371
+Apr-11,384,Canyon,444,313,478
+May-11,384,Canyon,551,264,597
+Jun-11,384,Canyon,353,0,691
+Jul-11,384,Canyon,0,0,747
+Aug-11,384,Canyon,0,0,754
+Sep-11,384,Canyon,0,0,754
+Oct-11,384,Canyon,0,0,0
+Nov-11,384,Canyon,18,15,66
+Dec-11,384,Canyon,79,77,127
+Jan-12,384,Canyon,140,139,178
+Feb-12,384,Canyon,206,207,244
+Mar-12,384,Canyon,272,267,310
+Apr-12,384,Canyon,315,313,376
+May-12,384,Canyon,236,264,462
+Jun-12,384,Canyon,0,0,572
+Jul-12,384,Canyon,0,0,617
+Aug-12,384,Canyon,0,0,650
+Sep-12,384,Canyon,0,0,655
+Oct-12,384,Canyon,0,0,0
+Nov-12,384,Canyon,25,15,48
+Dec-12,384,Canyon,64,77,94
+Jan-13,384,Canyon,145,139,175
+Feb-13,384,Canyon,190,207,221
+Mar-13,384,Canyon,218,267,249
+Apr-13,384,Canyon,269,313,300
+May-13,384,Canyon,290,264,356
+Jun-13,384,Canyon,0,0,399
+Jul-13,384,Canyon,0,0,437
+Aug-13,384,Canyon,0,0,447
+Sep-13,384,Canyon,0,0,467
+Oct-13,384,Canyon,0,0,0
+Nov-13,384,Canyon,23,15,53
+Dec-13,384,Canyon,64,77,104
+Jan-14,384,Canyon,135,139,173
+Feb-14,384,Canyon,198,207,236
+Mar-14,384,Canyon,287,267,333
+Apr-14,384,Canyon,386,313,419
+May-14,384,Canyon,391,264,488
+Jun-14,384,Canyon,0,0,531
+Jul-14,384,Canyon,0,0,564
+Aug-14,384,Canyon,0,0,569
+Sep-14,384,Canyon,0,0,676
+Oct-14,384,Canyon,0,0,0
+Nov-14,384,Canyon,18,15,41
+Dec-14,384,Canyon,91,77,119
+Jan-15,384,Canyon,165,139,188
+Feb-15,384,Canyon,224,207,246
+Mar-15,384,Canyon,244,267,269
+Apr-15,384,Canyon,244,313,279
+May-15,384,Canyon,91,264,295
+Jun-15,384,Canyon,0,0,373
+Jul-15,384,Canyon,0,0,391
+Aug-15,384,Canyon,0,0,422
+Sep-15,384,Canyon,0,0,444
+Oct-15,384,Canyon,0,0,0
+Nov-15,384,Canyon,0,15,41
+Dec-15,384,Canyon,56,77,109
+Jan-16,384,Canyon,142,139,196
+Feb-16,384,Canyon,196,207,246
+Mar-16,384,Canyon,224,267,282
+Apr-16,384,Canyon,272,313,333
+May-16,384,Canyon,150,264,361
+Jun-16,384,Canyon,0,0,424
+Jul-16,384,Canyon,0,0,444
+Aug-16,384,Canyon,0,0,450
+Sep-16,384,Canyon,0,0,452
+Oct-16,384,Canyon,0,0,0
+Nov-16,384,Canyon,0,15,145
+Dec-16,384,Canyon,43,77,193
+Jan-17,384,Canyon,173,139,325
+Feb-17,384,Canyon,269,207,424
+Mar-17,384,Canyon,389,267,546
+Apr-17,384,Canyon,437,313,632
+May-17,384,Canyon,475,264,732
+Jun-17,384,Canyon,0,0,767
+Jul-17,384,Canyon,0,0,800
+Aug-17,384,Canyon,0,0,813
+Sep-17,384,Canyon,0,0,833
+Oct-17,384,Canyon,0,0,0
+Nov-17,384,Canyon,0,15,23
+Dec-17,384,Canyon,109,77,142
+Jan-18,384,Canyon,180,139,224
+Feb-18,384,Canyon,279,207,323
+Mar-18,384,Canyon,376,267,424
+Apr-18,384,Canyon,422,313,483
+May-18,384,Canyon,411,264,551
+Jun-18,384,Canyon,0,0,617
+Jul-18,384,Canyon,0,0,693
+Aug-18,384,Canyon,0,0,704
+Sep-18,384,Canyon,0,0,737
+Oct-18,384,Canyon,0,0,0
+Nov-18,384,Canyon,8,15,53
+Dec-18,384,Canyon,66,77,109
+Jan-19,384,Canyon,112,139,157
+Feb-19,384,Canyon,170,207,216
+Mar-19,384,Canyon,300,267,348
+Apr-19,384,Canyon,335,313,381
+May-19,384,Canyon,320,264,467
+Jun-19,384,Canyon,,0,
+Jul-19,384,Canyon,,0,
+Aug-19,384,Canyon,,0,
+Sep-19,384,Canyon,,0,
+Oct-19,384,Canyon,,0,
+Oct-08,577,Lewis Lake Divide,0,0,0
+Nov-08,577,Lewis Lake Divide,0,25,61
+Dec-08,577,Lewis Lake Divide,114,187,213
+Jan-09,577,Lewis Lake Divide,302,338,404
+Feb-09,577,Lewis Lake Divide,434,507,549
+Mar-09,577,Lewis Lake Divide,536,639,627
+Apr-09,577,Lewis Lake Divide,803,749,828
+May-09,577,Lewis Lake Divide,897,765,973
+Jun-09,577,Lewis Lake Divide,274,295,1080
+Jul-09,577,Lewis Lake Divide,0,0,1224
+Aug-09,577,Lewis Lake Divide,0,0,1252
+Sep-09,577,Lewis Lake Divide,0,0,1295
+Oct-09,577,Lewis Lake Divide,0,0,0
+Nov-09,577,Lewis Lake Divide,23,25,97
+Dec-09,577,Lewis Lake Divide,102,187,168
+Jan-10,577,Lewis Lake Divide,198,338,267
+Feb-10,577,Lewis Lake Divide,307,507,371
+Mar-10,577,Lewis Lake Divide,343,639,404
+Apr-10,577,Lewis Lake Divide,434,749,495
+May-10,577,Lewis Lake Divide,437,765,622
+Jun-10,577,Lewis Lake Divide,300,295,739
+Jul-10,577,Lewis Lake Divide,0,0,958
+Aug-10,577,Lewis Lake Divide,0,0,983
+Sep-10,577,Lewis Lake Divide,0,0,1041
+Oct-10,577,Lewis Lake Divide,0,0,0
+Nov-10,577,Lewis Lake Divide,91,25,137
+Dec-10,577,Lewis Lake Divide,206,187,269
+Jan-11,577,Lewis Lake Divide,478,338,516
+Feb-11,577,Lewis Lake Divide,605,507,622
+Mar-11,577,Lewis Lake Divide,726,639,714
+Apr-11,577,Lewis Lake Divide,1057,749,932
+May-11,577,Lewis Lake Divide,1400,765,1133
+Jun-11,577,Lewis Lake Divide,1123,295,1298
+Jul-11,577,Lewis Lake Divide,102,0,1415
+Aug-11,577,Lewis Lake Divide,0,0,1473
+Sep-11,577,Lewis Lake Divide,0,0,1509
+Oct-11,577,Lewis Lake Divide,0,0,0
+Nov-11,577,Lewis Lake Divide,3,25,114
+Dec-11,577,Lewis Lake Divide,160,187,284
+Jan-12,577,Lewis Lake Divide,282,338,409
+Feb-12,577,Lewis Lake Divide,493,507,615
+Mar-12,577,Lewis Lake Divide,660,639,744
+Apr-12,577,Lewis Lake Divide,838,749,894
+May-12,577,Lewis Lake Divide,729,765,1008
+Jun-12,577,Lewis Lake Divide,264,295,1097
+Jul-12,577,Lewis Lake Divide,0,0,1130
+Aug-12,577,Lewis Lake Divide,0,0,1179
+Sep-12,577,Lewis Lake Divide,0,0,1204
+Oct-12,577,Lewis Lake Divide,0,0,0
+Nov-12,577,Lewis Lake Divide,48,25,124
+Dec-12,577,Lewis Lake Divide,170,187,264
+Jan-13,577,Lewis Lake Divide,417,338,500
+Feb-13,577,Lewis Lake Divide,500,507,592
+Mar-13,577,Lewis Lake Divide,551,639,643
+Apr-13,577,Lewis Lake Divide,704,749,765
+May-13,577,Lewis Lake Divide,704,765,866
+Jun-13,577,Lewis Lake Divide,0,295,914
+Jul-13,577,Lewis Lake Divide,0,0,927
+Aug-13,577,Lewis Lake Divide,0,0,950
+Sep-13,577,Lewis Lake Divide,0,0,980
+Oct-13,577,Lewis Lake Divide,0,0,0
+Nov-13,577,Lewis Lake Divide,20,25,53
+Dec-13,577,Lewis Lake Divide,157,187,208
+Jan-14,577,Lewis Lake Divide,269,338,333
+Feb-14,577,Lewis Lake Divide,409,507,485
+Mar-14,577,Lewis Lake Divide,716,639,757
+Apr-14,577,Lewis Lake Divide,991,749,1006
+May-14,577,Lewis Lake Divide,1095,765,1138
+Jun-14,577,Lewis Lake Divide,384,295,1217
+Jul-14,577,Lewis Lake Divide,0,0,1270
+Aug-14,577,Lewis Lake Divide,0,0,1331
+Sep-14,577,Lewis Lake Divide,0,0,1491
+Oct-14,577,Lewis Lake Divide,0,0,0
+Nov-14,577,Lewis Lake Divide,0,25,36
+Dec-14,577,Lewis Lake Divide,130,187,196
+Jan-15,577,Lewis Lake Divide,333,338,399
+Feb-15,577,Lewis Lake Divide,452,507,518
+Mar-15,577,Lewis Lake Divide,536,639,589
+Apr-15,577,Lewis Lake Divide,505,749,638
+May-15,577,Lewis Lake Divide,257,765,691
+Jun-15,577,Lewis Lake Divide,0,295,813
+Jul-15,577,Lewis Lake Divide,0,0,828
+Aug-15,577,Lewis Lake Divide,0,0,886
+Sep-15,577,Lewis Lake Divide,0,0,930
+Oct-15,577,Lewis Lake Divide,0,0,0
+Nov-15,577,Lewis Lake Divide,15,25,79
+Dec-15,577,Lewis Lake Divide,107,187,190
+Jan-16,577,Lewis Lake Divide,361,338,452
+Feb-16,577,Lewis Lake Divide,511,507,584
+Mar-16,577,Lewis Lake Divide,577,639,658
+Apr-16,577,Lewis Lake Divide,757,749,808
+May-16,577,Lewis Lake Divide,521,765,846
+Jun-16,577,Lewis Lake Divide,0,295,914
+Jul-16,577,Lewis Lake Divide,0,0,932
+Aug-16,577,Lewis Lake Divide,0,0,960
+Sep-16,577,Lewis Lake Divide,0,0,963
+Oct-16,577,Lewis Lake Divide,0,0,0
+Nov-16,577,Lewis Lake Divide,0,25,257
+Dec-16,577,Lewis Lake Divide,33,187,325
+Jan-17,577,Lewis Lake Divide,318,338,615
+Feb-17,577,Lewis Lake Divide,516,507,810
+Mar-17,577,Lewis Lake Divide,846,639,1090
+Apr-17,577,Lewis Lake Divide,1115,749,1374
+May-17,577,Lewis Lake Divide,1237,765,1516
+Jun-17,577,Lewis Lake Divide,587,295,1537
+Jul-17,577,Lewis Lake Divide,0,0,1636
+Aug-17,577,Lewis Lake Divide,0,0,1735
+Sep-17,577,Lewis Lake Divide,0,0,1748
+Oct-17,577,Lewis Lake Divide,0,0,0
+Nov-17,577,Lewis Lake Divide,15,25,66
+Dec-17,577,Lewis Lake Divide,251,187,318
+Jan-18,577,Lewis Lake Divide,333,338,417
+Feb-18,577,Lewis Lake Divide,561,507,630
+Mar-18,577,Lewis Lake Divide,815,639,848
+Apr-18,577,Lewis Lake Divide,973,749,950
+May-18,577,Lewis Lake Divide,1100,765,1133
+Jun-18,577,Lewis Lake Divide,312,295,1229
+Jul-18,577,Lewis Lake Divide,0,0,1349
+Aug-18,577,Lewis Lake Divide,0,0,1356
+Sep-18,577,Lewis Lake Divide,0,0,1400
+Oct-18,577,Lewis Lake Divide,0,0,0
+Nov-18,577,Lewis Lake Divide,10,25,81
+Dec-18,577,Lewis Lake Divide,152,187,246
+Jan-19,577,Lewis Lake Divide,231,338,338
+Feb-19,577,Lewis Lake Divide,361,507,467
+Mar-19,577,Lewis Lake Divide,772,639,843
+Apr-19,577,Lewis Lake Divide,859,749,912
+May-19,577,Lewis Lake Divide,899,765,1095
+Jun-19,577,Lewis Lake Divide,,295,
+Jul-19,577,Lewis Lake Divide,,0,
+Aug-19,577,Lewis Lake Divide,,0,
+Sep-19,577,Lewis Lake Divide,,0,
+Oct-19,577,Lewis Lake Divide,,0,
+Oct-08,609,Madison Plateau,0,0,0
+Nov-08,609,Madison Plateau,0,36,48
+Dec-08,609,Madison Plateau,79,129,140
+Jan-09,609,Madison Plateau,236,261,290
+Feb-09,609,Madison Plateau,312,357,363
+Mar-09,609,Madison Plateau,391,453,439
+Apr-09,609,Madison Plateau,569,541,610
+May-09,609,Madison Plateau,650,542,744
+Jun-09,609,Madison Plateau,193,157,828
+Jul-09,609,Madison Plateau,0,0,912
+Aug-09,609,Madison Plateau,0,0,950
+Sep-09,609,Madison Plateau,0,0,991
+Oct-09,609,Madison Plateau,0,0,0
+Nov-09,609,Madison Plateau,58,36,130
+Dec-09,609,Madison Plateau,130,129,208
+Jan-10,609,Madison Plateau,203,261,282
+Feb-10,609,Madison Plateau,284,357,361
+Mar-10,609,Madison Plateau,312,453,394
+Apr-10,609,Madison Plateau,363,541,447
+May-10,609,Madison Plateau,409,542,594
+Jun-10,609,Madison Plateau,249,157,706
+Jul-10,609,Madison Plateau,0,0,853
+Aug-10,609,Madison Plateau,0,0,864
+Sep-10,609,Madison Plateau,0,0,914
+Oct-10,609,Madison Plateau,0,0,0
+Nov-10,609,Madison Plateau,28,36,71
+Dec-10,609,Madison Plateau,183,129,234
+Jan-11,609,Madison Plateau,371,261,417
+Feb-11,609,Madison Plateau,467,357,513
+Mar-11,609,Madison Plateau,566,453,617
+Apr-11,609,Madison Plateau,777,541,818
+May-11,609,Madison Plateau,965,542,1008
+Jun-11,609,Madison Plateau,813,157,1173
+Jul-11,609,Madison Plateau,0,0,1270
+Aug-11,609,Madison Plateau,0,0,1316
+Sep-11,609,Madison Plateau,0,0,1326
+Oct-11,609,Madison Plateau,0,0,0
+Nov-11,609,Madison Plateau,18,36,114
+Dec-11,609,Madison Plateau,152,129,251
+Jan-12,609,Madison Plateau,224,261,325
+Feb-12,609,Madison Plateau,343,357,434
+Mar-12,609,Madison Plateau,460,453,556
+Apr-12,609,Madison Plateau,650,541,777
+May-12,609,Madison Plateau,635,542,930
+Jun-12,609,Madison Plateau,277,157,1044
+Jul-12,609,Madison Plateau,0,0,1090
+Aug-12,609,Madison Plateau,0,0,1115
+Sep-12,609,Madison Plateau,0,0,1125
+Oct-12,609,Madison Plateau,0,0,0
+Nov-12,609,Madison Plateau,38,36,81
+Dec-12,609,Madison Plateau,132,129,190
+Jan-13,609,Madison Plateau,318,261,386
+Feb-13,609,Madison Plateau,401,357,480
+Mar-13,609,Madison Plateau,439,453,516
+Apr-13,609,Madison Plateau,508,541,587
+May-13,609,Madison Plateau,523,542,653
+Jun-13,609,Madison Plateau,0,157,704
+Jul-13,609,Madison Plateau,0,0,749
+Aug-13,609,Madison Plateau,0,0,787
+Sep-13,609,Madison Plateau,0,0,787
+Oct-13,609,Madison Plateau,0,0,0
+Nov-13,609,Madison Plateau,13,36,56
+Dec-13,609,Madison Plateau,127,129,173
+Jan-14,609,Madison Plateau,229,261,262
+Feb-14,609,Madison Plateau,310,357,330
+Mar-14,609,Madison Plateau,434,453,442
+Apr-14,609,Madison Plateau,630,541,617
+May-14,609,Madison Plateau,696,542,739
+Jun-14,609,Madison Plateau,150,157,785
+Jul-14,609,Madison Plateau,0,0,869
+Aug-14,609,Madison Plateau,0,0,889
+Sep-14,609,Madison Plateau,0,0,1016
+Oct-14,609,Madison Plateau,0,0,0
+Nov-14,609,Madison Plateau,36,36,58
+Dec-14,609,Madison Plateau,127,129,157
+Jan-15,609,Madison Plateau,241,261,262
+Feb-15,609,Madison Plateau,320,357,325
+Mar-15,609,Madison Plateau,348,453,358
+Apr-15,609,Madison Plateau,325,541,378
+May-15,609,Madison Plateau,244,542,432
+Jun-15,609,Madison Plateau,0,157,559
+Jul-15,609,Madison Plateau,0,0,607
+Aug-15,609,Madison Plateau,0,0,691
+Sep-15,609,Madison Plateau,0,0,742
+Oct-15,609,Madison Plateau,0,0,0
+Nov-15,609,Madison Plateau,5,36,48
+Dec-15,609,Madison Plateau,91,129,147
+Jan-16,609,Madison Plateau,262,261,302
+Feb-16,609,Madison Plateau,351,357,381
+Mar-16,609,Madison Plateau,409,453,437
+Apr-16,609,Madison Plateau,546,541,564
+May-16,609,Madison Plateau,434,542,620
+Jun-16,609,Madison Plateau,0,157,693
+Jul-16,609,Madison Plateau,0,0,711
+Aug-16,609,Madison Plateau,0,0,754
+Sep-16,609,Madison Plateau,0,0,759
+Oct-16,609,Madison Plateau,0,0,0
+Nov-16,609,Madison Plateau,0,36,244
+Dec-16,609,Madison Plateau,66,129,325
+Jan-17,609,Madison Plateau,234,261,480
+Feb-17,609,Madison Plateau,353,357,584
+Mar-17,609,Madison Plateau,577,453,777
+Apr-17,609,Madison Plateau,668,541,889
+May-17,609,Madison Plateau,757,542,1016
+Jun-17,609,Madison Plateau,251,157,1057
+Jul-17,609,Madison Plateau,0,0,1115
+Aug-17,609,Madison Plateau,0,0,1128
+Sep-17,609,Madison Plateau,0,0,1158
+Oct-17,609,Madison Plateau,5,0,0
+Nov-17,609,Madison Plateau,28,36,43
+Dec-17,609,Madison Plateau,190,129,213
+Jan-18,609,Madison Plateau,259,261,290
+Feb-18,609,Madison Plateau,414,357,434
+Mar-18,609,Madison Plateau,582,453,574
+Apr-18,609,Madison Plateau,671,541,676
+May-18,609,Madison Plateau,752,542,808
+Jun-18,609,Madison Plateau,201,157,925
+Jul-18,609,Madison Plateau,0,0,1003
+Aug-18,609,Madison Plateau,0,0,1011
+Sep-18,609,Madison Plateau,0,0,1041
+Oct-18,609,Madison Plateau,0,0,0
+Nov-18,609,Madison Plateau,10,36,66
+Dec-18,609,Madison Plateau,97,129,150
+Jan-19,609,Madison Plateau,157,261,203
+Feb-19,609,Madison Plateau,264,357,295
+Mar-19,609,Madison Plateau,627,453,615
+Apr-19,609,Madison Plateau,673,541,663
+May-19,609,Madison Plateau,734,542,798
+Jun-19,609,Madison Plateau,,157,
+Jul-19,609,Madison Plateau,,0,
+Aug-19,609,Madison Plateau,,0,
+Sep-19,609,Madison Plateau,,0,
+Oct-19,609,Madison Plateau,,0,
+Oct-08,670,Northeast Entrance,0,0,0
+Nov-08,670,Northeast Entrance,0,0,30
+Dec-08,670,Northeast Entrance,10,43,91
+Jan-09,670,Northeast Entrance,91,104,160
+Feb-09,670,Northeast Entrance,183,163,241
+Mar-09,670,Northeast Entrance,216,208,274
+Apr-09,670,Northeast Entrance,284,244,348
+May-09,670,Northeast Entrance,147,75,401
+Jun-09,670,Northeast Entrance,0,0,465
+Jul-09,670,Northeast Entrance,0,0,561
+Aug-09,670,Northeast Entrance,0,0,607
+Sep-09,670,Northeast Entrance,0,0,663
+Oct-09,670,Northeast Entrance,0,0,0
+Nov-09,670,Northeast Entrance,13,0,69
+Dec-09,670,Northeast Entrance,28,43,97
+Jan-10,670,Northeast Entrance,64,104,130
+Feb-10,670,Northeast Entrance,99,163,170
+Mar-10,670,Northeast Entrance,124,208,196
+Apr-10,670,Northeast Entrance,135,244,208
+May-10,670,Northeast Entrance,15,75,262
+Jun-10,670,Northeast Entrance,0,0,353
+Jul-10,670,Northeast Entrance,0,0,485
+Aug-10,670,Northeast Entrance,0,0,528
+Sep-10,670,Northeast Entrance,0,0,577
+Oct-10,670,Northeast Entrance,0,0,0
+Nov-10,670,Northeast Entrance,0,0,53
+Dec-10,670,Northeast Entrance,69,43,124
+Jan-11,670,Northeast Entrance,150,104,201
+Feb-11,670,Northeast Entrance,224,163,272
+Mar-11,670,Northeast Entrance,282,208,318
+Apr-11,670,Northeast Entrance,381,244,411
+May-11,670,Northeast Entrance,437,75,498
+Jun-11,670,Northeast Entrance,0,0,592
+Jul-11,670,Northeast Entrance,0,0,658
+Aug-11,670,Northeast Entrance,0,0,683
+Sep-11,670,Northeast Entrance,0,0,706
+Oct-11,670,Northeast Entrance,0,0,0
+Nov-11,670,Northeast Entrance,0,0,58
+Dec-11,670,Northeast Entrance,48,43,107
+Jan-12,670,Northeast Entrance,91,104,150
+Feb-12,670,Northeast Entrance,152,163,206
+Mar-12,670,Northeast Entrance,236,208,274
+Apr-12,670,Northeast Entrance,203,244,328
+May-12,670,Northeast Entrance,13,75,414
+Jun-12,670,Northeast Entrance,0,0,513
+Jul-12,670,Northeast Entrance,0,0,582
+Aug-12,670,Northeast Entrance,0,0,627
+Sep-12,670,Northeast Entrance,0,0,643
+Oct-12,670,Northeast Entrance,0,0,0
+Nov-12,670,Northeast Entrance,0,0,58
+Dec-12,670,Northeast Entrance,28,43,102
+Jan-13,670,Northeast Entrance,81,104,160
+Feb-13,670,Northeast Entrance,127,163,208
+Mar-13,670,Northeast Entrance,155,208,239
+Apr-13,670,Northeast Entrance,163,244,267
+May-13,670,Northeast Entrance,84,75,318
+Jun-13,670,Northeast Entrance,0,0,371
+Jul-13,670,Northeast Entrance,0,0,404
+Aug-13,670,Northeast Entrance,0,0,462
+Sep-13,670,Northeast Entrance,0,0,475
+Oct-13,670,Northeast Entrance,0,0,0
+Nov-13,670,Northeast Entrance,13,0,30
+Dec-13,670,Northeast Entrance,38,43,64
+Jan-14,670,Northeast Entrance,114,104,140
+Feb-14,670,Northeast Entrance,185,163,203
+Mar-14,670,Northeast Entrance,310,208,305
+Apr-14,670,Northeast Entrance,394,244,394
+May-14,670,Northeast Entrance,290,75,457
+Jun-14,670,Northeast Entrance,0,0,500
+Jul-14,670,Northeast Entrance,0,0,566
+Aug-14,670,Northeast Entrance,0,0,592
+Sep-14,670,Northeast Entrance,0,0,676
+Oct-14,670,Northeast Entrance,0,0,0
+Nov-14,670,Northeast Entrance,0,0,33
+Dec-14,670,Northeast Entrance,84,43,145
+Jan-15,670,Northeast Entrance,152,104,211
+Feb-15,670,Northeast Entrance,216,163,274
+Mar-15,670,Northeast Entrance,239,208,305
+Apr-15,670,Northeast Entrance,122,244,323
+May-15,670,Northeast Entrance,0,75,351
+Jun-15,670,Northeast Entrance,0,0,439
+Jul-15,670,Northeast Entrance,0,0,493
+Aug-15,670,Northeast Entrance,0,0,546
+Sep-15,670,Northeast Entrance,0,0,589
+Oct-15,670,Northeast Entrance,0,0,0
+Nov-15,670,Northeast Entrance,0,0,58
+Dec-15,670,Northeast Entrance,38,43,107
+Jan-16,670,Northeast Entrance,97,104,165
+Feb-16,670,Northeast Entrance,137,163,211
+Mar-16,670,Northeast Entrance,178,208,249
+Apr-16,670,Northeast Entrance,193,244,290
+May-16,670,Northeast Entrance,0,75,310
+Jun-16,670,Northeast Entrance,0,0,373
+Jul-16,670,Northeast Entrance,0,0,396
+Aug-16,670,Northeast Entrance,0,0,447
+Sep-16,670,Northeast Entrance,0,0,447
+Oct-16,670,Northeast Entrance,0,0,0
+Nov-16,670,Northeast Entrance,0,0,130
+Dec-16,670,Northeast Entrance,25,43,165
+Jan-17,670,Northeast Entrance,117,104,251
+Feb-17,670,Northeast Entrance,175,163,307
+Mar-17,670,Northeast Entrance,262,208,404
+Apr-17,670,Northeast Entrance,236,244,508
+May-17,670,Northeast Entrance,74,75,584
+Jun-17,670,Northeast Entrance,0,0,605
+Jul-17,670,Northeast Entrance,0,0,660
+Aug-17,670,Northeast Entrance,0,0,698
+Sep-17,670,Northeast Entrance,0,0,742
+Oct-17,670,Northeast Entrance,0,0,0
+Nov-17,670,Northeast Entrance,5,0,43
+Dec-17,670,Northeast Entrance,53,43,145
+Jan-18,670,Northeast Entrance,127,104,211
+Feb-18,670,Northeast Entrance,190,163,279
+Mar-18,670,Northeast Entrance,320,208,394
+Apr-18,670,Northeast Entrance,351,244,455
+May-18,670,Northeast Entrance,224,75,518
+Jun-18,670,Northeast Entrance,0,0,584
+Jul-18,670,Northeast Entrance,0,0,688
+Aug-18,670,Northeast Entrance,0,0,714
+Sep-18,670,Northeast Entrance,0,0,772
+Oct-18,670,Northeast Entrance,0,0,0
+Nov-18,670,Northeast Entrance,13,0,58
+Dec-18,670,Northeast Entrance,71,43,135
+Jan-19,670,Northeast Entrance,117,104,175
+Feb-19,670,Northeast Entrance,150,163,213
+Mar-19,670,Northeast Entrance,241,208,292
+Apr-19,670,Northeast Entrance,244,244,318
+May-19,670,Northeast Entrance,99,75,427
+Jun-19,670,Northeast Entrance,,0,
+Jul-19,670,Northeast Entrance,,0,
+Aug-19,670,Northeast Entrance,,0,
+Sep-19,670,Northeast Entrance,,0,
+Oct-19,670,Northeast Entrance,,0,

@@ -1,0 +1,13 @@
+site,Sand,Silt,Clay,texture,pH,organic,N,P,K,Ca,Mg
+Buffalo-Flat,32,47,21,loam,6.9,3.5,0.264,131,433,2459,213
+Buffalo-North,54,29,17,sandy loam,7,5,0.246,99,352,1833,164
+Buffalo-South,52,31,17,loam,7.3,3.6,0.274,183,448,2070,155
+Berry-Glade-Flat,44,43,13,loam,6,2.4,0.097,11,143,458,63
+Berry-Glade-North,46,43,11,loam,6.4,1.6,0.1,32,180,532,63
+Berry-Glade-South,48,42,10,loam,6,2.2,0.105,15,122,372,53
+Maple-North,48,42,10,loam,6.1,1.8,0.072,15,133,360,68
+Maple-South,40,52,8,silt loam,6.2,1.9,0.082,9,132,728,110
+Maple-Flat,54,38,8,sandy loam,5.8,1.8,0.243,12,121,532,75
+Berry-Huck-North,42,42,16,loam,5.9,4.7,0.238,37,171,1154,168
+Berry-Huck-South,34,48,18,loam,5.7,3.2,0.076,22,167,512,93
+Berry-Huck-Flat,40,40,20,loam,5.6,5.1,0.249,29,232,1255,168

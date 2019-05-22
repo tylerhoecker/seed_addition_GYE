@@ -50,14 +50,11 @@ model_df <- complete_df %>%
   mutate_at(vars(-c(fire,aspect,species,Germination,Survival,Establishment)), scale) %>% 
   mutate(Weights = 50)
 
-# Zero-inflated GLMM using glmmTMB----------------------------------------------
-ziglmm_germination <- glmmTMB(Germination ~ species + mois_q50 + temp_q50 + (1 | fire),
-                           ziformula =  ~ 1,
-                           family = 'binomial', 
-                           weights = Weights,
-                           data = model_df)
-summary(ziglmm_germination)
-my_rsq(ziglmm_germination)
+glmm_germination <- glmer(Germination ~ species + mois_q50 + temp_q50 + (1|fire),
+                       family = 'binomial', 
+                       weights = Weights,
+                       data = model_df)
+
 
 model_results <- 
   summary(ziglmm_germination)$coefficients$cond %>% 
@@ -142,3 +139,22 @@ ggplot(complete_df) +
 
 # legend <- cowplot::get_legend(plotObj)
 # plot(legend)
+
+
+
+
+
+
+
+
+
+#-----------
+# # Zero-inflated GLMM using glmmTMB----------------------------------------------
+# ziglmm_germination <- glmmTMB(Germination ~ species + mois_q50 + temp_q50 + (1 | fire),
+#                               ziformula =  ~ 1,
+#                               family = 'binomial', 
+#                               weights = Weights,
+#                               data = model_df)
+# summary(ziglmm_germination)
+# my_rsq(ziglmm_germination)
+
