@@ -45,9 +45,9 @@ terrain_ind_df$elev = extract(dem, site_points)
 terrain_ind_df$dev_ne = extract(dev_ne, site_points)
 terrain_ind_df$slope = extract(slope, site_points)
 terrain_ind_df$tpi = extract(tpi, site_points)
-#terrain_ind_df$tpi9 = extract(tpi9, site_points)
+terrain_ind_df$tpi9 = extract(tpi9, site_points)
 terrain_ind_df$hli = extract(hli, site_points)
-#terrain_ind_df$hsp = extract(hsp, site_points)
+terrain_ind_df$hsp = extract(hsp, site_points)
 #terrain_ind_df$curv = extract(curv, site_points)
 
 
@@ -71,11 +71,32 @@ rescaled_df <- complete_df %>%
   mutate_at(vars(-c(fire,aspect,species,Germination,Survival,Establishment,Weights)), funs(as.numeric(scale(.)))) 
 
 # GLMMs -------------------------------------------------------------------------
+germ_proxy_global <- 
+  glm(Germination ~ species + dev_ne + elev + tpi + hli,
+      family = binomial(link = "logit"), 
+      weights = Weights,
+      data = rescaled_df,
+      na.action = 'na.fail')
+germ_proxy_dredge <- dredge(germ_proxy_global)
+germ_top_model <- get.models(germ_proxy_dredge, subset = 1)[[1]]
+summary(germ_top_model)
+PseudoR2(germ_top_model)
+
+surv_proxy_global <- 
+  glm(Survival ~ species + dev_ne + elev + tpi + hli,
+      family = binomial(link = "logit"), 
+      weights = Germination*50,
+      data = rescaled_df,
+      na.action = 'na.fail')
+surv_proxy_dredge <- dredge(surv_proxy_global)
+surv_top_model <- get.models(surv_proxy_dredge, subset = 1)[[1]]
+summary(surv_top_model)
+PseudoR2(surv_top_model)
 
 # Estimate a glmm of germination, with no zero-inflation component, save results
 # Estimate a glm of germination, save results
 glmm_proxy_germ <-
-  glm(Germination ~ species + dev_ne + elev + tpi,
+  glm(Germination ~ species + dev_ne + elev + hli + tpi,
       family = binomial(link = "logit"), 
       weights = Weights,
       data = rescaled_df)
@@ -89,7 +110,7 @@ glmm_proxy_germ_df <- glmm_proxy_germ %>%
 
 # Estimate a glmm of survival, with a zero-inflation component, save results
 glmm_proxy_surv <- 
-  glm(Survival ~ species + dev_ne + elev + tpi,
+  glm(Survival ~ species + dev_ne + elev,
       family = binomial(link = "logit"), 
       weights = Germination*50,
       data = rescaled_df)
@@ -108,7 +129,7 @@ model_results <- full_join(glmm_proxy_germ_df, glmm_proxy_surv_df) %>%
   mutate(term = fct_recode(term, 'Species (PSME)' = "speciesPSME",
                            'Deviation from NE' = 'dev_ne',
                            'Elevation' = 'elev',
-                           'TPI' = 'tpi9')) %>% 
+                           'TPI' = 'tpi')) %>% 
   mutate(ci_low = estimate - (1.96*std.error),
          ci_high = estimate + (1.96*std.error)) 
 
@@ -138,27 +159,6 @@ terrain_stack <- stack(dev_ne, dem, tpi) %>%
   as.data.frame(xy = T, centroids = T)
 
 #writeRaster(terrain_stack, filename="terrain_indices.tif", options="INTERLEAVE=BAND", overwrite=TRUE)
-germ_proxy_global <- 
-  glm(Survival ~ species + dev_ne + elev + tpi + tpi9 + hsp,
-      family = binomial(link = "logit"), 
-      weights = Germination*50,
-      data = rescaled_df,
-      na.action = 'na.fail')
-germ_proxy_dredge <- dredge(germ_proxy_global)
-germ_top_model <- get.models(germ_proxy_dredge, subset = 1)[[1]]
-summary(germ_top_model)
-PseudoR2(germ_top_model)
-
-surv_proxy_global <- 
-  glm(Survival ~ species + dev_ne + elev + tpi + tpi9,
-      family = binomial(link = "logit"), 
-      weights = Germination*50,
-      data = rescaled_df,
-      na.action = 'na.fail')
-surv_proxy_dredge <- dredge(surv_proxy_global)
-surv_top_model <- get.models(surv_proxy_dredge, subset = 1)[[1]]
-summary(surv_top_model)
-PseudoR2(surv_top_model)
 
 
 
