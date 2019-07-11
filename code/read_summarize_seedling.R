@@ -19,10 +19,10 @@ final <- seedlings %>%
 
 # Proportion of germination, survival and their product, establishment for each frame. 
 proportions <- full_join(germination, final) %>% 
-  group_by(fire, aspect, species, frameID) %>% # Adjust by frame or site: frameID
+  group_by(fire, aspect, species) %>% # Adjust by frame or site: +/- frameID
   summarise(Germination = sum(germinated, na.rm = T) / n(),
             Survival = sum(final, na.rm = T) / sum(germinated, na.rm = T),
-            Establishment = sum(final, na.rm = T) / n()) %>% 
+            Establishment = Germination * Survival) %>% 
   gather(period, value, Germination, Survival, Establishment) %>% 
   mutate(value = if_else(is.na(value), 0, value)) %>% 
   # Transform data, then show both ways (all fires and aspects together for clarity)

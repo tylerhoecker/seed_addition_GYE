@@ -3,14 +3,14 @@ library(MuMIn) # For psuedo-r-squared
 library(glmmTMB) # For zero-inflated
 library(lme4)
 library(effects)
-source('code/r2glmmTMB.R') # For Ben Bolker's adaptation of r-squared for glmmTMB
+#source('code/r2glmmTMB.R') # For Ben Bolker's adaptation of r-squared for glmmTMB
 library(ggrepel)
 library(tidyverse)
 library(broom.mixed)
 library(DHARMa)
 library(cowplot)
 library(broom.mixed)
-
+library(sjstats)
 
 # Import soil data, at this point filter for entire season ---------------------
 start_time <- as.POSIXct(c("2018-06-01 00:00:00"))
@@ -51,8 +51,8 @@ pct_cover <- read_csv('data/pct_cover.csv') %>%
   mutate(veg = forb + gram) %>% 
   select(fire, aspect, veg)
 
-ggplot(pct_cover) +
-  geom_col(aes(x = paste(fire,aspect), y = veg))
+# Soil properties/texture
+soil_props <- read_csv('data/soil_properties.csv') 
 
 # Import response variables (seedling germination, survival)--------------------
 source('code/read_summarize_seedling.R')
@@ -68,53 +68,224 @@ seedling_response %>%
 # Combine response and predictor variables -------------------------------------
 complete_df <-  full_join(seedling_response,soil_preds) %>% 
   full_join(pct_cover) %>% 
+  full_join(soil_props) %>% 
   modify_at(c('species'), as.factor) %>% 
-  mutate(Weights = 50)
+  mutate(Weights = 250)
+
+complete_germ_df <- filter(complete_df, !is.na(mois_q50_germ))
+
+rescaled_df <- complete_df %>% 
+  ungroup() %>%
+  mutate_at(vars(-c(fire,aspect,species,Germination,Survival,Establishment,Weights,texture)), scale) 
+
+rescaled_germ_df <- filter(rescaled_df, !is.na(mois_q50_germ))
+
+
+# Correlation matrix
+library(ggcorrplot)
+
+corr <- complete_df %>% 
+  ungroup() %>% 
+  select(starts_with('mois'),starts_with('temp'),veg,Clay,organic,N, Germination, Survival) %>% 
+  cor(use = "pairwise.complete.obs")
+
+pvals <- complete_df %>% 
+  ungroup() %>% 
+  select(starts_with('mois'),starts_with('temp'),veg,Clay,organic,N, Germination,Survival) %>% 
+  cor_pmat(use = "pairwise.complete.obs")
+
+ggcorrplot(corr, type = "lower", lab = TRUE, p.mat = pvals, insig = 'blank')
+
+
+# Scatterplots
+r2vals <- complete_df %>% 
+  ungroup() %>% 
+  select(species, Germination, Survival, starts_with('mois'),starts_with('temp'), veg, Clay, organic, N) %>% 
+  gather(predictor, value, -species, -Germination, -Survival) %>% 
+  group_by(species, predictor) %>% 
+  summarise(germ_r2 = round(cor.test(Germination, value, use = "pairwise.complete.obs", method = 'spearman')$estimate, 2),
+            germ_pval = round(cor.test(Germination, value, use = "pairwise.complete.obs", method = 'spearman')$p.value, 3),
+            surv_r2 = round(cor.test(Survival, value, use = "pairwise.complete.obs", method = 'spearman')$estimate, 2),
+            surv_pval = round(cor.test(Survival, value, use = "pairwise.complete.obs", method = 'spearman')$p.value, 3)) 
+
+scatterplot_df <- rescaled_df %>%
+  ungroup() %>% 
+  select(species, Survival, Germination, starts_with('mois'),starts_with('temp'), veg, Clay, organic, N) %>% 
+  gather(predictor, value, -species, -Survival, -Germination) 
+  
+  
+
+germ_scatter_plots <- 
+  ggplot(scatterplot_df, aes(x = value, y = Germination)) +
+  geom_point() +
+  geom_smooth(method = 'lm', color = 'black', se = F) +
+  geom_text(data = r2vals, aes(x = 0, 0.3, label = paste('r2 =', germ_r2, 'p =',germ_pval, sep = ' '))) +
+  facet_grid(species~predictor) +
+  theme_bw()
+
+surv_scatter_plots <- 
+  ggplot(scatterplot_df, aes(x = value, y = Survival)) +
+  geom_point() +
+  geom_smooth(method = 'lm', color = 'black', se = F) +
+  geom_text(data = r2vals, aes(x = 0, 0.8, label = paste('r2 =', surv_r2, 'p =',surv_pval, sep = ' '))) +
+  facet_grid(species~predictor) +
+  theme_bw()
+
+plot_grid(germ_scatter_plots, surv_scatter_plots, nrow = 2)
 
 
 # GLMMs on standardized predictors  --------------------------------------------
-rescaled_df <- complete_df %>% 
-  ungroup() %>%
-  mutate_at(vars(-c(fire,aspect,species,Germination,Survival,Establishment,Weights)), scale) 
+pico_rescaled <- filter(rescaled_df, species == 'PICO')
+psme_rescaled <- filter(rescaled_df, species == 'PSME')
 
-# Save the standard deviations used in the rescaling for unstandardization later
-sd_all = complete_df %>% 
-  ungroup() %>% 
-  select(mois_q50_germ, mois_q50_surv, temp_q50_germ, temp_q50_surv, veg) %>% 
-  map(., sd, na.rm = T) %>% 
-  stack() %>% 
-  rename(term = ind, stdevs = values)
+pico_germ_rescaled <- filter(rescaled_germ_df, species == 'PICO')
+psme_germ_rescaled <- filter(rescaled_germ_df, species == 'PSME')
 
 # Estimate a glmm of germination, with no zero-inflation component, save results
-glmm_germ_df <- glmmTMB(Germination ~ species + mois_q50_germ + temp_q50_germ + veg + (1|fire), 
-                        ziformula = ~ 1,
+
+## GERMINATION
+# PICO GERMINATION
+pico_germ_global <- glm(Germination ~ mois_q50_germ + temp_q50_germ + veg + N + Clay + organic, 
                         family = binomial(link = "logit"), 
                         weights = Weights,
-                        data = rescaled_df) %>% 
+                        data = pico_germ_rescaled,
+                        na.action = 'na.fail')
+  
+pico_germ_dredge <- dredge(pico_germ_global, m.lim = c(0,2),  extra = c("R^2","adjR^2"))
+pico_germ_dredge
+
+pico_germ_sum <- pico_germ_dredge %>%
+  as_tibble() %>% 
+  select(mois_q50_germ, N, organic, temp_q50_germ, veg) %>% 
+  gather(variable, estimate) %>% 
+  mutate(species = 'PICO', model = 'Germination')
+
+
+# PSME GERMINATION
+psme_germ_global <- glm(Germination ~ mois_q50_germ + temp_q50_germ + veg + N + Clay + organic, 
+                        family = binomial(link = "logit"), 
+                        weights = Weights,
+                        data = psme_germ_rescaled,
+                        na.action = 'na.fail')
+
+psme_germ_dredge <- dredge(psme_germ_global, m.lim = c(0,4),  extra = c("R^2","adjR^2"))
+psme_germ_dredge
+
+psme_germ_sum <- psme_germ_dredge %>%
+  as_tibble() %>% 
+  select(mois_q50_germ, N, organic, temp_q50_germ, veg) %>% 
+  gather(variable, estimate) %>% 
+  mutate(species = 'PSME', model = 'Germination')
+
+germ_sums <- full_join(pico_germ_sum, psme_germ_sum)
+
+
+## SURVIVAL
+# PICO SURVIVAL
+pico_surv_global <- glm(Survival ~ mois_q50_surv + temp_q50_surv + veg + N + organic, 
+                        family = binomial(link = "logit"), 
+                        weights = Germination*250,
+                        data = pico_rescaled,
+                        na.action = 'na.fail')
+pico_surv_dredge <- dredge(pico_surv_global, m.lim = c(0,2),  extra = c("R^2","adjR^2"))
+
+pico_surv_sum <- pico_surv_dredge %>%
+  as_tibble() %>% 
+  select(mois_q50_surv, N, organic, temp_q50_surv, veg) %>% 
+  gather(variable, estimate) %>% 
+  mutate(species = 'PICO', model = 'Survival')
+
+# PSME SURVIVAL
+psme_surv_global <- glm(Survival ~ mois_q50_surv + temp_q50_surv + veg + N + organic, 
+                        family = binomial(link = "logit"), 
+                        weights = Germination*250,
+                        data = psme_rescaled,
+                        na.action = 'na.fail')
+psme_surv_dredge <- dredge(psme_surv_global, m.lim = c(0,4),  extra = c("R^2","adjR^2"))
+psme_surv_dredge
+
+psme_surv_sum <- psme_surv_dredge %>%
+  as_tibble() %>% 
+  select(mois_q50_surv, N, organic, temp_q50_surv, veg) %>% 
+  gather(variable, estimate) %>% 
+  mutate(species = 'PSME', model = 'Survival')
+
+surv_sums <- full_join(pico_surv_sum, psme_surv_sum)
+
+# Combine summaries
+model_terms <- 
+  full_join(germ_sums, surv_sums) %>% 
+  group_by(variable, species, model) %>% 
+  summarise(mean_est = mean(estimate, na.rm = T),
+            SE = sd(estimate, na.rm = T))
+  
+# Plot summarized terms
+ggplot(model_terms, aes(x = variable, y = mean_est, color = species, fill = species)) +
+  geom_errorbar(aes(ymin = mean_est-SE, ymax = mean_est+SE),
+                size = 1, width = 0, position=position_dodge(width=0.7)) +
+  geom_point(shape = 21, size = 3.2, position=position_dodge(width=0.7)) +
+  geom_text_repel(aes(label = round(mean_est,2)), 
+                  show.legend = F, 
+                  position=position_dodge(width=0.7)) +
+  geom_hline(aes(yintercept = 0), linetype = 'dashed') +
+  coord_flip() +
+  theme_bw(base_size = 14) +
+  labs(y = 'Effect size (log-odds)', x = '') +
+  facet_wrap(~model) +
+  #scale_color_manual('Model', values = c('black','red3'), labels = c('Conditional','Zero-inflation') ) +
+  #scale_fill_manual('Model', values = c('grey50','red3'), labels = c('Conditional','Zero-inflation') ) +
+  theme(title = element_text(size = 12)) +
+  theme(strip.background = element_blank(),
+        strip.text = element_text(face = 'bold'))
+
+
+
+
+
+
+
+
+# NOW OLD
+
+germ_model_info <- germ_top_model %>% 
   tidy(.) %>% 
   mutate(model = 'Germination')
 
+
+
+
 # Estimate a glmm of survival, with a zero-inflation component, save results
-glmm_surv_df <- glmmTMB(Survival ~ species + mois_q50_surv + temp_q50_surv + veg + (1|fire), 
-                        ziformula = ~ 1,
-                        family = binomial(link = "logit"), 
-                        weights = Germination*50,
-                        data = rescaled_df) %>% 
+surv_global <- glm(Survival ~ species + mois_q50_surv + temp_q50_surv + veg + N + organic, 
+                   family = binomial(link = "logit"), 
+                   weights = Germination*50,
+                   data = rescaled_df,
+                   na.action = 'na.fail')
+surv_dredge <- dredge(surv_global)
+surv_top_model <- get.models(surv_dredge, subset = 1)[[1]]
+summary(surv_top_model)
+sjstats::r2(surv_top_model)
+
+
+
+surv_model_info <-  surv_top_model %>% 
   tidy(.) %>% 
   mutate(model = 'Survival')
   
 
 # Combine these two models into a single df and change labeling, for plotting
-model_results <- full_join(glmm_germ_df, glmm_surv_df) %>% 
-  filter(effect != 'ran_pars',
-         term != '(Intercept)') %>% 
+model_results <- full_join(germ_model_info, surv_model_info) %>% 
+  filter(term != '(Intercept)') %>% 
   full_join(., sd_all) %>% 
+  # Remove terms that weren't selected
+  filter(!is.na(model)) %>% 
   mutate(term = fct_recode(term, 'Species (PSME)' = "speciesPSME",
                                  'Soil moisture' = 'mois_q50_germ',
-                                 'Soil moisture' = 'mois_q50_surv',
+                                 #'Soil moisture' = 'mois_q50_surv',
                                  'Soil temperature' = 'temp_q50_germ',
                                  'Soil temperature' = 'temp_q50_surv',
-                                 'Veg. cover' = 'veg')) %>% 
+                                 'Veg. cover' = 'veg',
+                                 'Total N' = 'N',
+                                 'Organic matter' = 'organic')) %>% 
   mutate(term = fct_reorder(term, estimate, max)) %>% 
   mutate(ci_low = estimate - (1.96*std.error),
          ci_high = estimate + (1.96*std.error)) #%>% 
@@ -149,37 +320,34 @@ ggplot(model_results, aes(x = term, y = estimate)) +
 
 # First, fit the models on unscaled variables ----------------------------------
 # Estimate a glmm of germination, with no zero-inflation component, save results
-glmm_germ_pred <- glmmTMB(Germination ~ species + mois_q50_germ + temp_q50_germ + veg + (1|fire), 
-                        ziformula = ~ 1,
-                        family = binomial(link = "logit"), 
-                        weights = Weights,
-                        data = complete_df) 
+germ_pred <- glm(germ_top_model$formula,
+                 family = binomial(link = "logit"), 
+                 weights = Weights,
+                 data = complete_germ_df) 
 
 # Estimate a glmm of survival, with a zero-inflation component, save results
-glmm_surv_pred <- glmmTMB(Survival ~ species + mois_q50_surv + temp_q50_surv + veg + (1|fire), 
-                        ziformula = ~ 1,
-                        family = binomial(link = "logit"), 
-                        weights = Germination*50,
-                        data = complete_df) 
+surv_pred <- glm(surv_top_model$formula, 
+                 family = binomial(link = "logit"), 
+                 weights = Germination*50,
+                 data = complete_df) 
 
 # Make a and plot predictions --------------------------------------------------
 new_germ <- 
   expand.grid(mois_q50_germ = seq(.02,.18,length.out = 10),
               temp_q50_germ = seq(12,16,length.out = 1000),
               species =  c("PSME", "PICO"),
-              fire = NA,
-              veg = 25,
+              N = 0.17,
+              organic = 2.8,
               Weights = 50) %>% 
-  mutate(pred_probs = predict(glmm_germ_pred, type = 'response', newdata = ., allow.new.levels=TRUE)) %>% 
-  mutate(line_group = paste(mois_q50_germ,fire))
+  mutate(pred_probs = predict(germ_pred, type = 'response', newdata = .)) 
 
 germ_plot <- 
 ggplot() +
-  geom_errorbar(data = complete_df, aes(x = temp_q50_germ, y = Germination, group = fire), width = 0,
+  geom_errorbar(data = complete_germ_df, aes(x = temp_q50_germ, y = Germination, group = fire), width = 0,
                         stat = "summary", fun.ymin = min, fun.ymax = max, fun.y = median) +
-  geom_point(data = complete_df, aes(x = temp_q50_germ, y = Germination),
+  geom_point(data = complete_germ_df, aes(x = temp_q50_germ, y = Germination),
               shape = 21, fill = 'grey50', alpha = 0.7, size = 2.1) +
-  geom_line(data = new_germ, aes(x = temp_q50_germ, y = pred_probs, color = mois_q50_germ, group = line_group),
+  geom_line(data = new_germ, aes(x = temp_q50_germ, y = pred_probs, color = mois_q50_germ, group = mois_q50_germ),
             size = 0.75) +
   facet_wrap(~species) +
   scale_color_distiller(bquote('Median soil \nmoisture (vwc, '*~m^3*''*~m^-3*')'), 
@@ -198,11 +366,11 @@ new_surv <-
   expand.grid(mois_q50_surv = seq(.02,.18,length.out = 10),
               temp_q50_surv = seq(12,19,length.out = 1000),
               species =  c("PSME", "PICO"),
-              fire = NA,#c("Berry-Glade","Berry-Huck","Buffalo","Maple"),
+              N = 0.17,
+              organic = 2.8,
               veg = 25,
               Germination = 0.5) %>% 
-  mutate(pred_probs = predict(glmm_surv_pred, type = 'response', newdata = ., allow.new.levels=TRUE))  %>% 
-  group_by(species) 
+  mutate(pred_probs = predict(surv_pred, type = 'response', newdata = ., allow.new.levels=TRUE))  
 
 surv_plot <- 
 ggplot() +
@@ -241,5 +409,32 @@ model_results %>%
   mutate_at(.vars = vars(estimate, ci_low, ci_high),
                   .funs = funs(exp))
 
-  
-  
+
+
+
+# EXTRA
+# glmmTMB(Germination ~ species + mois_q50_germ + temp_q50_germ + (1|fire), 
+#         ziformula = ~ 1,
+#         family = binomial(link = "logit"), 
+#         weights = Weights,
+#         data = rescaled_df)
+# glmmTMB(Survival ~ species + mois_q50_surv + temp_q50_surv + veg + (1|fire), 
+#         ziformula = ~ 1,
+#         family = binomial(link = "logit"), 
+#         weights = Germination*50,
+#         data = rescaled_df)
+#germ_top_model <- get.models(pico_germ_dredge, subset = 1)[[1]]
+#summary(germ_top_model)
+#sjstats::r2(germ_top_model)
+# r2vals %>%
+#   gather(name, value, -species, -predictor) %>% 
+#   separate(name, into = c('model', 'stat'), sep = "_") %>% 
+#   spread(stat, value) %>% 
+#   mutate(r2 = ifelse(pval > 0.10, NA, r2)) %>% 
+#   ggplot() +
+#   geom_tile(aes(x = predictor, y = species, fill = r2)) +
+#   geom_text(aes(x = predictor, y = species, label = r2)) +
+#   facet_wrap(~model)
+
+
+

@@ -50,9 +50,9 @@ soil_df <- map(raw_files, read_soil) %>%
   mutate(value = if_else(value < 0 & variable == 'mois', as.numeric(NA), value)) %>% 
   # Average all 4 ports
   group_by(fire, aspect, time, variable) %>%
-  summarise(value = mean(value, na.rm = T)) %>% 
+  summarise(value = mean(value, na.rm = T)) #%>% 
   # Concert soil moisture (VMC) to %
-  mutate(value = if_else(variable == 'mois', value*100, value)) 
+  #mutate(value = if_else(variable == 'mois', value*100, value)) 
 
 
 # END
