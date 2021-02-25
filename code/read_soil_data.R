@@ -30,7 +30,7 @@ read_soil <- function(file_name){
   return(data)
 }
 
-raw_files <- list.files(file.path('data','soil_sensors'),full.names = TRUE)
+raw_files <- list.files(file.path('data','soil_sensors'), pattern = '*.xls', full.names = TRUE)
 
 soil_df <- map(raw_files, read_soil) %>% 
   `names<-` (str_extract(raw_files, '[[:upper:]][[:alnum:]]+-*[[:upper:]]*[[:alnum:]]+_[[:upper:]][[:alnum:]]*')) %>%

@@ -61,6 +61,23 @@ soil_props <- read_csv('data/soil_properties.csv')
 
 # Import response variables (seedling germination, survival)--------------------
 source('code/read_summarize_seedling.R')
+
+proportions <- full_join(germination, final) %>% 
+  group_by(fire, aspect, species) %>% # Adjust by frame or site: +/- frameID
+  summarise(Germination = sum(germinated, na.rm = T) / n(),
+            Survival = sum(final, na.rm = T) / sum(germinated, na.rm = T),
+            Establishment = Germination * Survival) %>% 
+  gather(period, value, Germination, Survival, Establishment) %>% 
+  mutate(value = if_else(is.na(value), 0, value)) %>% 
+  # Transform data, then show both ways (all fires and aspects together for clarity)
+  # Using arsine-square-root transform per Ives 2018 sensu Larson and Marx 1981
+  mutate(asinsqrt = asin(sign(value) * sqrt(abs(value))),
+         #logit = log( (value/(1-value)) )
+         logit = car::logit(value, adjust=0)) %>%
+  rename(original = value) %>% 
+  gather(version, value, original, asinsqrt, logit) %>% 
+  mutate(period = fct_relevel(period, 'Germination','Survival','Establishment'))
+
 seedling_response <- proportions %>% 
   filter(version == 'original') %>% 
   dplyr::select(-version)
@@ -68,10 +85,10 @@ seedling_response <- proportions %>%
 std_e <- function(x) sd(x)/sqrt(length(x))
 
 seedling_response %>% 
-  group_by(species, period) %>% 
+  group_by(species, period, aspect) %>% 
   summarise(mean = round(mean(value, na.rm = T), 2),
             se = round(sd(value)/sqrt(length(value)),2)) %>% 
-  filter(species == 'PSME') 
+  filter(species == 'PSME')
 
 # Combine response and predictor variables -------------------------------------
 complete_df <- seedling_response %>%
@@ -167,6 +184,10 @@ model_terms <- model_formulas %>%
               family = binomial(link = "logit"),
               weights = Weights))) %>% 
   group_by(species, period, term) %>% 
+  # Stop and print here to view un-averaged model coeffecients, SE, P vals
+  # As shown in Table 2
+  # print(n = 50)
+  
   # Average coeffecients from models with 2 AIC units, to present effect sizes from averages
   summarize_at(vars(estimate, std.error, statistic, p.value), mean, na.rm = T) %>% 
   mutate_at(vars(estimate, std.error, statistic, p.value), round, 3)
@@ -196,26 +217,33 @@ model_stats <- model_stats %>%
 
 
 # Combine model info and plot --------------------------------------------------
+full_stuff <- expand.grid(species = c('PICO','PSME'), 
+                          period = c('Germination','Survival','Establishment'),
+                          term = c('mois_q50','temp_q50','veg','organic'))
+
 model_info <- model_terms %>% 
   filter(term != '(Intercept)') %>% 
+  full_join(., full_stuff) %>% 
   mutate(term = factor(term, levels = c('veg','organic','mois_q50','temp_q50')))
+
 
 colors <- c("#0072B2","#D55E00")
 
 # Plot summarized terms
+
 ggplot(model_info, aes(x = term, y = estimate, fill = species)) +
   geom_errorbar(aes(color = species,
-                    ymin = estimate-std.error, ymax = estimate+std.error),
+                    ymin = estimate-std.error*1.96, ymax = estimate+std.error*1.96),
                 size = 0.5, width = 0.2, position=position_dodge(width=0.7)) +
   geom_point(shape = 21, size = 2, position=position_dodge(width=0.7)) +
-  geom_text(aes(color = species, y = estimate - 0.5, label = round(estimate,2)),
+  geom_text(aes(color = species, y = estimate-std.error-0.45, label = round(estimate,2)),
                   show.legend = F, position= position_dodge(width=0.7)) +
   geom_hline(aes(yintercept = 0), linetype = 'dashed') +
   scale_x_discrete(labels = c(mois_q50 = 'Soil mois.',
                               temp_q50 = 'Soil temp.',
                               veg = 'Veg. cover',
-                              organic = 'Organic Matter')) +
-  coord_flip() +
+                              organic = 'SOM')) +
+  coord_flip(ylim = c(-1.7,2)) +
   theme_bw(base_size = 14) +
   labs(y = 'Effect size (log-odds)', x = '') +
   facet_wrap(~period) +
@@ -260,7 +288,7 @@ ggplot(model_info, aes(x = term, y = estimate, fill = species)) +
 
 # Change this one at a time to calculate odds ratio results
 test <- complete_df %>%
-  filter(period == 'Establishment', species == 'PICO') %>%
+  filter(period == 'Establishment', species == 'PSME') %>%
   drop_na()
 test_glm <-
   glm(value ~ veg + temp_q50,

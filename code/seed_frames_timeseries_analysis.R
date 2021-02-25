@@ -1,29 +1,58 @@
 ## Seed-frame data ---------------------------------------------------------
 
 # Read in data from Kobo
-source('code/read_seedling_data.R')
+source('code/read_summarize_seedling.R')
 
 # Summarize counts
 counts <- seedlings %>% 
-  filter(variable == 'height', species != 'control', value > 0) %>% 
+  filter(variable == 'height', species != 'control', value > 0 | value == -666) %>% 
   group_by(date, fire, species, aspect) %>%
   summarize(count = n(),
             prop = n()/(5*50))
 
 allMeasures <- seedlings %>% 
+  filter(variable == 'height', species != 'control', value < 0 | is.na(value)) %>%
   group_by(date, fire, species, aspect) %>% 
-  filter(variable == 'height', value < 0 | is.na(value)) %>% 
   summarise(count = 0)
 
  counts_full <- 
   full_join(counts, allMeasures) %>% 
   group_by(date, fire, species, aspect) %>% 
-  filter(species != 'control') %>% 
   summarise(count = sum(count),
-            prop = count/(5*50)) 
+            prop = count/(5*50),
+            value = asin(sign(prop) * sqrt(abs(prop))))
 
+ # Time series plotting ---------
+ 
+colVals <- c('Flat' = '#009E73','North' = '#0072B2','South' = '#E69F00')
+legLabs <- c('Flat','North','South')
+ 
+ # Counts, through time
+counts_full %>% 
+  ggplot(aes(x = date, y = value)) +
+  # stat_summary(aes(color = aspect), fun.y = mean, geom = 'line', size = 1) +
+  # stat_summary(aes(fill = aspect), 
+  #              size = 0.35, shape = 21,
+  #              fun.data = 'mean_cl_boot', fun.args=(conf.int=.90), geom = "pointrange") +
+  geom_line(aes(x = date, y = value, color = aspect), size = 1) +
+  geom_point(aes(x = date, y = value, fill = aspect), shape = 21, size =2) +
+  facet_grid(species~fire) +
+  # scale_y_continuous(#breaks = seq(0,12,2),
+  #                    sec.axis = sec_axis(~.*0.004, name = "Percent of planted")) +
+  #scale_x_datetime(limits = as.POSIXct(c("2018-06-15 00:00:00", "2018-10-30 00:00:00"))) +
+  scale_color_manual(values = colVals, name = 'aspect') +
+  scale_fill_manual(values = colVals, name = 'aspect') +
+  labs(x = 'Date', y = 'Count of living seedlings') +  
+  theme_bw(base_size = 14) +
+  theme(strip.background = element_blank(),
+        #strip.text.x = element_blank(),
+        axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1),
+        axis.title.y = element_blank())
+ 
+ 
    
-# Summarize measurements
+
+ # Summarize measurements
 meas_summ <- seedlings %>% 
   group_by(date, fire, species, variable, aspect) %>% 
   summarize(med = quantile(value, 0.50, na.rm = T),
@@ -48,29 +77,6 @@ atmos_data <- atmos_df %>%
   summarise_at('value', c('min','mean','max'))
   
 
-# Time series plotting ---------
-
-colVals <- c('Flat' = '#009E73','North' = '#0072B2','South' = '#E69F00')
-legLabs <- c('Flat','North','South')
-
-# Counts, through time
-counts_full %>% 
-  filter(species == 'PICO') %>% 
-#seedlings_time <- 
-  ggplot() +
-  geom_line(aes(x = date, y = count, color = aspect), size = 1) +
-  geom_point(aes(x = date, y = count, fill = aspect), shape = 21, size =2) +
-  facet_wrap(~fire, ncol = 4) +
-  scale_y_continuous(sec.axis = sec_axis(~.*0.4, name = "Percent of planted")) +
-  scale_x_datetime(limits = as.POSIXct(c("2018-06-15 00:00:00", "2018-10-30 00:00:00"))) +
-  scale_color_manual(values = colVals, name = 'aspect') +
-  scale_fill_manual(values = colVals, name = 'aspect') +
-  labs(x = 'Date', y = 'Count of living seedlings') +  
-  theme_bw(base_size = 14) +
-  theme(strip.background = element_blank(),
-        #strip.text.x = element_blank(),
-        axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1),
-        axis.title.y = element_blank())
 
 # Abiotic through time
 colVals2 <- c('Flat' = '#009E73','North' = '#0072B2','South' = '#E69F00')

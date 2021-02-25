@@ -10,7 +10,7 @@ library(MuMIn)
 
 
 # Import raster data
-dem <- raster( "/Users/tylerhoecker/Box Sync/PhD/GIS/establishment_map/dem_10m.tif") 
+dem <- raster( "/Users/tylerhoecker/Box Sync/PhD/GIS/establishment_map/dem_10m_reburn.tif") 
 # Import experimental plot locatons
 site_points <- readOGR(dsn = "/Users/tylerhoecker/Box Sync/PhD/GIS/establishment_map/site_locations_shp/") 
 
@@ -21,12 +21,8 @@ crs(site_points) <- crs(dem)
 aspect <- terrain(dem, opt = 'aspect', unit = 'degrees')
 # Convert aspect to continuous measure per Beers et al. 1966 J. For.
 dev_ne <- cos( (45*pi/180) - (aspect*pi/180) ) + 1 
-slope <- terrain(dem, opt = 'slope', unit = 'degrees')
 tpi <- terrain(dem, opt = 'TPI')
-#tpi9 <- tpi(dem, scale = 9)
 hli <- hli(dem, check = T)
-#hsp <- hsp(dem)
-#curv <- curvature(dem, type = 'total')
 
 # Save these values to a dataframe with the site names
 terrain_ind_df <- site_points@data %>% 
@@ -40,7 +36,7 @@ terrain_ind_df$tpi = extract(tpi, site_points)
 terrain_ind_df$hli = extract(hli, site_points)
 
 # Import response variables (seedling germination, survival)--------------------
-source('code/read_summarize_seedling.R')
+source("/Users/tylerhoecker/GitHub/seed_addition_GYE/code/read_summarize_seedling.R")
 seedling_response <- proportions  
   #filter(version == 'asinsqrt') %>% 
   #dplyr::select(-version) %>% 
@@ -61,16 +57,16 @@ rescaled_df %>%
   filter(period == 'Establishment') %>% 
   filter(species == 'PICO') %>% 
   drop_na() %>% 
-  do(dredge(lm(value ~ dev_ne + tpi + hli,
+  do(dredge(lm(value ~ dev_ne + tpi + hli + elev,
                data = ., na.action = 'na.fail'), 
             m.lim = c(0,3), 
             extra = list("R^2", "*" = function(x) {
               s <- summary(x)
               c(Rsq = s$r.squared, adjRsq = s$adj.r.squared, F = s$fstatistic[[1]])
             }),
-            rank = 'AIC')) %>% 
+            rank = 'AICc')) %>% 
   filter(delta <= 2) %>% 
-  write_csv(., 'linear_proxy_model_germ.csv')
+  write_csv(., 'linear_proxy_model_pico_estab.csv')
 
 
 # Prediction

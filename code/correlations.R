@@ -6,74 +6,65 @@ library(ggcorrplot)
 library(multcomp)
 
 
-# Import soil data, at this point filter for entire season ---------------------
 start_time <- as.POSIXct(c("2018-06-01 00:00:00"))
 end_time <- as.POSIXct(c("2018-10-01 00:00:00"))
 source('code/read_soil_data.R')
 
-# Filter to germination and survival periods, and calculate median values -----
+
+# Filter to germination and survival periods, and calculate median values 
 germ_period <- soil_df %>% 
-  # Convert to proportion
-  #mutate(value = if_else(variable == 'mois', value/100, value)) %>%
   # Filter to "germination period"
   filter(time >= "2018-06-01 00:00:00" & time <= "2018-06-15 00:00:00") %>% 
   # Calculate the median soil moisture 
   group_by(fire, aspect, variable) %>% 
-  summarise(q50_germ = quantile(value, 0.50, na.rm = T)) %>% 
+  summarise(q50 = quantile(value, 0.50, na.rm = T)) %>% 
   gather(quant, value, -c(fire,aspect,variable)) %>% 
   unite(temp, variable, quant) %>% 
-  spread(temp, value) 
+  spread(temp, value) %>% 
+  mutate(period = 'Germination')
 
 surv_period <- soil_df %>% 
-  # Convert to proportion
-  #mutate(value = if_else(variable == 'mois', value/100, value)) %>%
-  # Filter to "germination period"
+  # Filter to "survival period"
   filter(time >= "2018-07-08 00:00:00" & time <= "2018-10-01 00:00:00") %>% 
   # Calculate the median soil moisture 
   group_by(fire, aspect, variable) %>% 
-  summarise(q50_surv = quantile(value, 0.50, na.rm = T)) %>% 
+  summarise(q50 = quantile(value, 0.50, na.rm = T)) %>% 
   gather(quant, value, -c(fire,aspect,variable)) %>% 
   unite(temp, variable, quant) %>% 
-  spread(temp, value) 
+  spread(temp, value) %>% 
+  mutate(period = 'Survival')
 
-soil_preds <- full_join(surv_period, germ_period)
+estab_period <- surv_period %>% 
+  mutate(period = 'Establishment')
+
+soil_preds <- full_join(surv_period, germ_period) %>% 
+  full_join(estab_period)
+
+soil_preds %>% 
+  group_by(aspect, period) %>% 
+  summarise_at(vars(mois_q50, temp_q50), funs(mean(., na.rm = TRUE))) %>% 
+  filter(period != 'Establishment') %>% 
+  arrange(period)
 
 # Percent cover data
 pct_cover <- read_csv('data/pct_cover.csv') %>% 
   group_by(fire, aspect) %>% 
   summarise_all(mean) %>% 
   mutate(veg = forb + gram) %>% 
-  select(fire, aspect, veg)
+  dplyr::select(fire, aspect, veg)
 
 # Soil properties/texture
 soil_props <- read_csv('data/soil_properties.csv') 
 
+
 # Import response variables (seedling germination, survival)--------------------
-# Import seedling data
-source('code/read_seedling_data.R')
+source('code/read_summarize_seedling.R')
 
-# Surival and germination figuring-------------------------------------------
-# Germinated
-germination <- seedlings %>% 
-  filter(variable == 'height', species != 'control') %>% 
-  mutate(germinated = if_else(is.na(value), 0, 1)) %>% 
-  group_by(fire, aspect, species, frameID, cell) %>% 
-  summarise(germinated = max(germinated, na.rm = T)) 
-
-# Survived
-final <- seedlings %>%
-  filter(variable == 'height', species != 'control') %>% 
-  mutate(survived = if_else(date > as.POSIXct("2018-10-01") & value > 0, 1, 0)) %>% 
-  group_by(fire, aspect, species, frameID, cell) %>% 
-  summarise(final = max(survived, na.rm = T)) 
-
-
-# Proportion of germination, survival and their product, establishment for each frame. 
 proportions <- full_join(germination, final) %>% 
   group_by(fire, aspect, species) %>% # Adjust by frame or site: +/- frameID
   summarise(Germination = sum(germinated, na.rm = T) / n(),
             Survival = sum(final, na.rm = T) / sum(germinated, na.rm = T),
-            Establishment = sum(final, na.rm = T) / n()) %>% 
+            Establishment = Germination * Survival) %>% 
   gather(period, value, Germination, Survival, Establishment) %>% 
   mutate(value = if_else(is.na(value), 0, value)) %>% 
   # Transform data, then show both ways (all fires and aspects together for clarity)
@@ -87,26 +78,40 @@ proportions <- full_join(germination, final) %>%
 
 seedling_response <- proportions %>% 
   filter(version == 'original') %>% 
-  dplyr::select(-version) %>% 
-  spread(period, value) 
+  dplyr::select(-version)
 
+std_e <- function(x) sd(x)/sqrt(length(x))
+
+seedling_response %>% 
+  group_by(species, period, aspect) %>% 
+  summarise(mean = round(mean(value, na.rm = T), 2),
+            se = round(sd(value)/sqrt(length(value)),2)) %>% 
+  filter(species == 'PSME')
 
 # Combine response and predictor variables -------------------------------------
-complete_df <-  full_join(seedling_response,soil_preds) %>% 
+complete_df <- seedling_response %>%
+  spread(period,value) %>% 
+  # Add informaiton for weights for binomial regression
+  mutate(germ_estab_Weights = as.integer(250),
+         surv_Weights = as.integer(Germination * 250)) %>% 
+  gather(period, value, Germination, Survival, Establishment) %>% 
+  full_join(soil_preds) %>% 
   full_join(pct_cover) %>% 
   full_join(soil_props) %>% 
-  modify_at(c('species'), as.factor) %>% 
-  mutate(Weights = 250)
+  modify_at(c('species','period','texture'), as.factor) %>% 
+  ungroup() %>% 
+  mutate(period = fct_relevel(period, 'Germination','Survival','Establishment'),
+         Weights = if_else(period %in% c('Germination', 'Establishment'),
+                           germ_estab_Weights, # else (survival):
+                           surv_Weights)) %>% 
+  dplyr::select(fire, aspect, species, period, value, Weights, mois_q50, temp_q50, veg, organic, N)
 
-rescaled_df <- complete_df %>% 
-  ungroup() %>%
-  mutate_at(vars(-c(fire,aspect,species,Germination,Survival,Establishment,Weights,texture)), scale) 
 
 # Correlation matrix
 corr <- complete_df %>% 
   ungroup() %>% 
-  select(starts_with('mois'),starts_with('temp'),veg,Clay,organic,N, Germination, Survival) %>% 
-  cor(use = "pairwise.complete.obs")
+  dplyr::select(starts_with('mois'),starts_with('temp'),veg,organic,N) %>% 
+  cor(use = "pairwise.complete.obs", method = 'spearman')
 
 pvals <- complete_df %>% 
   ungroup() %>% 

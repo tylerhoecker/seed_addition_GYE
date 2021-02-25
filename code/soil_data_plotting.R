@@ -1,3 +1,4 @@
+library(cowplot)
 # This function reads the xls files automatically produced by the METER Em50 data logger. 
 # The script assumes that "Port 4" is an empty port
 # Ports 1-3 are inside seed-addition frames, port 5 is outside. Ports are renamed 1-4, with 4 becoming "empty" and then removed.
@@ -6,8 +7,8 @@
 #---------------------------------------------------------------------------
 # Edited on 2/8 to use updated version of soil_df
 # Decide on a time period of interest:
-start_time <- as.POSIXct(c("2018-04-15 00:00:00"))
-end_time <- as.POSIXct(c("2018-11-01 00:00:00"))
+start_time <- as.POSIXct(c("2018-06-01 00:00:00"))
+end_time <- as.POSIXct(c("2018-10-01 00:00:00"))
 
 
 # Load soil data for sure in either method. Produces `soil_df`
@@ -18,7 +19,7 @@ soil_data <- soil_df %>%
   separate(time, into = c('date','hour'), sep = " ") %>%
   mutate(date = as.Date(date),
          #value = if_else(variable == 'mois', value / 100, value),
-         variable = if_else(variable == 'mois','Soil water content','Soil temperature')) %>%
+         variable = if_else(variable == 'mois','Soil moisture','Soil temperature')) %>%
   # mutate(aspect = as.factor(aspect),
   #        measType = if_else(measType == 'mois',"Moisture","Temperature")) %>%
   group_by(fire, aspect, date, variable) %>% # Change site for aspect
@@ -27,7 +28,10 @@ soil_data <- soil_df %>%
             dayMean = mean(value, na.rm = T),
             dayMax = max(value, na.rm = T)) %>% 
   mutate(dayMin = ifelse(is.infinite(dayMin), NA, dayMin),
-         dayMax = ifelse(is.infinite(dayMax), NA, dayMax))
+         dayMax = ifelse(is.infinite(dayMax), NA, dayMax)) 
+# %>% 
+#   group_by(variable, aspect) %>% 
+#   summarise_if(is.numeric, mean, na.rm = T)
 
 
 colVals <- rev(c('South' = '#E69F00', 'North' = '#0072B2','Flat' = '#009E73'))
@@ -35,22 +39,41 @@ colVals <- rev(c('South' = '#E69F00', 'North' = '#0072B2','Flat' = '#009E73'))
 alphaVals <- 0.4
 sizeVals <- 1
 
-soil_time_plot <- 
-  ggplot(soil_data) +
-  geom_ribbon(aes(x = date, ymin = dayMin, ymax = dayMax, fill = aspect),
-              alpha = alphaVals) +
+moisture_2018 <- 
+  ggplot(filter(soil_data, variable == 'Soil moisture')) +
+  # geom_ribbon(aes(x = date, ymin = dayMin, ymax = dayMax, fill = aspect),
+  #             alpha = alphaVals) +
   geom_line(aes(x = date, y = dayMean, color = aspect), size = 0.85) +
   scale_fill_manual('Aspect', values = colVals) +
   scale_color_manual('Aspect', values = colVals) +
-  facet_grid(variable ~ fire, scales = 'free') +
+  facet_grid(~fire) +
   theme_bw(base_size = 14) +
-  labs(x = '', y = bquote('Daily mean & range ('*~m^3*''*~m^-3*','*~degree *C*')')) +
+  labs(x = '', y = bquote('Mean soil moisture ('*~m^3*''*~m^-3*')')) + #,'*~degree *C*'
   theme(strip.background = element_blank(),
         plot.subtitle = element_text(hjust = 0.5, face = 'bold')) +
   scale_x_date(date_breaks = "1 month", 
-               date_labels = "%b",
-               limits = as.Date(c("2018-04-15","2018-11-01")))
+               date_labels = "%b") +
+  theme(panel.grid.minor = element_blank())
 
+temperature_2018 <- 
+  ggplot(filter(soil_data, variable == 'Soil temperature')) +
+  # geom_ribbon(aes(x = date, ymin = dayMin, ymax = dayMax, fill = aspect),
+  #             alpha = alphaVals) +
+  geom_line(aes(x = date, y = dayMean, color = aspect), size = 0.85) +
+  scale_fill_manual('Aspect', values = colVals) +
+  scale_color_manual('Aspect', values = colVals) +
+  facet_grid(~fire) +
+  theme_bw(base_size = 14) +
+  labs(x = '', y = bquote('Mean soil temperature ('*~degree *C*')')) + #,'*~degree *C*'
+  theme(strip.background = element_blank(),
+        plot.subtitle = element_text(hjust = 0.5, face = 'bold')) +
+  scale_x_date(date_breaks = "1 month", 
+               date_labels = "%b") +
+  theme(panel.grid.minor = element_blank())
+
+# Rerun again with 19 data...
+
+plot_grid(moisture_2018, moisture_2019, temperature_2018, temperature_2019, nrow = 4)
 
 ##------
 # soilSouth <- filter(soil_data, aspect == 'South')
